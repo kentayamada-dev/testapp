@@ -1,0 +1,279 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PUBLISH_DIR: Publish
+  RELEASE_DIR: Release
+  PROJECT_NAME: App
+  APP_IDENTIFIER: com.kentayamada.myapp
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  info-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    outputs:
+      product_name: ${{ steps.get-info.outputs.product_name }}
+      company_name: ${{ steps.get-info.outputs.company_name }}
+      app_title: ${{ steps.get-info.outputs.app_title }}
+      app_version: ${{ steps.get-info.outputs.app_version }}
+      app_updated: ${{ steps.app-version-check.outputs.app_updated }}
+      dotnet_version: ${{ steps.get-info.outputs.dotnet_version }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.1
+        with:
+          sparse-checkout: |
+            ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+          sparse-checkout-cone-mode: false
+
+      - name: Get app info
+        id: get-info
+        run: |
+          project_file="${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj"
+
+          app_version="$(sed -n 's/.*<Version>\(.*\)<\/Version>.*/\1/p' "$project_file" | head -1)"
+          echo "app_version=$app_version" >> "$GITHUB_OUTPUT"
+
+          app_title="$(sed -n 's/.*<AssemblyTitle>\(.*\)<\/AssemblyTitle>.*/\1/p' "$project_file" | head -1)"
+          echo "app_title=$app_title" >> "$GITHUB_OUTPUT"
+
+          company_name="$(sed -n 's/.*<Company>\(.*\)<\/Company>.*/\1/p' "$project_file" | head -1)"
+          echo "company_name=$company_name" >> "$GITHUB_OUTPUT"
+
+          product_name="$(sed -n 's/.*<Product>\(.*\)<\/Product>.*/\1/p' "$project_file" | head -1)"
+          echo "product_name=$product_name" >> "$GITHUB_OUTPUT"
+
+          target_framework="$(sed -n 's/.*<TargetFramework>\(.*\)<\/TargetFramework>.*/\1/p' "$project_file" | head -1)"
+          dotnet_version="${target_framework#net}.x"
+          echo "dotnet_version=$dotnet_version" >> "$GITHUB_OUTPUT"
+
+      - name: Check app version against latest release
+        id: app-version-check
+        run: |
+          current_version="${{ steps.get-info.outputs.app_version }}"
+          repo="${{ github.repository }}"
+
+          latest_tag="$(gh release view --repo "$repo" --json tagName -q '.tagName' 2>/dev/null || echo "")"
+
+          if [ -z "$latest_tag" ]; then
+            echo "No previous releases found."
+            echo "app_updated=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          latest_version="${latest_tag#v}"
+
+          version_lt () {
+            [ "$(printf '%s\n' "$1" "$2" | sort -V | head -n1)" != "$2" ]
+          }
+
+          if [ "$current_version" != "$latest_version" ] && \
+            ! version_lt "$current_version" "$latest_version"; then
+            echo "app_updated=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "app_updated=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate summary
+        run: |
+          tmp_file="/tmp/outputs.json"
+
+          cat > "$tmp_file" << 'EOF'
+          {
+            "App Title": "${{ steps.get-info.outputs.app_title }}",
+            "Product Name": "${{ steps.get-info.outputs.product_name }}",
+            "Company Name": "${{ steps.get-info.outputs.company_name }}",
+            "App Version": "${{ steps.get-info.outputs.app_version }}",
+            ".NET Version": "${{ steps.get-info.outputs.dotnet_version }}",
+            "App Version Updated": "${{ steps.app-version-check.outputs.app_updated }}"
+          }
+          EOF
+
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+
+          jq -r 'to_entries[] | "| \(.key) | \(.value) |"' "$tmp_file" >> $GITHUB_STEP_SUMMARY
+
+  publish:
+    needs: info-check
+    timeout-minutes: 10
+    if: needs.info-check.outputs.app_updated == 'true'
+
+    strategy:
+      matrix:
+        include:
+          - os: macos-26
+            rid: osx-arm64
+            platform: macos-arm64
+          - os: windows-2025
+            rid: win-x64
+            platform: windows-x64
+          - os: windows-11-arm
+            rid: win-arm64
+            platform: windows-arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.1
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5.0.1
+        with:
+          dotnet-version: ${{ needs.info-check.outputs.dotnet_version }}
+
+      - name: Publish
+        run: dotnet publish ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release --runtime ${{ matrix.rid }} --output ${{ env.PUBLISH_DIR }}
+
+      - name: Build macOS package
+        if: startsWith(matrix.os, 'macos')
+        env:
+          ProductName: ${{ needs.info-check.outputs.product_name }}
+          AppIdentifier: ${{ env.APP_IDENTIFIER }}
+          ProductVersion: ${{ needs.info-check.outputs.app_version }}
+          OutputFilename: ${{ env.PROJECT_NAME }}
+          AppName: ${{ needs.info-check.outputs.app_title }}
+        run: |
+          info_plist_template="${{ env.PROJECT_NAME }}/Build/macOS/Info.plist"
+          icon_file="${{ env.PROJECT_NAME }}/Assets/Logo/logo.icns"
+          app_bundle="$AppName.app"
+          app_contents="$app_bundle/Contents"
+          publish_dir="${{ env.PUBLISH_DIR }}"
+          tmp_info="/tmp/Info.plist"
+          app_pkg="${{ env.RELEASE_DIR }}/${{ needs.info-check.outputs.product_name }}-${{ matrix.rid }}.pkg"
+
+          rm -rf "${{ env.PUBLISH_DIR }}/App.dSYM"
+
+          envsubst < "$info_plist_template" > "$tmp_info"
+
+          mkdir -p "${{ env.RELEASE_DIR }}"
+
+          mkdir -p "$app_contents/MacOS" "$app_contents/Resources"
+          cp "$tmp_info" "$app_contents/Info.plist"
+          cp "$icon_file" "$app_contents/Resources/logo.icns"
+          cp -a "$publish_dir"/* "$app_contents/MacOS/"
+
+          pkgbuild --root "$app_bundle" \
+            --install-location "/Applications/$app_bundle" \
+            --version "$ProductVersion" \
+            --identifier "$AppIdentifier" \
+            "$app_pkg"
+
+      - name: Build Windows installer
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          $publishDir = "${{ env.PUBLISH_DIR }}"
+          $projectName = "${{ env.PROJECT_NAME }}"
+          $productName = "${{ needs.info-check.outputs.product_name }}"
+          $appTitle = "${{ needs.info-check.outputs.app_title }}"
+          $appVersion = "${{ needs.info-check.outputs.app_version }}"
+          $companyName = "${{ needs.info-check.outputs.company_name }}"
+          $logoFile = "$projectName/Assets/Logo/logo.ico"
+          $appUrl = "${{ github.server_url }}/${{ github.repository }}"
+          $releaseDir = "${{ env.RELEASE_DIR }}"
+          $setupFile = "$productName-${{ matrix.rid }}-Setup"
+
+          rm "${{ env.PUBLISH_DIR }}/App.pdb" -ErrorAction SilentlyContinue
+
+          winget install -e --id JRSoftware.InnoSetup -h
+
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" `
+            /DMyPublishDir="$publishDir" `
+            /DMyLogoIconFile="$logoFile" `
+            /DMyAppName="$appTitle" `
+            /DMyAppVersion="$appVersion" `
+            /DMyAppPublisher="$companyName" `
+            /DMyAppURL="$appUrl" `
+            /DMyAppExeName="$projectName.exe" `
+            /O+ `
+            /O"$releaseDir" `
+            /F"$setupFile" `
+            setup.iss
+
+      - name: Generate summary
+        shell: pwsh
+        run: |
+          npm install -g tree-node-cli
+
+          '```' >> $env:GITHUB_STEP_SUMMARY
+          treee -a "${{ env.PUBLISH_DIR }}" >> $env:GITHUB_STEP_SUMMARY
+          '```' >> $env:GITHUB_STEP_SUMMARY
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v6.0.0
+        with:
+          name: ${{ matrix.platform }}
+          path: ${{ env.RELEASE_DIR }}/
+
+  generate-appcast:
+    needs: [info-check, publish]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6.0.1
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v7.0.0
+        with:
+          path: ${{ env.RELEASE_DIR }}
+
+      - name: Install app cast generator
+        run: dotnet tool install --global NetSparkleUpdater.Tools.AppCastGenerator
+
+      - name: Generate app cast
+        run: |
+          app_version="${{ needs.info-check.outputs.app_version }}"
+          release_dir="${{ env.RELEASE_DIR }}"
+          app_title="${{ needs.info-check.outputs.app_title }}"
+          base_url="${{ github.server_url }}/${{ github.repository }}/releases/latest/download"
+
+
+          find Release -type f \( -name "*.pkg" -o -name "*.exe" \) | while read file; do
+            dir_name=$(echo "$file" | cut -d'/' -f2)
+
+            netsparkle-generate-appcast \
+                  --single-file "$file" \
+                  --appcast-output-directory "$release_dir" \
+                  --public-key-override "${{ secrets.SPARKLE_PUBLIC_KEY }}" \
+                  --private-key-override "${{ secrets.SPARKLE_PRIVATE_KEY }}" \
+                  --base-url "$base_url" \
+                  --product-name "$app_title" \
+                  --file-version "$app_version" \
+                  --os "$dir_name" \
+                  --reparse-existing
+          done
+
+          find "$release_dir" -mindepth 2 -type f -exec mv {} "$release_dir/" \;
+          find "$release_dir" -mindepth 1 -type d -empty -delete
+
+      - name: Upload to release
+        run: |
+          release_tag="v${{ needs.info-check.outputs.app_version }}"
+          release_dir="${{ env.RELEASE_DIR }}"
+
+          gh release view "$release_tag" 2>/dev/null || gh release create "$release_tag"
+          gh release upload "$release_tag" "$release_dir/*" --clobber
+
+      - name: Generate summary
+        run: |
+          release_dir="${{ env.RELEASE_DIR }}"
+
+          echo '```xml' >> $GITHUB_STEP_SUMMARY
+          cat "$release_dir/appcast.xml" >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

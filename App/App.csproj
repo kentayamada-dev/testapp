@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>My Best App</AssemblyTitle>
+    <Company>Kenta Yamada</Company>
+    <Version>1.0.0</Version>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <Description>My best app is cool</Description>
+    <Product>MyBestApp</Product>
+    <Copyright>2025 Kenta Yamada</Copyright>
+    <IsAotCompatible>true</IsAotCompatible>
+    <PublishAot>true</PublishAot>
+    <BuiltInComInteropSupport>false</BuiltInComInteropSupport>
+    <PublishSingleFile>true</PublishSingleFile>
+    <TrimMode>full</TrimMode>
+    <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
+    <StripSymbols>true</StripSymbols>
+    <OptimizationPreference>Speed</OptimizationPreference>
+    <SelfContained>true</SelfContained>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <IlcDisableReflection>true</IlcDisableReflection>
+    <PublishTrimmed>true</PublishTrimmed>
+    <UseAppHost>true</UseAppHost>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\Fonts\*"/>
+    <AvaloniaResource Include="Assets\Icons\*"/>
+    <AvaloniaResource Include="Assets\Logo\*"/>
+    <AvaloniaResource Include="Assets\Config\*"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Assets\Culture\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Assets\Culture\Resources.ja-JP.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.ja-JP.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Assets\Culture\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Assets\Culture\Resources.ja-JP.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.11"/>
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.11"/>
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.11">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.3.11"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.2"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2"/>
+    <PackageReference Include="NetSparkleUpdater.SparkleUpdater" Version="3.1.0-preview20251127001"/>
+    <PackageReference Include="Svg.Controls.Skia.Avalonia" Version="11.3.9.2"/>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,116 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             x:Class="App.App"
+             Name="{Binding AppName, RelativeSource={RelativeSource Self}}">
+
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem Header="View">
+        <NativeMenu>
+          <NativeMenuItem Header="System Theme" Click="ChangeThemeSystem_Click" />
+          <NativeMenuItem Header="Light Theme" Click="ChangeThemeLight_Light" />
+          <NativeMenuItem Header="Dark Theme" Click="ChangeThemeDark_Click" />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="Info">
+        <NativeMenu>
+          <NativeMenuItem Header="Check Update" Click="UpdateCheck_Click" />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="Language">
+        <NativeMenu>
+          <NativeMenuItem Header="English" Click="ChangeCultureEn_Click" />
+          <NativeMenuItem Header="日本語" Click="ChangeCultureJp_Click" />
+        </NativeMenu>
+      </NativeMenuItem>
+    </NativeMenu>
+  </NativeMenu.Menu>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <Color x:Key="WindowBackground">#fafafa</Color>
+          <Color x:Key="HoverColor">#e1e1e1</Color>
+          <Color x:Key="PrimaryColor">#61afef</Color>
+          <Color x:Key="SecondaryColor">#e1e4eb</Color>
+          <system:String x:Key="SvgCss">* { fill: #000000 }</system:String>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+          <Color x:Key="WindowBackground">#23272e</Color>
+          <Color x:Key="HoverColor">#383C42</Color>
+          <Color x:Key="PrimaryColor">#4d78cc</Color>
+          <Color x:Key="SecondaryColor">#1e2227</Color>
+          <system:String x:Key="SvgCss">* { fill: #ffffff }</system:String>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <Style Selector="Window[WindowState=Maximized]">
+      <Setter Property="Padding" Value="7" />
+    </Style>
+
+    <Style Selector="Button.WindowChromeButton">
+      <Setter Property="Padding" Value="15,10" />
+    </Style>
+
+    <Style Selector="Button.WindowChromeButtonClose:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Red" />
+    </Style>
+
+    <Style Selector="Button.MenuButton">
+      <Setter Property="Padding" Value="5" />
+    </Style>
+
+    <Style Selector="Svg.ChromeButtonSvg">
+      <Setter Property="Css" Value="{DynamicResource SvgCss}" />
+    </Style>
+
+    <Style Selector="Button.WindowChromeButtonClose:pointerover Svg.ChromeButtonSvgClose">
+      <Setter Property="Css" Value="* { fill: #ffffff; }" />
+    </Style>
+
+    <Style Selector="Button">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalAlignment" Value="Left" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+
+    <Style Selector="Button:pointerover">
+      <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+    </Style>
+
+    <Style Selector="Button:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+    </Style>
+
+    <Style Selector="MenuItem">
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="root" Background="{TemplateBinding Background}">
+            <ContentPresenter Padding="40,10" Content="{TemplateBinding Header}" />
+          </Border>
+        </ControlTemplate>
+      </Setter>
+    </Style>
+
+    <Style Selector="MenuItem:pointerover /template/ Border#root">
+      <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+    </Style>
+
+    <Style Selector="MenuFlyoutPresenter">
+      <Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="TextBlock">
+      <Setter Property="FontFamily" Value="fonts:MyFonts#Noto Sans JP" />
+    </Style>
+
+    <SimpleTheme />
+  </Application.Styles>
+</Application>

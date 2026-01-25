@@ -1,0 +1,71 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:culture="clr-namespace:App.Assets.Culture"
+        xmlns:local="clr-namespace:App"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
+        x:Class="App.Views.MainWindow"
+        Width="800" Height="500"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackground}"
+        Title="{x:Static local:App.AppName}">
+
+  <Grid Name="MainView">
+    <Grid Name="WindowsMenu">
+      <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto">
+        <Image Grid.Column="0" Source="/Assets/Logo/logo.ico" Height="20" Width="40" PointerPressed="TitleBar_PointerPressed" />
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+          <StackPanel Orientation="Horizontal">
+            <Button Content="View" Classes="MenuButton">
+              <Button.Flyout>
+                <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                  <MenuItem Header="System Theme" Click="ChangeThemeSystem_Click" />
+                  <MenuItem Header="Light Theme" Click="ChangeThemeLight_Light" />
+                  <MenuItem Header="Dark Theme" Click="ChangeThemeDark_Click" />
+                </MenuFlyout>
+              </Button.Flyout>
+            </Button>
+            <Button Content="Info" Classes="MenuButton">
+              <Button.Flyout>
+                <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                  <MenuItem Header="Check Update" Click="UpdateCheck_Click" />
+                </MenuFlyout>
+              </Button.Flyout>
+            </Button>
+            <Button Content="Language" Classes="MenuButton">
+              <Button.Flyout>
+                <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                  <MenuItem Header="English" Click="ChangeCultureEn_Click" />
+                  <MenuItem Header="日本語" Click="ChangeCultureJp_Click" />
+                </MenuFlyout>
+              </Button.Flyout>
+            </Button>
+          </StackPanel>
+        </StackPanel>
+        <Border Grid.Column="2" PointerPressed="TitleBar_PointerPressed" />
+        <StackPanel Name="WindowChromeButtons" Grid.Column="3" Orientation="Horizontal">
+          <Button Click="Minimize_Click" Classes="WindowChromeButton">
+            <Svg Path="/Assets/Icons/minimize.svg" Classes="ChromeButtonSvg" />
+          </Button>
+          <Button Click="Resize_Click" Classes="WindowChromeButton">
+            <Svg Path="/Assets/Icons/resize.svg" Classes="ChromeButtonSvg" />
+          </Button>
+          <Button Click="Close_Click" Classes="WindowChromeButton WindowChromeButtonClose">
+            <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg ChromeButtonSvgClose" />
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Grid>
+    <StackPanel Name="MainContent">
+      <TabControl>
+        <TabItem Header="Tab 1">
+          <TextBlock Text="{x:Static culture:Resources.Hello}" FontSize="70" />
+        </TabItem>
+        <TabItem Header="Tab 2">
+          <TextBlock Text="Hello World" FontSize="70" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </TabItem>
+      </TabControl>
+    </StackPanel>
+  </Grid>
+</Window>
