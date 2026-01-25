@@ -1,4 +1,5 @@
 using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -21,7 +22,7 @@ public sealed partial class MainWindow : Window
       ExtendClientAreaChromeHints =
         ExtendClientAreaChromeHints.NoChrome;
       ExtendClientAreaToDecorationsHint = true;
-      MainView.RowDefinitions = new RowDefinitions("35,*");
+      MainView.RowDefinitions = new RowDefinitions($"{Application.Current?.Resources["ChromeHeight"]},*");
       MainContent.SetValue(Grid.RowProperty, 1);
       WindowsMenu.IsVisible = true;
     }

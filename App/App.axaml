@@ -21,31 +21,25 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="/Assets/Resources/ThemeResource.axaml" />
       </ResourceDictionary.MergedDictionaries>
+      <x:Double x:Key="ChromeHeight">30</x:Double>
     </ResourceDictionary>
   </Application.Resources>
 
   <Application.Styles>
-    <StyleInclude Source="/Assets/Styles/Button.axaml" />
+    <StyleInclude Source="/Assets/Styles/WindowChromeButton.axaml" />
+    <StyleInclude Source="/Assets/Styles/MenuButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuItem.axaml" />
     <StyleInclude Source="/Assets/Styles/Window.axaml" />
 
-    <Style Selector="Button.WindowChromeButton">
-      <Setter Property="Padding" Value="15,10" />
-    </Style>
-
-    <Style Selector="Button.WindowChromeButtonClose:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Style Selector="Button.WindowChromeCloseButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Background" Value="Red" />
-    </Style>
-
-    <Style Selector="Button.MenuButton">
-      <Setter Property="Padding" Value="10, 5" />
     </Style>
 
     <Style Selector="Svg.ChromeButtonSvg">
       <Setter Property="Css" Value="{DynamicResource SvgCss}" />
     </Style>
 
-    <Style Selector="Button.WindowChromeButtonClose:pointerover Svg.ChromeButtonSvgClose">
+    <Style Selector="Button.WindowChromeCloseButton:pointerover Svg.ChromeButtonCloseSvg">
       <Setter Property="Css" Value="* { fill: #ffffff; }" />
     </Style>
 

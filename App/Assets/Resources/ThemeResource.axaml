@@ -4,10 +4,11 @@
 
   <ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary x:Key="Light">
-      <Color x:Key="WindowBackground">#fafafa</Color>
-      <Color x:Key="HoverColor">#e1e1e1</Color>
+      <Color x:Key="WindowBackground">#f6f8fa</Color>
+      <Color x:Key="HoverColor">#eaebed</Color>
       <Color x:Key="PrimaryColor">#61afef</Color>
-      <Color x:Key="SecondaryColor">#e1e4eb</Color>
+      <Color x:Key="SecondaryColor">#ffffff</Color>
+      <Color x:Key="TertiaryColor">#d1d9e0</Color>
       <system:String x:Key="SvgCss">* { fill: #000000 }</system:String>
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
@@ -15,6 +16,7 @@
       <Color x:Key="HoverColor">#383C42</Color>
       <Color x:Key="PrimaryColor">#4d78cc</Color>
       <Color x:Key="SecondaryColor">#1e2227</Color>
+      <Color x:Key="TertiaryColor">#3d444d</Color>
       <system:String x:Key="SvgCss">* { fill: #ffffff }</system:String>
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>

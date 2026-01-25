@@ -1,23 +1,25 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:App"
+        xmlns:views="clr-namespace:App.Views"
         x:Class="App.Views.ProgressWindow"
         SizeToContent="WidthAndHeight"
         ShowInTaskbar="False">
 
   <StackPanel Width="350">
     <Grid Name="WindowsMenu">
-      <Grid ColumnDefinitions="Auto,*,Auto" Height="35">
-        <TextBlock Grid.Column="0" Margin="10,0,0,0" FontSize="15" Text="{x:Static local:App.AppName}" VerticalAlignment="Center"
-                   PointerPressed="TitleBar_PointerPressed" />
-        <Border Grid.Column="1" PointerPressed="TitleBar_PointerPressed" />
-        <StackPanel Name="WindowChromeButtons" Grid.Column="2" Orientation="Horizontal">
-          <Button Click="Close_Click" Classes="WindowChromeButton WindowChromeButtonClose">
-            <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg ChromeButtonSvgClose" />
-          </Button>
-        </StackPanel>
-      </Grid>
+      <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TertiaryColor}">
+        <Grid ColumnDefinitions="Auto,*,Auto" Height="{StaticResource ChromeHeight}" Background="{DynamicResource SecondaryColor}">
+          <TextBlock Grid.Column="0" Margin="10,0,0,0" FontSize="15" Text="{x:Static local:App.AppName}" VerticalAlignment="Center"
+                     PointerPressed="TitleBar_PointerPressed" />
+          <Border Grid.Column="1" PointerPressed="TitleBar_PointerPressed" Background="Transparent" />
+          <StackPanel Name="WindowChromeButtons" Grid.Column="2" Orientation="Horizontal">
+            <views:ChromeCloseButton RoutedEvent="Close_Click" />
+          </StackPanel>
+        </Grid>
+      </Border>
     </Grid>
-    <ProgressBar Name="ProgressBar" Margin="40" Height="20" Minimum="0" Maximum="100" ShowProgressText="True" />
+    <ProgressBar Name="ProgressBar" Margin="40" Height="30" Minimum="0" Maximum="100" ShowProgressText="True"
+                 Foreground="{DynamicResource PrimaryColor}" Background="{DynamicResource SecondaryColor}" />
   </StackPanel>
 </Window>
