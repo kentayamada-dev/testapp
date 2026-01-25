@@ -41,13 +41,6 @@ public sealed partial class MainWindow : Window
     WindowState = WindowState.Minimized;
   }
 
-  private void Resize_Click(object? sender, RoutedEventArgs e)
-  {
-    WindowState = WindowState == WindowState.Maximized
-      ? WindowState.Normal
-      : WindowState.Maximized;
-  }
-
   private void Close_Click(object? sender, RoutedEventArgs e)
   {
     Close();

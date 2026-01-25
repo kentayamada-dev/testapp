@@ -1,8 +1,21 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:local="clr-namespace:App"
              x:Class="App.App"
-             Name="{Binding AppName, RelativeSource={RelativeSource Self}}">
+             Name="{x:Static local:App.AppName}">
+
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem Header="About">
+        <NativeMenu>
+          <NativeMenuItem Header="App" Click="AboutApp_Click" />
+          <NativeMenuItem Header="Developer" Click="AboutDeveloper_Click" />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="Check Update" Click="CheckUpdate_Click" />
+    </NativeMenu>
+  </NativeMenu.Menu>
 
   <Application.Resources>
     <ResourceDictionary>
@@ -26,10 +39,6 @@
   </Application.Resources>
 
   <Application.Styles>
-    <Style Selector="Window[WindowState=Maximized]">
-      <Setter Property="Padding" Value="7" />
-    </Style>
-
     <Style Selector="Button.WindowChromeButton">
       <Setter Property="Padding" Value="15,10" />
     </Style>
@@ -84,8 +93,12 @@
       <Setter Property="BorderThickness" Value="0" />
     </Style>
 
-    <Style Selector="TextBlock">
+    <Style Selector="Window">
       <Setter Property="FontFamily" Value="fonts:MyFonts#Noto Sans JP" />
+      <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+      <Setter Property="WindowStartupLocation" Value="CenterScreen" />
+      <Setter Property="Title" Value="{x:Static local:App.AppName}" />
+      <Setter Property="CanResize" Value="False" />
     </Style>
 
     <SimpleTheme />

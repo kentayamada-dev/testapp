@@ -3,10 +3,7 @@
         xmlns:local="clr-namespace:App"
         x:Class="App.Views.ProgressWindow"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackground}"
-        ShowInTaskbar="False"
-        Title="{x:Static local:App.AppName}">
+        ShowInTaskbar="False">
 
   <StackPanel Width="350">
     <Grid Name="WindowsMenu">
@@ -21,6 +18,6 @@
         </StackPanel>
       </Grid>
     </Grid>
-    <ProgressBar Name="ProgressBar" Margin="40" Height="20" Minimum="0" Maximum="100" Value="14" ShowProgressText="True" />
+    <ProgressBar Name="ProgressBar" Margin="40" Height="20" Minimum="0" Maximum="100" ShowProgressText="True" />
   </StackPanel>
 </Window>

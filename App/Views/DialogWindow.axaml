@@ -3,14 +3,11 @@
         xmlns:local="clr-namespace:App"
         x:Class="App.Views.DialogWindow"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource WindowBackground}"
-        ShowInTaskbar="False"
-        Title="{x:Static local:App.AppName}">
+        ShowInTaskbar="False">
 
   <StackPanel Width="350">
     <Grid Name="WindowsMenu">
-      <Grid ColumnDefinitions="Auto,*,Auto" Height="35">
+      <Grid ColumnDefinitions="Auto,*,Auto" Height="35" Background="{DynamicResource SecondaryColor}">
         <TextBlock Grid.Column="0" Margin="10,0,0,0" FontSize="15" Text="{x:Static local:App.AppName}" VerticalAlignment="Center"
                    PointerPressed="TitleBar_PointerPressed" />
         <Border Grid.Column="1" PointerPressed="TitleBar_PointerPressed" />
@@ -22,9 +19,11 @@
       </Grid>
     </Grid>
     <TextBlock Name="MessageText" Text="Test Message" FontSize="15" Height="100" Margin="20" />
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="10">
-      <Button Name="OkButton" Content="OK" Click="Ok_Click" Width="50" />
-      <Button Name="CancelButton" Content="Cancel" Click="Cancel_Click" Width="50" />
+    <StackPanel Background="{DynamicResource SecondaryColor}" Spacing="10">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Spacing="10">
+        <Button Name="OkButton" Content="OK" Click="Ok_Click" Width="50" />
+        <Button Name="CancelButton" Content="Cancel" Click="Cancel_Click" Width="50" />
+      </StackPanel>
     </StackPanel>
   </StackPanel>
 </Window>

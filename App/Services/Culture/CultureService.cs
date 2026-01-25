@@ -17,6 +17,8 @@ public sealed class CultureService(DataPersistService dataService)
 
   public void SetCulture(Culture culture, bool save = true)
   {
+    if (CultureInfo.CurrentCulture.Name == culture.Code) return;
+
     var cultureInfo = new CultureInfo(culture.Code);
     Resources.Culture = cultureInfo;
     CultureInfo.CurrentCulture = cultureInfo;

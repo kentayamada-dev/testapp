@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Avalonia.Platform;
 using Microsoft.Extensions.Configuration;
@@ -38,37 +39,44 @@ public static class ConfigurationService
 
     return new AppMetadata
     {
-      AppName = assembly
-        .GetCustomAttribute<AssemblyTitleAttribute>()?
-        .Title ?? throw new InvalidOperationException(
-        "AssemblyTitleAttribute not found."),
-      AppVersion = assembly
-        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-        .InformationalVersion ?? throw new InvalidOperationException(
-        "AssemblyInformationalVersionAttribute not found."),
-      CompanyName = assembly
-        .GetCustomAttribute<AssemblyCompanyAttribute>()?
-        .Company ?? throw new InvalidOperationException(
-        "AssemblyCompanyAttribute not found.")
+      AppName = GetAttribute<AssemblyTitleAttribute>(
+        assembly,
+        attribute => attribute.Title),
+      AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(
+        assembly,
+        attribute => attribute.InformationalVersion),
+      CompanyName = GetAttribute<AssemblyCompanyAttribute>(
+        assembly,
+        attribute => attribute.Company)
     };
+  }
+
+  private static string GetAttribute<T>(
+    Assembly assembly,
+    Func<T, string?> selector) where T : Attribute
+  {
+    var attribute = assembly.GetCustomAttribute<T>()
+                    ?? throw new InvalidOperationException(
+                      $"Missing {typeof(T).Name}");
+
+    var value = selector(attribute);
+    return !string.IsNullOrWhiteSpace(value)
+      ? value
+      : throw new InvalidOperationException(
+        $"Empty {typeof(T).Name}");
   }
 
   private static void ValidateSettings(AppSettings settings)
   {
-    if (string.IsNullOrWhiteSpace(settings.LogFolder))
-      throw new InvalidOperationException(
-        "LogFolder cannot be empty.");
+    var invalid = typeof(AppSettings)
+      .GetProperties()
+      .Where(p => p.PropertyType == typeof(string) &&
+                  string.IsNullOrWhiteSpace((string?)p.GetValue(settings)))
+      .Select(p => p.Name)
+      .ToList();
 
-    if (string.IsNullOrWhiteSpace(settings.AppcastUrl))
+    if (invalid.Count > 0)
       throw new InvalidOperationException(
-        "AppcastUrl cannot be empty.");
-
-    if (string.IsNullOrWhiteSpace(settings.SettingsFile))
-      throw new InvalidOperationException(
-        "SettingsFile cannot be empty.");
-
-    if (string.IsNullOrWhiteSpace(settings.PublicKey))
-      throw new InvalidOperationException(
-        "PublicKey cannot be empty.");
+        $"Invalid settings: {string.Join(", ", invalid)}");
   }
 }
