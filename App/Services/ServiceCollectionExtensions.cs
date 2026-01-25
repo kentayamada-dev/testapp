@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
 
     services.AddSingleton<MainWindow>();
     services.AddTransient<DialogWindow>();
+    services.AddTransient<ProgressWindow>();
     services.AddSingleton<CultureService>();
     services.AddSingleton<ThemeService>();
     services.AddSingleton<UpdaterService>();

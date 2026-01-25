@@ -1,0 +1,26 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:App"
+        x:Class="App.Views.ProgressWindow"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource WindowBackground}"
+        ShowInTaskbar="False"
+        Title="{x:Static local:App.AppName}">
+
+  <StackPanel Width="350">
+    <Grid Name="WindowsMenu">
+      <Grid ColumnDefinitions="Auto,*,Auto" Height="35">
+        <TextBlock Grid.Column="0" Margin="10,0,0,0" FontSize="15" Text="{x:Static local:App.AppName}" VerticalAlignment="Center"
+                   PointerPressed="TitleBar_PointerPressed" />
+        <Border Grid.Column="1" PointerPressed="TitleBar_PointerPressed" />
+        <StackPanel Name="WindowChromeButtons" Grid.Column="2" Orientation="Horizontal">
+          <Button Click="Close_Click" Classes="WindowChromeButton WindowChromeButtonClose">
+            <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg ChromeButtonSvgClose" />
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Grid>
+    <ProgressBar Name="ProgressBar" Margin="40" Height="20" Minimum="0" Maximum="100" Value="14" ShowProgressText="True" />
+  </StackPanel>
+</Window>

@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using NetSparkleUpdater;
 using NetSparkleUpdater.Enums;
+using NetSparkleUpdater.Events;
 using NetSparkleUpdater.SignatureVerifiers;
 
 namespace App.Services.Updater;
@@ -28,6 +29,8 @@ public class UpdaterService(
   );
 
   private string? _downloadPath;
+  private int _lastReportedProgress = -1;
+  private ProgressWindow? _progressWindow;
 
   public async Task CheckForUpdate(Window owner)
   {
@@ -93,6 +96,8 @@ public class UpdaterService(
     UpdateInfo updateInfo
   )
   {
+    _progressWindow = serviceProvider.GetRequiredService<ProgressWindow>();
+    _progressWindow.Show(owner);
     try
     {
       var update = updateInfo.Updates.First();
@@ -130,8 +135,17 @@ public class UpdaterService(
     _downloadPath = path;
   }
 
+  private void OnDownloadMadeProgress(object sender, AppCastItem item, ItemDownloadProgressEventArgs e)
+  {
+    if (e.ProgressPercentage == _lastReportedProgress) return;
+
+    _lastReportedProgress = e.ProgressPercentage;
+    _progressWindow?.SetProgress(_lastReportedProgress);
+  }
+
   private void AttachUpdateEventHandlers()
   {
+    _sparkleUpdater.DownloadMadeProgress += OnDownloadMadeProgress;
     _sparkleUpdater.DownloadFinished += OnDownloadFinished;
     _sparkleUpdater.CloseApplication +=
       ApplicationService.CloseApplication;
