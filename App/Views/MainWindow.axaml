@@ -4,12 +4,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:culture="clr-namespace:App.Assets.Culture"
         xmlns:local="clr-namespace:App"
+        xmlns:vm="clr-namespace:App.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500"
         x:Class="App.Views.MainWindow"
         Width="800" Height="500"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource WindowBackground}"
-        Title="{x:Static local:App.AppName}">
+        Title="{x:Static local:App.AppName}"
+        x:DataType="vm:MainViewModel">
+
+  <NativeMenu.Menu>
+    <NativeMenu>
+      <NativeMenuItem Header="View">
+        <NativeMenu>
+          <NativeMenuItem Header="System Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding SystemTheme}" />
+          <NativeMenuItem Header="Light Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding LightTheme}" />
+          <NativeMenuItem Header="Dark Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding DarkTheme}" />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="Info">
+        <NativeMenu>
+          <NativeMenuItem Header="Check Update" Command="{Binding UpdateCheckCommand}" />
+        </NativeMenu>
+      </NativeMenuItem>
+      <NativeMenuItem Header="Language">
+        <NativeMenu>
+          <NativeMenuItem Header="English" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding EnCode}" />
+          <NativeMenuItem Header="日本語" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding JaCode}" />
+        </NativeMenu>
+      </NativeMenuItem>
+    </NativeMenu>
+  </NativeMenu.Menu>
 
   <Grid Name="MainView">
     <Grid Name="WindowsMenu">
@@ -20,24 +45,24 @@
             <Button Content="View" Classes="MenuButton">
               <Button.Flyout>
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                  <MenuItem Header="System Theme" Click="ChangeThemeSystem_Click" />
-                  <MenuItem Header="Light Theme" Click="ChangeThemeLight_Light" />
-                  <MenuItem Header="Dark Theme" Click="ChangeThemeDark_Click" />
+                  <MenuItem Header="System Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding SystemTheme}" />
+                  <MenuItem Header="Light Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding LightTheme}" />
+                  <MenuItem Header="Dark Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding DarkTheme}" />
                 </MenuFlyout>
               </Button.Flyout>
             </Button>
             <Button Content="Info" Classes="MenuButton">
               <Button.Flyout>
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                  <MenuItem Header="Check Update" Click="UpdateCheck_Click" />
+                  <MenuItem Header="Check Update" Command="{Binding UpdateCheckCommand}" />
                 </MenuFlyout>
               </Button.Flyout>
             </Button>
             <Button Content="Language" Classes="MenuButton">
               <Button.Flyout>
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                  <MenuItem Header="English" Click="ChangeCultureEn_Click" />
-                  <MenuItem Header="日本語" Click="ChangeCultureJp_Click" />
+                  <MenuItem Header="English" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding EnCode}" />
+                  <MenuItem Header="日本語" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding JaCode}" />
                 </MenuFlyout>
               </Button.Flyout>
             </Button>

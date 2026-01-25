@@ -11,7 +11,7 @@ public sealed class Theme(string value)
 
   private static readonly List<Theme> AllThemes = [Dark, Light, System];
 
-  public string Value { get; init; } = value;
+  public string Value { get; } = value;
 
   public static IReadOnlyList<Theme> GetAll()
   {

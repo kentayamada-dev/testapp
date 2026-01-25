@@ -4,29 +4,6 @@
              x:Class="App.App"
              Name="{Binding AppName, RelativeSource={RelativeSource Self}}">
 
-  <NativeMenu.Menu>
-    <NativeMenu>
-      <NativeMenuItem Header="View">
-        <NativeMenu>
-          <NativeMenuItem Header="System Theme" Click="ChangeThemeSystem_Click" />
-          <NativeMenuItem Header="Light Theme" Click="ChangeThemeLight_Light" />
-          <NativeMenuItem Header="Dark Theme" Click="ChangeThemeDark_Click" />
-        </NativeMenu>
-      </NativeMenuItem>
-      <NativeMenuItem Header="Info">
-        <NativeMenu>
-          <NativeMenuItem Header="Check Update" Click="UpdateCheck_Click" />
-        </NativeMenu>
-      </NativeMenuItem>
-      <NativeMenuItem Header="Language">
-        <NativeMenu>
-          <NativeMenuItem Header="English" Click="ChangeCultureEn_Click" />
-          <NativeMenuItem Header="日本語" Click="ChangeCultureJp_Click" />
-        </NativeMenu>
-      </NativeMenuItem>
-    </NativeMenu>
-  </NativeMenu.Menu>
-
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.ThemeDictionaries>

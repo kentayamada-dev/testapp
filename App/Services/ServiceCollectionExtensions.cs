@@ -4,6 +4,7 @@ using App.Services.Data;
 using App.Services.Logger;
 using App.Services.Theme;
 using App.Services.Updater;
+using App.ViewModels;
 using App.Views;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +17,7 @@ public static class ServiceCollectionExtensions
   {
     Directory.CreateDirectory(appDataFolder);
 
-    services.AddSingleton<MainWindow>();
+    services.AddSingleton<MainViewModel>();
     services.AddTransient<DialogWindow>();
     services.AddTransient<ProgressWindow>();
     services.AddSingleton<CultureService>();
