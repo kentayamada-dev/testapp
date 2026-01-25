@@ -1,0 +1,36 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Padding="20" Width="300" Height="200">
+      <Button Content="Open Menu" Classes="MenuButton">
+        <Button.Flyout>
+          <MenuFlyout Placement="BottomEdgeAlignedLeft">
+            <MenuItem Header="Menu 1" />
+            <MenuItem Header="Menu 2" />
+            <MenuItem Header="Menu 3" />
+          </MenuFlyout>
+        </Button.Flyout>
+      </Button>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="MenuItem">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="root" Background="{TemplateBinding Background}">
+          <ContentPresenter Padding="40,10" Content="{TemplateBinding Header}" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+
+  <Style Selector="MenuItem:pointerover /template/ Border#root">
+    <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+  </Style>
+
+  <Style Selector="MenuFlyoutPresenter">
+    <Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+</Styles>

@@ -1,0 +1,24 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Padding="20" Width="220">
+      <Button Content="Simple Button" />
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="Button">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="VerticalAlignment" Value="Top" />
+  </Style>
+
+  <Style Selector="Button:pointerover">
+    <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+  </Style>
+
+  <Style Selector="Button:pressed  /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+  </Style>
+</Styles>

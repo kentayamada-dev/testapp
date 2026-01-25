@@ -16,6 +16,7 @@ env:
   PROJECT_NAME: App
   APP_IDENTIFIER: com.kentayamada.myapp
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  GH_WORKFLOWS_ASSETS: ".github/workflows/assets"
 
 jobs:
   info-check:
@@ -147,7 +148,7 @@ jobs:
           OutputFilename: ${{ env.PROJECT_NAME }}
           AppName: ${{ needs.info-check.outputs.app_title }}
         run: |
-          info_plist_template="${{ env.PROJECT_NAME }}/Build/macOS/Info.plist"
+          info_plist_template="${{ env.GH_WORKFLOWS_ASSETS }}/osx/Info.plist"
           icon_file="${{ env.PROJECT_NAME }}/Assets/Logo/logo.icns"
           app_bundle="$AppName.app"
           app_contents="$app_bundle/Contents"
@@ -175,13 +176,13 @@ jobs:
       - name: Build Windows installer
         if: startsWith(matrix.os, 'windows')
         run: |
-          $publishDir = "${{ env.PUBLISH_DIR }}"
+          $publishDir = "${{ github.workspace }}/${{ env.PUBLISH_DIR }}"
           $projectName = "${{ env.PROJECT_NAME }}"
           $productName = "${{ needs.info-check.outputs.product_name }}"
           $appTitle = "${{ needs.info-check.outputs.app_title }}"
           $appVersion = "${{ needs.info-check.outputs.app_version }}"
           $companyName = "${{ needs.info-check.outputs.company_name }}"
-          $logoFile = "$projectName/Assets/Logo/logo.ico"
+          $logoFile = "${{ github.workspace }}/$projectName/Assets/Logo/logo.ico"
           $appUrl = "${{ github.server_url }}/${{ github.repository }}"
           $releaseDir = "${{ env.RELEASE_DIR }}"
           $setupFile = "$productName-${{ matrix.rid }}-Setup"
@@ -201,7 +202,7 @@ jobs:
             /O+ `
             /O"$releaseDir" `
             /F"$setupFile" `
-            setup.iss
+            "${{ env.GH_WORKFLOWS_ASSETS }}/windows/setup.iss"
 
       - name: Generate summary
         shell: pwsh

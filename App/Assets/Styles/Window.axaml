@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:App">
+  <Design.PreviewWith>
+    <Window Width="420" Height="130">
+      <StackPanel Margin="20" Spacing="10">
+        <TextBlock Text="こんにちは世界!" FontSize="20" />
+        <TextBlock Text="Hello World!" FontSize="20" />
+      </StackPanel>
+    </Window>
+  </Design.PreviewWith>
+
+  <Style Selector="Window">
+    <Setter Property="FontFamily" Value="fonts:MyFonts#Noto Sans JP" />
+    <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+    <Setter Property="WindowStartupLocation" Value="CenterScreen" />
+    <Setter Property="Title" Value="{x:Static local:App.AppName}" />
+    <Setter Property="CanResize" Value="False" />
+  </Style>
+</Styles>
