@@ -85,18 +85,18 @@
         BorderBrush="{DynamicResource TertiaryColor}"
         BorderThickness="1"
         CornerRadius="{StaticResource CornerRadius}">
-      <TabControl Classes="CustomTabControl">
-        <TabItem Header="Tab 1" Classes="CustomTabItem">
-          <StackPanel Background="{DynamicResource WindowBackground}">
-          <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
-          </StackPanel>
-        </TabItem>
-        <TabItem Header="Tab 2" Classes="CustomTabItem">
-          <StackPanel Background="{DynamicResource WindowBackground}">
-            <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
-          </StackPanel>
-        </TabItem>
-      </TabControl>
+        <TabControl Classes="CustomTabControl">
+          <TabItem Header="Tab 1" Classes="CustomTabItem">
+            <StackPanel Background="{DynamicResource WindowBackground}">
+              <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
+            </StackPanel>
+          </TabItem>
+          <TabItem Header="Tab 2" Classes="CustomTabItem">
+            <StackPanel Background="{DynamicResource WindowBackground}">
+              <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
+            </StackPanel>
+          </TabItem>
+        </TabControl>
       </Border>
     </StackPanel>
   </Grid>
