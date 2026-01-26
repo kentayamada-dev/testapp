@@ -22,7 +22,7 @@ public sealed class ThemeService(DataPersistService dataService)
     Avalonia.Application.Current?.RequestedThemeVariant = themeVariant;
   }
 
-  public void SaveTheme(Theme theme)
+  public void ApplyAndSaveTheme(Theme theme)
   {
     ApplyTheme(theme);
     dataService.Set(DataKey.Theme, theme.Value);

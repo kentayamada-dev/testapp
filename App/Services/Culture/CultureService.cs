@@ -23,7 +23,7 @@ public sealed class CultureService(DataPersistService dataService)
     CultureInfo.CurrentUICulture = cultureInfo;
   }
 
-  public void SaveCulture(Culture culture)
+  public void ApplyAndSaveCulture(Culture culture)
   {
     ApplyCulture(culture);
     dataService.Set(DataKey.Culture, culture.Code);

@@ -7,7 +7,7 @@
         SizeToContent="WidthAndHeight"
         ShowInTaskbar="False">
 
-  <StackPanel Width="350">
+  <StackPanel>
     <Grid Name="WindowsMenu">
       <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TertiaryColor}">
         <Grid ColumnDefinitions="Auto,*,Auto" Height="{StaticResource ChromeHeight}" Background="{DynamicResource SecondaryColor}">
@@ -20,7 +20,8 @@
         </Grid>
       </Border>
     </Grid>
-    <TextBlock Name="MessageText" Text="Test Message" FontSize="15" Height="100" Margin="20" />
+    <TextBlock Name="MessageText" Text="Test Message Test Message Test Message Test Message Test Message Test Message" FontSize="15" Height="100"
+               Margin="20" TextWrapping="Wrap" Width="{StaticResource DialogWidth}" />
     <StackPanel Spacing="10">
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Spacing="10">
         <Button Name="YesButton" Classes="DialogButton" Content="{x:Static culture:Resources.Yes}" Click="YesButton_Click" Width="60" />

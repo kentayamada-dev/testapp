@@ -24,6 +24,7 @@
       </ResourceDictionary.MergedDictionaries>
       <x:Double x:Key="ChromeHeight">30</x:Double>
       <CornerRadius x:Key="CornerRadius">3</CornerRadius>
+      <x:Double x:Key="DialogWidth">350</x:Double>
     </ResourceDictionary>
   </Application.Resources>
 

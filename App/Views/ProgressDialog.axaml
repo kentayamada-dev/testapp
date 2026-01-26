@@ -6,7 +6,7 @@
         SizeToContent="WidthAndHeight"
         ShowInTaskbar="False">
 
-  <StackPanel Width="350">
+  <StackPanel Width="{StaticResource DialogWidth}">
     <Grid Name="WindowsMenu">
       <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TertiaryColor}">
         <Grid ColumnDefinitions="Auto,*,Auto" Height="{StaticResource ChromeHeight}" Background="{DynamicResource SecondaryColor}">
