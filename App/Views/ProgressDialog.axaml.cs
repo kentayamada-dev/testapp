@@ -6,15 +6,9 @@ using Avalonia.Platform;
 
 namespace App.Views;
 
-public enum DialogResult
+public partial class ProgressDialog : Window
 {
-  Ok,
-  Cancel
-}
-
-public partial class DialogWindow : Window
-{
-  public DialogWindow()
+  public ProgressDialog()
   {
     InitializeComponent();
     LoadSettings();
@@ -24,8 +18,7 @@ public partial class DialogWindow : Window
   {
     if (OperatingSystem.IsWindows())
     {
-      ExtendClientAreaChromeHints =
-        ExtendClientAreaChromeHints.NoChrome;
+      ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
       ExtendClientAreaToDecorationsHint = true;
       WindowsMenu.IsVisible = true;
     }
@@ -35,24 +28,9 @@ public partial class DialogWindow : Window
     }
   }
 
-  public void SetMessage(string message)
+  public void SetProgress(double progress)
   {
-    MessageText.Text = message;
-  }
-
-  public void SetShowCancelButton(bool show)
-  {
-    CancelButton.IsVisible = show;
-  }
-
-  private void Ok_Click(object? sender, RoutedEventArgs e)
-  {
-    Close(DialogResult.Ok);
-  }
-
-  private void Cancel_Click(object? sender, RoutedEventArgs e)
-  {
-    Close(DialogResult.Cancel);
+    ProgressBar.Value = progress;
   }
 
   private void Close_Click(object? sender, RoutedEventArgs e)

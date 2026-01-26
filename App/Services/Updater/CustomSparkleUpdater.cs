@@ -16,12 +16,8 @@ public sealed class CustomSparkleUpdater : SparkleUpdater
   private readonly bool _isMac;
   private readonly bool _isWindows;
 
-  public CustomSparkleUpdater(
-    string appcastUrl,
-    ISignatureVerifier signatureVerifier,
-    string appVersion,
-    string appName
-  ) : base(appcastUrl, signatureVerifier, null)
+  public CustomSparkleUpdater(string appcastUrl, ISignatureVerifier signatureVerifier, string appVersion, string appName) : base(appcastUrl,
+    signatureVerifier, null)
   {
     _appName = appName;
     _isWindows = OperatingSystem.IsWindows();

@@ -11,9 +11,7 @@ public class LoggerService
 
   public LoggerService(string appDataFolder)
   {
-    _folderPath = Path.Combine(
-      appDataFolder,
-      ConfigurationService.AppSettings.LogFolder);
+    _folderPath = Path.Combine(appDataFolder, ConfigurationService.AppSettings.LogFolder);
 
     Directory.CreateDirectory(_folderPath);
   }

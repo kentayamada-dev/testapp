@@ -12,14 +12,13 @@ namespace App.Services;
 
 public static class ServiceCollectionExtensions
 {
-  public static void AddAppServices(this IServiceCollection services,
-    string appDataFolder)
+  public static void AddAppServices(this IServiceCollection services, string appDataFolder)
   {
     Directory.CreateDirectory(appDataFolder);
 
     services.AddSingleton<MainViewModel>();
-    services.AddTransient<DialogWindow>();
-    services.AddTransient<ProgressWindow>();
+    services.AddTransient<MessageDialog>();
+    services.AddTransient<ProgressDialog>();
     services.AddSingleton<CultureService>();
     services.AddSingleton<ThemeService>();
     services.AddSingleton<UpdaterService>();

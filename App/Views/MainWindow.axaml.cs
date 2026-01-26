@@ -19,8 +19,7 @@ public sealed partial class MainWindow : Window
   {
     if (OperatingSystem.IsWindows())
     {
-      ExtendClientAreaChromeHints =
-        ExtendClientAreaChromeHints.NoChrome;
+      ExtendClientAreaChromeHints = ExtendClientAreaChromeHints.NoChrome;
       ExtendClientAreaToDecorationsHint = true;
       MainView.RowDefinitions = new RowDefinitions($"{Application.Current?.Resources["ChromeHeight"]},*");
       MainContent.SetValue(Grid.RowProperty, 1);

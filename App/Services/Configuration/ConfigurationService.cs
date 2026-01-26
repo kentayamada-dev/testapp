@@ -8,11 +8,9 @@ namespace App.Services.Configuration;
 
 public static class ConfigurationService
 {
-  private static readonly Lazy<AppSettings> CachedAppSettings =
-    new(GetAppSettingsInternal);
+  private static readonly Lazy<AppSettings> CachedAppSettings = new(GetAppSettingsInternal);
 
-  private static readonly Lazy<AppMetadata> CachedMetadata =
-    new(GetMetadataInternal);
+  private static readonly Lazy<AppMetadata> CachedMetadata = new(GetMetadataInternal);
 
   public static AppSettings AppSettings => CachedAppSettings.Value;
 
@@ -20,14 +18,9 @@ public static class ConfigurationService
 
   private static AppSettings GetAppSettingsInternal()
   {
-    using var stream = AssetLoader.Open(
-      new Uri("avares://App/Assets/Config/appsettings.json"));
-    var configuration = new ConfigurationBuilder()
-      .AddJsonStream(stream)
-      .Build();
-    var settings = configuration.Get<AppSettings>()
-                   ?? throw new InvalidOperationException(
-                     "Configuration is missing or invalid.");
+    using var stream = AssetLoader.Open(new System.Uri("avares://App/Assets/Config/appsettings.json"));
+    var configuration = new ConfigurationBuilder().AddJsonStream(stream).Build();
+    var settings = configuration.Get<AppSettings>() ?? throw new InvalidOperationException("Configuration is missing or invalid.");
 
     ValidateSettings(settings);
     return settings;
@@ -39,44 +32,28 @@ public static class ConfigurationService
 
     return new AppMetadata
     {
-      AppName = GetAttribute<AssemblyTitleAttribute>(
-        assembly,
-        attribute => attribute.Title),
-      AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(
-        assembly,
-        attribute => attribute.InformationalVersion),
-      CompanyName = GetAttribute<AssemblyCompanyAttribute>(
-        assembly,
-        attribute => attribute.Company)
+      AppName = GetAttribute<AssemblyTitleAttribute>(assembly, attribute => attribute.Title),
+      AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(assembly, attribute => attribute.InformationalVersion),
+      CompanyName = GetAttribute<AssemblyCompanyAttribute>(assembly, attribute => attribute.Company)
     };
   }
 
-  private static string GetAttribute<T>(
-    Assembly assembly,
-    Func<T, string?> selector) where T : Attribute
+  private static string GetAttribute<T>(Assembly assembly, Func<T, string?> selector) where T : Attribute
   {
-    var attribute = assembly.GetCustomAttribute<T>()
-                    ?? throw new InvalidOperationException(
-                      $"Missing {typeof(T).Name}");
+    var attribute = assembly.GetCustomAttribute<T>() ?? throw new InvalidOperationException($"Missing {typeof(T).Name}");
 
     var value = selector(attribute);
-    return !string.IsNullOrWhiteSpace(value)
-      ? value
-      : throw new InvalidOperationException(
-        $"Empty {typeof(T).Name}");
+
+    return !string.IsNullOrWhiteSpace(value) ? value : throw new InvalidOperationException($"Empty {typeof(T).Name}");
   }
 
   private static void ValidateSettings(AppSettings settings)
   {
-    var invalid = typeof(AppSettings)
-      .GetProperties()
-      .Where(p => p.PropertyType == typeof(string) &&
-                  string.IsNullOrWhiteSpace((string?)p.GetValue(settings)))
+    var invalid = typeof(AppSettings).GetProperties()
+      .Where(p => p.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string?)p.GetValue(settings)))
       .Select(p => p.Name)
       .ToList();
 
-    if (invalid.Count > 0)
-      throw new InvalidOperationException(
-        $"Invalid settings: {string.Join(", ", invalid)}");
+    if (invalid.Count > 0) throw new InvalidOperationException($"Invalid settings: {string.Join(", ", invalid)}");
   }
 }

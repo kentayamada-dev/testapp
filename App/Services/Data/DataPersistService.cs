@@ -14,8 +14,7 @@ public enum DataKey
 
 [JsonSourceGenerationOptions(WriteIndented = true)]
 [JsonSerializable(typeof(Dictionary<string, string>))]
-public sealed partial class DataSerializerContext
-  : JsonSerializerContext;
+public sealed partial class DataSerializerContext : JsonSerializerContext;
 
 public sealed class DataPersistService
 {
@@ -24,9 +23,7 @@ public sealed class DataPersistService
 
   public DataPersistService(string appDataFolder)
   {
-    _settingsFile = Path.Combine(
-      appDataFolder,
-      ConfigurationService.AppSettings.SettingsFile);
+    _settingsFile = Path.Combine(appDataFolder, ConfigurationService.AppSettings.SettingsFile);
     _data = Load();
   }
 
@@ -52,19 +49,13 @@ public sealed class DataPersistService
       return new Dictionary<string, string>();
 
     var json = File.ReadAllText(_settingsFile);
-    return JsonSerializer.Deserialize<Dictionary<string, string>>(
-      json,
-      DataSerializerContext.Default
-        .DictionaryStringString
-    ) ?? new Dictionary<string, string>();
+    return JsonSerializer.Deserialize<Dictionary<string, string>>(json, DataSerializerContext.Default.DictionaryStringString) ??
+           new Dictionary<string, string>();
   }
 
   private void Save()
   {
-    var json = JsonSerializer.Serialize(
-      _data,
-      DataSerializerContext.Default.DictionaryStringString
-    );
+    var json = JsonSerializer.Serialize(_data, DataSerializerContext.Default.DictionaryStringString);
     File.WriteAllText(_settingsFile, json);
   }
 }

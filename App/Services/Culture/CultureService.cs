@@ -10,9 +10,7 @@ public sealed class CultureService(DataPersistService dataService)
 {
   public static Culture GetCulture(string? culture)
   {
-    return Culture.GetAll()
-             .FirstOrDefault(availableCulture => availableCulture.Code == culture)
-           ?? Culture.En;
+    return Culture.GetAll().FirstOrDefault(availableCulture => availableCulture.Code == culture) ?? Culture.En;
   }
 
   public void SetCulture(Culture culture, bool save = true)

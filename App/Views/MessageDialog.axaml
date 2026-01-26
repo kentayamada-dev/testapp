@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:App"
         xmlns:views="clr-namespace:App.Views"
-        x:Class="App.Views.ProgressWindow"
+        x:Class="App.Views.MessageDialog"
         SizeToContent="WidthAndHeight"
         ShowInTaskbar="False">
 
@@ -19,7 +19,12 @@
         </Grid>
       </Border>
     </Grid>
-    <ProgressBar Name="ProgressBar" Margin="40" Height="30" Minimum="0" Maximum="100" ShowProgressText="True"
-                 Foreground="{DynamicResource PrimaryColor}" Background="{DynamicResource SecondaryColor}" />
+    <TextBlock Name="MessageText" Text="Test Message" FontSize="15" Height="100" Margin="20" />
+    <StackPanel Spacing="10">
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Spacing="10">
+        <Button Name="OkButton" Content="OK" Click="Ok_Click" Width="50" />
+        <Button Name="CancelButton" Content="Cancel" Click="Cancel_Click" Width="50" />
+      </StackPanel>
+    </StackPanel>
   </StackPanel>
 </Window>

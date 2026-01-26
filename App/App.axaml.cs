@@ -6,6 +6,7 @@ using App.Services.Culture;
 using App.Services.Data;
 using App.Services.Theme;
 using App.Services.Updater;
+using App.Services.Uri;
 using App.ViewModels;
 using App.Views;
 using Avalonia;
@@ -53,23 +54,16 @@ public sealed class App : Application
     var dataPersistService =
       serviceProvider.GetRequiredService<DataPersistService>();
 
-    _cultureService.SetCulture(
-      CultureService.GetCulture(dataPersistService.Get(DataKey.Culture)),
-      false);
+    _cultureService.SetCulture(CultureService.GetCulture(dataPersistService.Get(DataKey.Culture)), false);
 
-    _themeService.SetTheme(
-      ThemeService.GetTheme(dataPersistService.Get(DataKey.Theme)),
-      false);
+    _themeService.SetTheme(ThemeService.GetTheme(dataPersistService.Get(DataKey.Theme)), false);
 
-    var mainCiewModel = serviceProvider.GetRequiredService<MainViewModel>();
+    var mainViewModel = serviceProvider.GetRequiredService<MainViewModel>();
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
     {
-      _mainWindow = new MainWindow
-      {
-        DataContext = mainCiewModel
-      };
+      _mainWindow = new MainWindow { DataContext = mainViewModel };
 
-      mainCiewModel.SetMainWindow(_mainWindow);
+      mainViewModel.SetMainWindow(_mainWindow);
 
       desktop.MainWindow = _mainWindow;
     }
@@ -77,32 +71,24 @@ public sealed class App : Application
     base.OnFrameworkInitializationCompleted();
   }
 
-  private async void CheckUpdate_Click(object? sender, EventArgs e)
+  private void CheckUpdate_Click(object? sender, EventArgs e)
   {
-    if (_mainWindow == null || _updaterService == null) return;
+    if (_mainWindow == null) return;
 
-    await _updaterService.CheckForUpdate(_mainWindow);
+    _updaterService?.CheckForUpdate(_mainWindow);
   }
 
-  private async void AboutDeveloper_Click(object? sender, EventArgs e)
+  private void AboutDeveloper_Click(object? sender, EventArgs e)
   {
-    var topLevel = TopLevel.GetTopLevel(_mainWindow);
+    if (_mainWindow == null) return;
 
-    if (topLevel == null) return;
-
-    await topLevel.Launcher.LaunchUriAsync(
-      new Uri(ConfigurationService.AppSettings.HomepageUrl)
-    );
+    _ = UriService.OpenUri(ConfigurationService.AppSettings.HomepageUrl, _mainWindow);
   }
 
-  private async void AboutApp_Click(object? sender, EventArgs e)
+  private void AboutApp_Click(object? sender, EventArgs e)
   {
-    var topLevel = TopLevel.GetTopLevel(_mainWindow);
+    if (_mainWindow == null) return;
 
-    if (topLevel == null) return;
-
-    await topLevel.Launcher.LaunchUriAsync(
-      new Uri(ConfigurationService.AppSettings.AppRepoUrl)
-    );
+    _ = UriService.OpenUri(ConfigurationService.AppSettings.AppRepoUrl, _mainWindow);
   }
 }
