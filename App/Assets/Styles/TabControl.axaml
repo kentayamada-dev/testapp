@@ -1,0 +1,21 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Width="300">
+      <TabControl Classes="CustomTabControl">
+        <TabItem Header="Tab 1" Classes="CustomTabItem">
+          <TextBlock Text="Hello" FontSize="70" />
+        </TabItem>
+        <TabItem Header="Tab 2" Classes="CustomTabItem">
+          <TextBlock Text=" World" FontSize="70" />
+        </TabItem>
+      </TabControl>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="TabControl.CustomTabControl">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
+  </Style>
+</Styles>
