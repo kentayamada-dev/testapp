@@ -6,15 +6,15 @@ using Avalonia.Platform;
 
 namespace App.Views;
 
-public enum MessageDialogResult
+public enum ConfirmDialogResult
 {
-  Ok,
-  Cancel
+  Yes,
+  No
 }
 
-public partial class MessageDialog : Window
+public partial class ConfirmDialog : Window
 {
-  public MessageDialog()
+  public ConfirmDialog()
   {
     InitializeComponent();
     LoadSettings();
@@ -39,28 +39,23 @@ public partial class MessageDialog : Window
     MessageText.Text = message;
   }
 
-  public void SetShowCancelButton(bool show)
-  {
-    CancelButton.IsVisible = show;
-  }
-
-  private void Close_Click(object? sender, RoutedEventArgs e)
-  {
-    Close(MessageDialogResult.Cancel);
-  }
-
   private void TitleBar_PointerPressed(object? sender, PointerPressedEventArgs e)
   {
     if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) BeginMoveDrag(e);
   }
 
-  private void OkButton_Click(object? sender, RoutedEventArgs e)
+  private void Close_Click(object? sender, RoutedEventArgs e)
   {
-    Close(MessageDialogResult.Ok);
+    Close(ConfirmDialogResult.No);
   }
 
-  private void CancelButton_Click(object? sender, RoutedEventArgs e)
+  private void YesButton_Click(object? sender, RoutedEventArgs e)
   {
-    Close(MessageDialogResult.Cancel);
+    Close(ConfirmDialogResult.Yes);
+  }
+
+  private void NoButton_Click(object? sender, RoutedEventArgs e)
+  {
+    Close(ConfirmDialogResult.No);
   }
 }

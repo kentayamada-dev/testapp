@@ -9,14 +9,14 @@
     </Border>
   </Design.PreviewWith>
 
-  <Style Selector="Button.MenuButton">
+  <Style Selector="Button.MenuButton /template/ ContentPresenter#PART_ContentPresenter">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="CornerRadius" Value="3" />
+    <Setter Property="CornerRadius" Value="{StaticResource CornerRadius}" />
     <Setter Property="Padding" Value="10,2" />
   </Style>
 
-  <Style Selector="Button.MenuButton:pointerover">
+  <Style Selector="Button.MenuButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
     <Setter Property="Background" Value="{DynamicResource HoverColor}" />
   </Style>
 

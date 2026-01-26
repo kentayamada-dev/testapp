@@ -3,7 +3,7 @@
         xmlns:local="clr-namespace:App"
         xmlns:views="clr-namespace:App.Views"
         xmlns:culture="clr-namespace:App.Assets.Culture"
-        x:Class="App.Views.MessageDialog"
+        x:Class="App.Views.ConfirmDialog"
         SizeToContent="WidthAndHeight"
         ShowInTaskbar="False">
 
@@ -23,8 +23,8 @@
     <TextBlock Name="MessageText" Text="Test Message" FontSize="15" Height="100" Margin="20" />
     <StackPanel Spacing="10">
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Spacing="10">
-        <Button Name="OkButton" Classes="DialogButton" Content="OK" Click="OkButton_Click" Width="80" />
-        <Button Name="CancelButton" Classes="DialogButton" Content="{x:Static culture:Resources.Cancel}" Click="CancelButton_Click" Width="80" />
+        <Button Name="YesButton" Classes="DialogButton" Content="{x:Static culture:Resources.Yes}" Click="YesButton_Click" Width="60" />
+        <Button Name="NoButton" Classes="DialogButton" Content="{x:Static culture:Resources.No}" Click="NoButton_Click" Width="60" />
       </StackPanel>
     </StackPanel>
   </StackPanel>

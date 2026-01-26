@@ -1,0 +1,22 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Padding="20" Width="300" Height="100">
+      <Button Classes="DialogButton">
+        Hello
+      </Button>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="Button.DialogButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+    <Setter Property="CornerRadius" Value="{StaticResource CornerRadius}" />
+  </Style>
+
+  <Style Selector="Button.DialogButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+  </Style>
+</Styles>

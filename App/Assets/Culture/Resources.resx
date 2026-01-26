@@ -24,7 +24,55 @@
       PublicKeyToken=b77a5c561934e089
     </value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-        <value>Hello World</value>
-    </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="AboutApp" xml:space="preserve">
+    <value>About App</value>
+  </data>
+  <data name="AboutDeveloper" xml:space="preserve">
+    <value>About Developer</value>
+  </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>Check Update</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>New update available! Update now?</value>
+  </data>
+  <data name="UpdateNotAvailable" xml:space="preserve">
+    <value>There's no update available.</value>
+  </data>
+  <data name="updateUnable" xml:space="preserve">
+    <value>Unable to determine update status.</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>

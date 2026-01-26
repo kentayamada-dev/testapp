@@ -24,7 +24,55 @@
       PublicKeyToken=b77a5c561934e089
     </value>
   </resheader>
-  <data name="Hello" xml:space="preserve">
-        <value>こんにちは世界</value>
-    </data>
+  <data name="Theme" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>情報</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>言語</value>
+  </data>
+  <data name="AboutApp" xml:space="preserve">
+    <value>アプリについて</value>
+  </data>
+  <data name="AboutDeveloper" xml:space="preserve">
+    <value>開発者について</value>
+  </data>
+  <data name="CheckUpdate" xml:space="preserve">
+    <value>更新をチェック</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>システム</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>ライト</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>ダーク</value>
+  </data>
+  <data name="UpdateAvailable" xml:space="preserve">
+    <value>新しいバージョンが利用可能です。今すぐインストールしますか？</value>
+  </data>
+  <data name="UpdateNotAvailable" xml:space="preserve">
+    <value>現在、利用可能な更新はありません。</value>
+  </data>
+  <data name="updateUnable" xml:space="preserve">
+    <value>更新情報の取得に失敗しました。しばらく後にお試しください。</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>表示</value>
+  </data>
+  <data name="About" xml:space="preserve">
+    <value>情報</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>はい</value>
+  </data>
 </root>

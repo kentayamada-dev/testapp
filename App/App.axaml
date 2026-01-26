@@ -1,18 +1,19 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:App"
+             xmlns:culture="clr-namespace:App.Assets.Culture"
              x:Class="App.App"
              Name="{x:Static local:App.AppName}">
 
   <NativeMenu.Menu>
     <NativeMenu>
-      <NativeMenuItem Header="About">
+      <NativeMenuItem Header="{x:Static culture:Resources.About}">
         <NativeMenu>
-          <NativeMenuItem Header="App" Click="AboutApp_Click" />
-          <NativeMenuItem Header="Developer" Click="AboutDeveloper_Click" />
+          <NativeMenuItem Header="{x:Static culture:Resources.AboutApp}" Click="AboutApp_Click" />
+          <NativeMenuItem Header="{x:Static culture:Resources.AboutDeveloper}" Click="AboutDeveloper_Click" />
         </NativeMenu>
       </NativeMenuItem>
-      <NativeMenuItem Header="Check Update" Click="CheckUpdate_Click" />
+      <NativeMenuItem Header="{x:Static culture:Resources.CheckUpdate}" Click="CheckUpdate_Click" />
     </NativeMenu>
   </NativeMenu.Menu>
 
@@ -22,10 +23,12 @@
         <ResourceInclude Source="/Assets/Resources/ThemeResource.axaml" />
       </ResourceDictionary.MergedDictionaries>
       <x:Double x:Key="ChromeHeight">30</x:Double>
+      <CornerRadius x:Key="CornerRadius">3</CornerRadius>
     </ResourceDictionary>
   </Application.Resources>
 
   <Application.Styles>
+    <StyleInclude Source="/Assets/Styles/DialogButton.axaml" />
     <StyleInclude Source="/Assets/Styles/WindowChromeButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuItem.axaml" />

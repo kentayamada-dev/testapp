@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using App.Assets.Culture;
 using App.Services.Application;
 using App.Services.Configuration;
 using App.Views;
@@ -38,19 +39,19 @@ public class UpdaterService(
     switch (updateInfo.Status)
     {
       case UpdateStatus.UpdateAvailable:
-        var confirmDialog = serviceProvider.GetRequiredService<MessageDialog>();
-        confirmDialog.SetMessage("New update available! Update now?");
-        var result = await confirmDialog.ShowDialog<DialogResult>(owner);
-        if (result != DialogResult.Ok) return;
+        var confirmDialog = serviceProvider.GetRequiredService<ConfirmDialog>();
+        confirmDialog.SetMessage(Resources.UpdateAvailable);
+        var result = await confirmDialog.ShowDialog<ConfirmDialogResult>(owner);
+        if (result != ConfirmDialogResult.Yes) return;
         await HandleInstallUpdate(owner, updateInfo);
         return;
       case UpdateStatus.UpdateNotAvailable:
-        await ShowMessageDialog(owner, "There's no update available :(");
+        await ShowMessageDialog(owner, Resources.UpdateNotAvailable);
         break;
       case UpdateStatus.UserSkipped:
       case UpdateStatus.CouldNotDetermine:
       default:
-        await ShowMessageDialog(owner, "Unable to determine update status.");
+        await ShowMessageDialog(owner, Resources.updateUnable);
         break;
     }
   }
@@ -70,7 +71,7 @@ public class UpdaterService(
     var dialog = serviceProvider.GetRequiredService<MessageDialog>();
     dialog.SetMessage(message);
     dialog.SetShowCancelButton(false);
-    await dialog.ShowDialog<DialogResult>(owner);
+    await dialog.ShowDialog<MessageDialogResult>(owner);
   }
 
   private void OnDownloadFinished(AppCastItem item, string path)

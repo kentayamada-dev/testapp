@@ -9,16 +9,19 @@
 
   <NativeMenu.Menu>
     <NativeMenu>
-      <NativeMenuItem Header="View">
+      <NativeMenuItem Header="{x:Static culture:Resources.View}">
         <NativeMenu>
-          <NativeMenuItem Header="Theme">
+          <NativeMenuItem Header="{x:Static culture:Resources.Theme}">
             <NativeMenu>
-              <NativeMenuItem Header="System Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding SystemTheme}" />
-              <NativeMenuItem Header="Light Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding LightTheme}" />
-              <NativeMenuItem Header="Dark Theme" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding DarkTheme}" />
+              <NativeMenuItem Header="{x:Static culture:Resources.ThemeSystem}" Command="{Binding ChangeThemeCommand}"
+                              CommandParameter="{Binding SystemTheme}" />
+              <NativeMenuItem Header="{x:Static culture:Resources.ThemeLight}" Command="{Binding ChangeThemeCommand}"
+                              CommandParameter="{Binding LightTheme}" />
+              <NativeMenuItem Header="{x:Static culture:Resources.ThemeDark}" Command="{Binding ChangeThemeCommand}"
+                              CommandParameter="{Binding DarkTheme}" />
             </NativeMenu>
           </NativeMenuItem>
-          <NativeMenuItem Header="Language">
+          <NativeMenuItem Header="{x:Static culture:Resources.Language}">
             <NativeMenu>
               <NativeMenuItem Header="English" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding EnCode}" />
               <NativeMenuItem Header="日本語" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding JaCode}" />
@@ -36,25 +39,30 @@
           <Image Grid.Column="0" Source="/Assets/Logo/logo.ico" Height="20" Width="40" PointerPressed="TitleBar_PointerPressed" />
           <StackPanel Grid.Column="1" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal">
-              <Button Content="Info" Classes="MenuButton">
+              <Button Content="{x:Static culture:Resources.Info}" Classes="MenuButton">
                 <Button.Flyout>
                   <MenuFlyout Placement="BottomEdgeAlignedLeft" VerticalOffset="3">
-                    <MenuItem Header="About App" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding AppRepoUrl}" />
-                    <MenuItem Header="About Developer" Command="{Binding OpenUrlCommand}" CommandParameter="{Binding HomepageUrl}" />
-                    <MenuItem Header="Check Update" Command="{Binding UpdateCheckCommand}" />
+                    <MenuItem Header="{x:Static culture:Resources.AboutApp}" Command="{Binding OpenUrlCommand}"
+                              CommandParameter="{Binding AppRepoUrl}" />
+                    <MenuItem Header="{x:Static culture:Resources.AboutDeveloper}" Command="{Binding OpenUrlCommand}"
+                              CommandParameter="{Binding HomepageUrl}" />
+                    <MenuItem Header="{x:Static culture:Resources.CheckUpdate}" Command="{Binding UpdateCheckCommand}" />
                   </MenuFlyout>
                 </Button.Flyout>
               </Button>
-              <Button Content="Theme" Classes="MenuButton">
+              <Button Content="{x:Static culture:Resources.Theme}" Classes="MenuButton">
                 <Button.Flyout>
                   <MenuFlyout Placement="BottomEdgeAlignedLeft" VerticalOffset="3">
-                    <MenuItem Header="System" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding SystemTheme}" />
-                    <MenuItem Header="Light" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding LightTheme}" />
-                    <MenuItem Header="Dark" Command="{Binding ChangeThemeCommand}" CommandParameter="{Binding DarkTheme}" />
+                    <MenuItem Header="{x:Static culture:Resources.ThemeSystem}" Command="{Binding ChangeThemeCommand}"
+                              CommandParameter="{Binding SystemTheme}" />
+                    <MenuItem Header="{x:Static culture:Resources.ThemeLight}" Command="{Binding ChangeThemeCommand}"
+                              CommandParameter="{Binding LightTheme}" />
+                    <MenuItem Header="{x:Static culture:Resources.ThemeDark}" Command="{Binding ChangeThemeCommand}"
+                              CommandParameter="{Binding DarkTheme}" />
                   </MenuFlyout>
                 </Button.Flyout>
               </Button>
-              <Button Content="Language" Classes="MenuButton">
+              <Button Content="{x:Static culture:Resources.Language}" Classes="MenuButton">
                 <Button.Flyout>
                   <MenuFlyout Placement="BottomEdgeAlignedLeft" VerticalOffset="3">
                     <MenuItem Header="English" Command="{Binding ChangeCultureCommand}" CommandParameter="{Binding EnCode}" />
@@ -75,7 +83,7 @@
     <StackPanel Name="MainContent">
       <TabControl>
         <TabItem Header="Tab 1">
-          <TextBlock Text="{x:Static culture:Resources.Hello}" FontSize="70" />
+          <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
         </TabItem>
         <TabItem Header="Tab 2">
           <TextBlock Text="Hello World" FontSize="70" HorizontalAlignment="Center" VerticalAlignment="Center" />

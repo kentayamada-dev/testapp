@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
 
     services.AddSingleton<MainViewModel>();
     services.AddTransient<MessageDialog>();
+    services.AddTransient<ConfirmDialog>();
     services.AddTransient<ProgressDialog>();
     services.AddSingleton<CultureService>();
     services.AddSingleton<ThemeService>();

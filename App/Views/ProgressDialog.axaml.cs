@@ -35,7 +35,7 @@ public partial class ProgressDialog : Window
 
   private void Close_Click(object? sender, RoutedEventArgs e)
   {
-    Close(DialogResult.Cancel);
+    Close();
   }
 
   private void TitleBar_PointerPressed(object? sender, PointerPressedEventArgs e)

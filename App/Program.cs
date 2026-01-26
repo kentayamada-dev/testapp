@@ -20,6 +20,10 @@ public static class Program
   {
     return AppBuilder.Configure<App>()
       .UsePlatformDetect()
+      .With(new MacOSPlatformOptions
+      {
+        DisableDefaultApplicationMenuItems = true
+      })
       .ConfigureFonts(fontManager => { fontManager.AddFontCollection(new MyFontCollection()); })
       .LogToTrace();
   }
