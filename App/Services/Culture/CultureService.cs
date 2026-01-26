@@ -13,7 +13,7 @@ public sealed class CultureService(DataPersistService dataService)
     return Culture.GetAll().FirstOrDefault(availableCulture => availableCulture.Code == culture) ?? Culture.En;
   }
 
-  public void SetCulture(Culture culture, bool save = true)
+  public static void ApplyCulture(Culture culture)
   {
     if (CultureInfo.CurrentCulture.Name == culture.Code) return;
 
@@ -21,9 +21,11 @@ public sealed class CultureService(DataPersistService dataService)
     Resources.Culture = cultureInfo;
     CultureInfo.CurrentCulture = cultureInfo;
     CultureInfo.CurrentUICulture = cultureInfo;
+  }
 
-    if (!save) return;
-
+  public void SaveCulture(Culture culture)
+  {
+    ApplyCulture(culture);
     dataService.Set(DataKey.Culture, culture.Code);
     ApplicationService.RestartApplication();
   }

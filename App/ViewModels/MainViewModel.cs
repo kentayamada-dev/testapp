@@ -30,7 +30,7 @@ public partial class MainViewModel(CultureService cultureService, ThemeService t
   [RelayCommand]
   private void ChangeCulture(string? culture)
   {
-    cultureService.SetCulture(CultureService.GetCulture(culture));
+    cultureService.SaveCulture(CultureService.GetCulture(culture));
   }
 
   [RelayCommand]
@@ -52,6 +52,6 @@ public partial class MainViewModel(CultureService cultureService, ThemeService t
   [RelayCommand]
   private void ChangeTheme(string? theme)
   {
-    themeService.SetTheme(ThemeService.GetTheme(theme));
+    themeService.SaveTheme(ThemeService.GetTheme(theme));
   }
 }

@@ -19,9 +19,12 @@ namespace App;
 
 public sealed class App : Application
 {
-  private CultureService? _cultureService;
+  private readonly string _appDataFolder = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+    ConfigurationService.AppMetadata.CompanyName,
+    ConfigurationService.AppMetadata.AppName);
+
   private Window? _mainWindow;
-  private ThemeService? _themeService;
   private UpdaterService? _updaterService;
   public static string? AppName { get; private set; }
 
@@ -29,34 +32,25 @@ public sealed class App : Application
   {
     AppName = ConfigurationService.AppMetadata.AppName;
 
+    CultureService.ApplyCulture(CultureService.GetCulture(DataPersistService.Get(DataKey.Culture, _appDataFolder)));
+
     AvaloniaXamlLoader.Load(this);
   }
 
   public override void OnFrameworkInitializationCompleted()
   {
-    var appDataFolder = Path.Combine(
-      Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-      ConfigurationService.AppMetadata.CompanyName,
-      ConfigurationService.AppMetadata.AppName);
-
     var services = new ServiceCollection();
 
-    services.AddAppServices(appDataFolder);
+    services.AddAppServices(_appDataFolder);
 
     var serviceProvider = services.BuildServiceProvider();
-
-    _cultureService = serviceProvider.GetRequiredService<CultureService>();
-
-    _themeService = serviceProvider.GetRequiredService<ThemeService>();
 
     _updaterService = serviceProvider.GetRequiredService<UpdaterService>();
 
     var dataPersistService =
       serviceProvider.GetRequiredService<DataPersistService>();
 
-    _cultureService.SetCulture(CultureService.GetCulture(dataPersistService.Get(DataKey.Culture)), false);
-
-    _themeService.SetTheme(ThemeService.GetTheme(dataPersistService.Get(DataKey.Theme)), false);
+    ThemeService.ApplyTheme(ThemeService.GetTheme(dataPersistService.Get(DataKey.Theme)));
 
     var mainViewModel = serviceProvider.GetRequiredService<MainViewModel>();
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

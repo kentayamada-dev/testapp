@@ -38,6 +38,12 @@ public sealed class DataPersistService
     return _data.GetValueOrDefault(key.ToString());
   }
 
+  public static string? Get(DataKey key, string appDataFolder)
+  {
+    var service = new DataPersistService(appDataFolder);
+    return service.Get(key);
+  }
+
   public void Remove(string key)
   {
     if (_data.Remove(key)) Save();

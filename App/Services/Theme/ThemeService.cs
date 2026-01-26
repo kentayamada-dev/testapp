@@ -10,7 +10,7 @@ public sealed class ThemeService(DataPersistService dataService)
     return Theme.FromValue(theme) ?? Theme.System;
   }
 
-  public void SetTheme(Theme theme, bool save = true)
+  public static void ApplyTheme(Theme theme)
   {
     var themeVariant = theme.Value switch
     {
@@ -20,9 +20,11 @@ public sealed class ThemeService(DataPersistService dataService)
     };
 
     Avalonia.Application.Current?.RequestedThemeVariant = themeVariant;
+  }
 
-    if (!save) return;
-
+  public void SaveTheme(Theme theme)
+  {
+    ApplyTheme(theme);
     dataService.Set(DataKey.Theme, theme.Value);
   }
 }
