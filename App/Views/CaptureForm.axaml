@@ -12,7 +12,11 @@
     <StackPanel Margin="30" Spacing="15">
       <views:TextInputField DataContext="{Binding UrlField}" />
       <views:TextInputField DataContext="{Binding IntervalField}" />
-      <views:TextInputField DataContext="{Binding OutputFolderField}" />
+      <Grid ColumnDefinitions="*, 20, Auto" RowDefinitions="Auto">
+        <views:TextInputField DataContext="{Binding OutputFolderField}" Grid.Column="0" />
+        <Button Content="Browse" Grid.Column="2" Classes="FormButton" Height="{StaticResource InputFieldHeight}"
+                Command="{Binding SelectFolderCommand}" />
+      </Grid>
       <Button Content="Submit" IsEnabled="{Binding !CaptureCommand.IsRunning}" Command="{Binding CaptureCommand}" Classes="FormButton" />
     </StackPanel>
   </StackPanel>

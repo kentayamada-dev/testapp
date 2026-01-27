@@ -132,6 +132,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 10進数である必要があります.
+        /// </summary>
+        internal static string IntervalError {
+            get {
+                return ResourceManager.GetString("IntervalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 言語.
         /// </summary>
         internal static string Language {
@@ -155,6 +164,15 @@ namespace App.Assets.Culture {
         internal static string OutputFolder {
             get {
                 return ResourceManager.GetString("OutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 無効なパス.
+        /// </summary>
+        internal static string OutputFolderError {
+            get {
+                return ResourceManager.GetString("OutputFolderError", resourceCulture);
             }
         }
         
@@ -227,6 +245,15 @@ namespace App.Assets.Culture {
         internal static string updateUnable {
             get {
                 return ResourceManager.GetString("updateUnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URLは必須です.
+        /// </summary>
+        internal static string UrlError {
+            get {
+                return ResourceManager.GetString("UrlError", resourceCulture);
             }
         }
         

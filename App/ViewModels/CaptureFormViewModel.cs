@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using App.Assets.Culture;
 using App.Services.Data;
+using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -11,20 +13,22 @@ public partial class CaptureFormViewModel : ViewModelBase
   [ObservableProperty] private TextInputFieldViewModel _intervalField = new()
   {
     Label = Resources.Interval,
-    ErrorMessage = "Interval must be a valid decimal number"
+    ErrorMessage = Resources.IntervalError
   };
 
   [ObservableProperty] private TextInputFieldViewModel _outputFolderField = new()
   {
     Label = Resources.OutputFolder,
-    ErrorMessage = "Output folder path is required"
+    ErrorMessage = Resources.OutputFolderError
   };
 
   [ObservableProperty] private TextInputFieldViewModel _urlField = new()
   {
     Label = "URL",
-    ErrorMessage = "URL is required"
+    ErrorMessage = Resources.UrlError
   };
+
+  private Window? _mainWindow;
 
   public CaptureFormViewModel()
   {
@@ -34,10 +38,26 @@ public partial class CaptureFormViewModel : ViewModelBase
     OutputFolderField.Value = form.OutputFolder ?? "";
   }
 
+  public void SetMainWindow(Window mainWindow)
+  {
+    _mainWindow = mainWindow;
+  }
+
+  [RelayCommand]
+  private async Task SelectFolder()
+  {
+    if (_mainWindow == null) return;
+
+    var folders = await _mainWindow.StorageProvider.OpenFolderPickerAsync(
+      new FolderPickerOpenOptions());
+
+    if (folders.Count > 0) OutputFolderField.Value = folders[0].Path.LocalPath;
+  }
+
   [RelayCommand]
   private async Task Capture()
   {
-    if (IsInValid()) return;
+    if (await IsInValid()) return;
 
     await DataPersistService.Update(data =>
     {
@@ -47,14 +67,14 @@ public partial class CaptureFormViewModel : ViewModelBase
     });
   }
 
-  private bool IsInValid()
+  private async Task<bool> IsInValid()
   {
     if (string.IsNullOrWhiteSpace(UrlField.Value))
       UrlField.IsInvalid = true;
     else
       UrlField.IsInvalid = false;
 
-    if (string.IsNullOrWhiteSpace(OutputFolderField.Value))
+    if (string.IsNullOrWhiteSpace(OutputFolderField.Value) || !await IsValidFolderPath(OutputFolderField.Value))
       OutputFolderField.IsInvalid = true;
     else
       OutputFolderField.IsInvalid = false;
@@ -65,5 +85,15 @@ public partial class CaptureFormViewModel : ViewModelBase
       IntervalField.IsInvalid = false;
 
     return IntervalField.IsInvalid || OutputFolderField.IsInvalid || UrlField.IsInvalid;
+  }
+
+  private async Task<bool> IsValidFolderPath(
+    string? folderPath)
+  {
+    if (_mainWindow == null || folderPath == null) return false;
+
+    var folder = await _mainWindow.StorageProvider.TryGetFolderFromPathAsync(folderPath);
+
+    return folder != null;
   }
 }

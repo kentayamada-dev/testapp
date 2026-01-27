@@ -87,4 +87,13 @@
   <data name="RestartApp" xml:space="preserve">
     <value>変更を有効にするためにアプリを再起動しますか？</value>
   </data>
+  <data name="IntervalError" xml:space="preserve">
+    <value>10進数である必要があります</value>
+  </data>
+  <data name="OutputFolderError" xml:space="preserve">
+    <value>無効なパス</value>
+  </data>
+  <data name="UrlError" xml:space="preserve">
+    <value>URLは必須です</value>
+  </data>
 </root>

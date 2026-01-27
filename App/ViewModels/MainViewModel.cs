@@ -36,6 +36,7 @@ public partial class MainViewModel(
   public void SetMainWindow(Window mainWindow)
   {
     _mainWindow = mainWindow;
+    CaptureFormViewModel.SetMainWindow(mainWindow);
   }
 
   [RelayCommand]

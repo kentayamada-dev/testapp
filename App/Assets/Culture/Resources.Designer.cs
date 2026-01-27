@@ -132,6 +132,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Must be a decimal number.
+        /// </summary>
+        public static string IntervalError {
+            get {
+                return ResourceManager.GetString("IntervalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
@@ -155,6 +164,15 @@ namespace App.Assets.Culture {
         public static string OutputFolder {
             get {
                 return ResourceManager.GetString("OutputFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid path.
+        /// </summary>
+        public static string OutputFolderError {
+            get {
+                return ResourceManager.GetString("OutputFolderError", resourceCulture);
             }
         }
         
@@ -227,6 +245,15 @@ namespace App.Assets.Culture {
         public static string updateUnable {
             get {
                 return ResourceManager.GetString("updateUnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL is required.
+        /// </summary>
+        public static string UrlError {
+            get {
+                return ResourceManager.GetString("UrlError", resourceCulture);
             }
         }
         

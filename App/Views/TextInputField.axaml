@@ -9,7 +9,7 @@
 
   <StackPanel>
     <TextBlock Text="{Binding Label}" FontWeight="Bold" Margin="0,0,0,5" />
-    <Border BorderThickness="1" Height="40" Classes.invalid="{Binding IsInvalid}">
+    <Border BorderThickness="1" Height="{StaticResource InputFieldHeight}" Classes.invalid="{Binding IsInvalid}">
       <Border.Styles>
         <Style Selector="Border">
           <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />

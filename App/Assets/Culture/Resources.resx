@@ -87,4 +87,13 @@
   <data name="RestartApp" xml:space="preserve">
     <value>Restart the app for changes to take effect?</value>
   </data>
+  <data name="IntervalError" xml:space="preserve">
+    <value>Must be a decimal number</value>
+  </data>
+  <data name="OutputFolderError" xml:space="preserve">
+    <value>Invalid path</value>
+  </data>
+  <data name="UrlError" xml:space="preserve">
+    <value>URL is required</value>
+  </data>
 </root>

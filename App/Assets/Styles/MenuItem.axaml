@@ -19,7 +19,7 @@
     <Setter Property="Template">
       <ControlTemplate>
         <Border Name="root" Background="{TemplateBinding Background}">
-          <ContentPresenter Padding="30,10" Content="{TemplateBinding Header}" />
+          <ContentPresenter Padding="30,10" FontSize="13" Content="{TemplateBinding Header}" />
         </Border>
       </ControlTemplate>
     </Setter>
