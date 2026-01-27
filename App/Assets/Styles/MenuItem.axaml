@@ -32,6 +32,6 @@
   <Style Selector="MenuFlyoutPresenter">
     <Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
     <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="BorderBrush" Value="{DynamicResource TertiaryColor}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
   </Style>
 </Styles>

@@ -34,7 +34,7 @@
 
   <Grid Name="MainView">
     <Grid Name="WindowsMenu" Background="{DynamicResource SecondaryColor}">
-      <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TertiaryColor}">
+      <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderColor}">
         <Grid ColumnDefinitions="Auto,Auto,*,Auto">
           <Image Grid.Column="0" Source="/Assets/Logo/logo.ico" Height="20" Width="40" PointerPressed="TitleBar_PointerPressed" />
           <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -82,14 +82,11 @@
     </Grid>
     <StackPanel Name="MainContent" Margin="20">
       <Border
-        BorderBrush="{DynamicResource TertiaryColor}"
-        BorderThickness="1"
-        CornerRadius="{StaticResource CornerRadius}">
+        BorderBrush="{DynamicResource BorderColor}"
+        BorderThickness="1">
         <TabControl Classes="CustomTabControl">
-          <TabItem Header="Tab 1" Classes="CustomTabItem">
-            <StackPanel Background="{DynamicResource WindowBackground}">
-              <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
-            </StackPanel>
+          <TabItem Header="{x:Static culture:Resources.Capture}" Classes="CustomTabItem">
+            <views:CaptureForm DataContext="{Binding CaptureFormViewModel}" />
           </TabItem>
           <TabItem Header="Tab 2" Classes="CustomTabItem">
             <StackPanel Background="{DynamicResource WindowBackground}">

@@ -1,67 +1,82 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using App.Models;
 using App.Services.Configuration;
 
 namespace App.Services.Data;
 
-public enum DataKey
+public class UserPreferencesModel
 {
-  Culture,
-  Theme
+  public string? Theme { get; set; }
+
+  public string? Culture { get; set; }
+
+  public CaptureFormModel CaptureForm { get; init; } = new();
 }
 
-[JsonSourceGenerationOptions(WriteIndented = true)]
-[JsonSerializable(typeof(Dictionary<string, string>))]
-public sealed partial class DataSerializerContext : JsonSerializerContext;
+[JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
+  DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
+[JsonSerializable(typeof(UserPreferencesModel))]
+public partial class DataPersistJsonContext : JsonSerializerContext;
 
-public sealed class DataPersistService
+public static class DataPersistService
 {
-  private readonly Dictionary<string, string> _data;
-  private readonly string _settingsFile;
+  private static readonly string FilePath = Path.Combine(
+    ConfigurationService.AppDataFolder,
+    ConfigurationService.AppSettings.SettingsFile
+  );
 
-  public DataPersistService(string appDataFolder)
+  private static UserPreferencesModel? _cache;
+
+  public static void Initialize()
   {
-    _settingsFile = Path.Combine(appDataFolder, ConfigurationService.AppSettings.SettingsFile);
-    _data = Load();
+    if (!File.Exists(FilePath))
+    {
+      _cache = new UserPreferencesModel();
+      var json = JsonSerializer.Serialize(
+        _cache,
+        DataPersistJsonContext.Default.UserPreferencesModel
+      );
+      File.WriteAllText(FilePath, json);
+    }
+    else
+    {
+      var json = File.ReadAllText(FilePath);
+      _cache = JsonSerializer.Deserialize(
+        json,
+        DataPersistJsonContext.Default.UserPreferencesModel
+      ) ?? new UserPreferencesModel();
+    }
   }
 
-  public void Set(DataKey key, string value)
+  public static UserPreferencesModel Get()
   {
-    _data[key.ToString()] = value;
-    Save();
+    return _cache ?? throw new InvalidOperationException(
+      "Service not initialized. Call Initialize() first"
+    );
   }
 
-  public string? Get(DataKey key)
+  public static async Task Save(UserPreferencesModel settings)
   {
-    return _data.GetValueOrDefault(key.ToString());
+    var json = JsonSerializer.Serialize(
+      settings,
+      DataPersistJsonContext.Default.UserPreferencesModel
+    );
+    await File.WriteAllTextAsync(FilePath, json);
+    _cache = settings;
   }
 
-  public static string? Get(DataKey key, string appDataFolder)
+  public static async Task Update(
+    Action<UserPreferencesModel> updateAction
+  )
   {
-    var service = new DataPersistService(appDataFolder);
-    return service.Get(key);
-  }
-
-  public void Remove(string key)
-  {
-    if (_data.Remove(key)) Save();
-  }
-
-  private Dictionary<string, string> Load()
-  {
-    if (!File.Exists(_settingsFile))
-      return new Dictionary<string, string>();
-
-    var json = File.ReadAllText(_settingsFile);
-    return JsonSerializer.Deserialize<Dictionary<string, string>>(json, DataSerializerContext.Default.DictionaryStringString) ??
-           new Dictionary<string, string>();
-  }
-
-  private void Save()
-  {
-    var json = JsonSerializer.Serialize(_data, DataSerializerContext.Default.DictionaryStringString);
-    File.WriteAllText(_settingsFile, json);
+    var cache = _cache ?? throw new InvalidOperationException(
+      "Service not initialized. Call Initialize() first"
+    );
+    updateAction(cache);
+    await Save(cache);
   }
 }

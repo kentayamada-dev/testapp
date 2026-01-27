@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Avalonia.Platform;
@@ -11,6 +12,11 @@ public static class ConfigurationService
   private static readonly Lazy<AppSettings> CachedAppSettings = new(GetAppSettingsInternal);
 
   private static readonly Lazy<AppMetadata> CachedMetadata = new(GetMetadataInternal);
+
+  private static readonly Lazy<string> CachedAppDataFolder =
+    new(GetAppDataFolderInternal);
+
+  public static string AppDataFolder => CachedAppDataFolder.Value;
 
   public static AppSettings AppSettings => CachedAppSettings.Value;
 
@@ -55,5 +61,18 @@ public static class ConfigurationService
       .ToList();
 
     if (invalid.Count > 0) throw new InvalidOperationException($"Invalid settings: {string.Join(", ", invalid)}");
+  }
+
+  private static string GetAppDataFolderInternal()
+  {
+    var folderPath = Path.Combine(
+      Environment.GetFolderPath(
+        Environment.SpecialFolder.ApplicationData),
+      AppMetadata.CompanyName,
+      AppMetadata.AppName);
+
+    Directory.CreateDirectory(folderPath);
+
+    return folderPath;
   }
 }

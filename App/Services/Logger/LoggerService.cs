@@ -5,31 +5,30 @@ using App.Services.Configuration;
 
 namespace App.Services.Logger;
 
-public class LoggerService
+public static class LoggerService
 {
-  private readonly string _folderPath;
+  private static readonly string FolderPath = Path.Combine(
+    ConfigurationService.AppDataFolder,
+    ConfigurationService.AppSettings.SettingsFile
+  );
 
-  public LoggerService(string appDataFolder)
-  {
-    _folderPath = Path.Combine(appDataFolder, ConfigurationService.AppSettings.LogFolder);
-
-    Directory.CreateDirectory(_folderPath);
-  }
-
-  public async Task Log(string message)
+  public static async Task Log(string message)
   {
     await WriteLogAsync(message);
   }
 
-  public async Task Log(string message, Exception ex)
+  public static async Task Log(Exception ex)
   {
-    var fullMessage = $"{message}{Environment.NewLine}{ex}";
+    var fullMessage = $"{ex.Message}{Environment.NewLine}{ex}";
     await WriteLogAsync(fullMessage);
   }
 
-  private async Task WriteLogAsync(string message)
+  private static async Task WriteLogAsync(string message)
   {
-    var logFilePath = Path.Combine(_folderPath, $"{DateTime.Now:yyyy-MM-dd}.txt");
+    var logFilePath = Path.Combine(
+      FolderPath,
+      $"{DateTime.Now:yyyy-MM-dd}.txt"
+    );
     var logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}";
 
     await File.AppendAllTextAsync(

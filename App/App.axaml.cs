@@ -1,9 +1,10 @@
 using System;
-using System.IO;
+using System.Globalization;
 using App.Services;
 using App.Services.Configuration;
 using App.Services.Culture;
 using App.Services.Data;
+using App.Services.Logger;
 using App.Services.Theme;
 using App.Services.Updater;
 using App.Services.Uri;
@@ -19,11 +20,6 @@ namespace App;
 
 public sealed class App : Application
 {
-  private readonly string _appDataFolder = Path.Combine(
-    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-    ConfigurationService.AppMetadata.CompanyName,
-    ConfigurationService.AppMetadata.AppName);
-
   private Window? _mainWindow;
   private UpdaterService? _updaterService;
   public static string? AppName { get; private set; }
@@ -32,7 +28,11 @@ public sealed class App : Application
   {
     AppName = ConfigurationService.AppMetadata.AppName;
 
-    CultureService.ApplyCulture(CultureService.GetCulture(DataPersistService.Get(DataKey.Culture, _appDataFolder)));
+    DataPersistService.Initialize();
+
+    var savedCulture = CultureService.GetCulture(DataPersistService.Get().Culture);
+
+    if (CultureInfo.CurrentCulture.Name != savedCulture.Code) CultureService.ApplyCulture(savedCulture);
 
     AvaloniaXamlLoader.Load(this);
   }
@@ -41,16 +41,13 @@ public sealed class App : Application
   {
     var services = new ServiceCollection();
 
-    services.AddAppServices(_appDataFolder);
+    services.AddAppServices();
 
     var serviceProvider = services.BuildServiceProvider();
 
     _updaterService = serviceProvider.GetRequiredService<UpdaterService>();
 
-    var dataPersistService =
-      serviceProvider.GetRequiredService<DataPersistService>();
-
-    ThemeService.ApplyTheme(ThemeService.GetTheme(dataPersistService.Get(DataKey.Theme)));
+    ThemeService.ApplyTheme(ThemeService.GetTheme(DataPersistService.Get().Theme));
 
     var mainViewModel = serviceProvider.GetRequiredService<MainViewModel>();
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -65,24 +62,45 @@ public sealed class App : Application
     base.OnFrameworkInitializationCompleted();
   }
 
-  private void CheckUpdate_Click(object? sender, EventArgs e)
+  private async void CheckUpdate_Click(object? sender, EventArgs e)
   {
-    if (_mainWindow == null) return;
+    try
+    {
+      if (_mainWindow == null || _updaterService == null) return;
 
-    _updaterService?.CheckForUpdate(_mainWindow);
+      await _updaterService.CheckForUpdate(_mainWindow);
+    }
+    catch (Exception ex)
+    {
+      await LoggerService.Log(ex);
+    }
   }
 
-  private void AboutDeveloper_Click(object? sender, EventArgs e)
+  private async void AboutDeveloper_Click(object? sender, EventArgs e)
   {
-    if (_mainWindow == null) return;
+    try
+    {
+      if (_mainWindow == null) return;
 
-    _ = UriService.OpenUri(ConfigurationService.AppSettings.HomepageUrl, _mainWindow);
+      await UriService.OpenUri(ConfigurationService.AppSettings.HomepageUrl, _mainWindow);
+    }
+    catch (Exception ex)
+    {
+      await LoggerService.Log(ex);
+    }
   }
 
-  private void AboutApp_Click(object? sender, EventArgs e)
+  private async void AboutApp_Click(object? sender, EventArgs e)
   {
-    if (_mainWindow == null) return;
+    try
+    {
+      if (_mainWindow == null) return;
 
-    _ = UriService.OpenUri(ConfigurationService.AppSettings.AppRepoUrl, _mainWindow);
+      await UriService.OpenUri(ConfigurationService.AppSettings.AppRepoUrl, _mainWindow);
+    }
+    catch (Exception ex)
+    {
+      await LoggerService.Log(ex);
+    }
   }
 }

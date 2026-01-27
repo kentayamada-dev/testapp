@@ -2,7 +2,7 @@
 
 public sealed class AppMetadata
 {
-  public string AppName { get; set; } = "";
-  public string AppVersion { get; set; } = "";
-  public string CompanyName { get; set; } = "";
+  public string AppName { get; init; } = "";
+  public string AppVersion { get; init; } = "";
+  public string CompanyName { get; init; } = "";
 }

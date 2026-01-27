@@ -1,0 +1,24 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Padding="20" Width="300" Height="100">
+      <Button Classes="FormButton">
+        SUBMIT
+      </Button>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="Button.FormButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="FontWeight" Value="Bold" />
+    <Setter Property="CornerRadius" Value="{StaticResource CornerRadius}" />
+    <Setter Property="Padding" Value="20,10" />
+  </Style>
+
+  <Style Selector="Button.FormButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource PrimaryHoverColor}" />
+  </Style>
+</Styles>

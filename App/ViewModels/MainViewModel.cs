@@ -1,18 +1,29 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Globalization;
+using System.Threading.Tasks;
+using App.Assets.Culture;
+using App.Services.Application;
 using App.Services.Configuration;
 using App.Services.Culture;
+using App.Services.Data;
 using App.Services.Theme;
 using App.Services.Updater;
 using App.Services.Uri;
+using App.Views;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace App.ViewModels;
 
-public partial class MainViewModel(CultureService cultureService, ThemeService themeService, UpdaterService updaterService) : ObservableObject
+public partial class MainViewModel(
+  IServiceProvider serviceProvider,
+  UpdaterService updaterService,
+  CaptureFormViewModel captureFormViewModel) : ViewModelBase
 {
   [ObservableProperty] private string _appRepoUrl = ConfigurationService.AppSettings.AppRepoUrl;
+  [ObservableProperty] private CaptureFormViewModel _captureFormViewModel = captureFormViewModel;
   [ObservableProperty] private string _darkTheme = Theme.Dark.Value;
   [ObservableProperty] private string _enCode = Culture.En.Code;
   [ObservableProperty] private string _homepageUrl = ConfigurationService.AppSettings.HomepageUrl;
@@ -22,16 +33,29 @@ public partial class MainViewModel(CultureService cultureService, ThemeService t
 
   private Window? _mainWindow;
 
-
   public void SetMainWindow(Window mainWindow)
   {
     _mainWindow = mainWindow;
   }
 
   [RelayCommand]
-  private void ChangeCulture(string? culture)
+  private async Task ChangeCulture(string? culture)
   {
-    cultureService.ApplyAndSaveCulture(CultureService.GetCulture(culture));
+    var newCulture = CultureService.GetCulture(culture);
+
+    if (CultureInfo.CurrentCulture.Name == newCulture.Code || _mainWindow == null) return;
+
+    CultureService.ApplyCulture(newCulture);
+
+    await DataPersistService.Update(data => { data.Culture = newCulture.Code; });
+
+    var confirmDialog = serviceProvider.GetRequiredService<ConfirmDialog>();
+    confirmDialog.SetMessage(Resources.RestartApp);
+    var result = await confirmDialog.ShowDialog<ConfirmDialogResult>(_mainWindow);
+
+    if (result != ConfirmDialogResult.Yes) return;
+
+    ApplicationService.RestartApplication();
   }
 
   [RelayCommand]
@@ -43,16 +67,16 @@ public partial class MainViewModel(CultureService cultureService, ThemeService t
   }
 
   [RelayCommand]
-  private void OpenUrl(string? url)
+  private async Task OpenUrl(string? url)
   {
     if (_mainWindow == null) return;
 
-    _ = UriService.OpenUri(url, _mainWindow);
+    await UriService.OpenUri(url, _mainWindow);
   }
 
   [RelayCommand]
-  private void ChangeTheme(string? theme)
+  private static async Task ChangeTheme(string? theme)
   {
-    themeService.ApplyAndSaveTheme(ThemeService.GetTheme(theme));
+    await ThemeService.ApplyAndSaveTheme(ThemeService.GetTheme(theme));
   }
 }

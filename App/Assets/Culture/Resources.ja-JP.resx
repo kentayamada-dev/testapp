@@ -75,4 +75,16 @@
   <data name="Yes" xml:space="preserve">
     <value>はい</value>
   </data>
+  <data name="Capture" xml:space="preserve">
+    <value>キャプチャ</value>
+  </data>
+  <data name="Interval" xml:space="preserve">
+    <value>間隔（秒）</value>
+  </data>
+  <data name="OutputFolder" xml:space="preserve">
+    <value>出力フォルダ</value>
+  </data>
+  <data name="RestartApp" xml:space="preserve">
+    <value>変更を有効にするためにアプリを再起動しますか？</value>
+  </data>
 </root>

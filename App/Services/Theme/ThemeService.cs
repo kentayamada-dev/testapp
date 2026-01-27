@@ -1,9 +1,10 @@
-﻿using App.Services.Data;
+﻿using System.Threading.Tasks;
+using App.Services.Data;
 using Avalonia.Styling;
 
 namespace App.Services.Theme;
 
-public sealed class ThemeService(DataPersistService dataService)
+public static class ThemeService
 {
   public static Theme GetTheme(string? theme)
   {
@@ -19,12 +20,13 @@ public sealed class ThemeService(DataPersistService dataService)
       _ => ThemeVariant.Default
     };
 
-    Avalonia.Application.Current?.RequestedThemeVariant = themeVariant;
+    Avalonia.Application.Current?.RequestedThemeVariant =
+      themeVariant;
   }
 
-  public void ApplyAndSaveTheme(Theme theme)
+  public static async Task ApplyAndSaveTheme(Theme theme)
   {
     ApplyTheme(theme);
-    dataService.Set(DataKey.Theme, theme.Value);
+    await DataPersistService.Update(data => { data.Theme = theme.Value; });
   }
 }

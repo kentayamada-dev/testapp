@@ -32,10 +32,12 @@
     <StyleInclude Source="/Assets/Styles/DialogButton.axaml" />
     <StyleInclude Source="/Assets/Styles/WindowChromeButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuButton.axaml" />
+    <StyleInclude Source="/Assets/Styles/FormButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuItem.axaml" />
     <StyleInclude Source="/Assets/Styles/TabItem.axaml" />
     <StyleInclude Source="/Assets/Styles/TabControl.axaml" />
     <StyleInclude Source="/Assets/Styles/Window.axaml" />
+    <StyleInclude Source="/Assets/Styles/TextBox.axaml" />
 
     <Style Selector="Button.WindowChromeCloseButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Background" Value="Red" />

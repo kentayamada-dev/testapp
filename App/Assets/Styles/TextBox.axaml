@@ -1,0 +1,18 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Padding="20" Width="300" Height="100">
+      <TextBox Classes="CustomTextBox" />
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="TextBox.CustomTextBox">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource SelectionBackgroundColor}" />
+    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource TextColor}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Height" Value="30" />
+  </Style>
+</Styles>

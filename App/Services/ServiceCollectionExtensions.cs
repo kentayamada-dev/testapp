@@ -1,9 +1,4 @@
-﻿using System.IO;
-using App.Services.Culture;
-using App.Services.Data;
-using App.Services.Logger;
-using App.Services.Theme;
-using App.Services.Updater;
+﻿using App.Services.Updater;
 using App.ViewModels;
 using App.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,18 +7,13 @@ namespace App.Services;
 
 public static class ServiceCollectionExtensions
 {
-  public static void AddAppServices(this IServiceCollection services, string appDataFolder)
+  public static void AddAppServices(this IServiceCollection services)
   {
-    Directory.CreateDirectory(appDataFolder);
-
     services.AddSingleton<MainViewModel>();
+    services.AddSingleton<CaptureFormViewModel>();
     services.AddTransient<MessageDialog>();
     services.AddTransient<ConfirmDialog>();
     services.AddTransient<ProgressDialog>();
-    services.AddSingleton<CultureService>();
-    services.AddSingleton<ThemeService>();
     services.AddSingleton<UpdaterService>();
-    services.AddSingleton(new DataPersistService(appDataFolder));
-    services.AddSingleton(new LoggerService(appDataFolder));
   }
 }

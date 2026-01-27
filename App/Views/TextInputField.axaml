@@ -1,0 +1,34 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:App.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Views.TextInputField"
+             x:DataType="vm:TextInputFieldViewModel">
+
+  <StackPanel>
+    <TextBlock Text="{Binding Label}" FontWeight="Bold" Margin="0,0,0,5" />
+    <Border BorderThickness="1" Height="40" Classes.invalid="{Binding IsInvalid}">
+      <Border.Styles>
+        <Style Selector="Border">
+          <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
+        </Style>
+        <Style Selector="Border.invalid">
+          <Setter Property="BorderBrush" Value="{DynamicResource ErrorBrush}" />
+        </Style>
+      </Border.Styles>
+      <TextBox Text="{Binding Value, UpdateSourceTrigger=LostFocus}" Classes="CustomTextBox" />
+    </Border>
+    <TextBlock Text="{Binding ErrorMessage}" Margin="0,5,0,0" Classes.invalid="{Binding IsInvalid}">
+      <TextBlock.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="Foreground" Value="Transparent" />
+        </Style>
+        <Style Selector="TextBlock.invalid">
+          <Setter Property="Foreground" Value="{DynamicResource ErrorBrush}" />
+        </Style>
+      </TextBlock.Styles>
+    </TextBlock>
+  </StackPanel>
+</UserControl>
