@@ -96,4 +96,7 @@
   <data name="UrlError" xml:space="preserve">
     <value>URLは必須です</value>
   </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>フォルダを選択</value>
+  </data>
 </root>

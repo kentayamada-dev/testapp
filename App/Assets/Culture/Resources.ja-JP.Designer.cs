@@ -186,6 +186,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to フォルダを選択.
+        /// </summary>
+        internal static string SelectFolder {
+            get {
+                return ResourceManager.GetString("SelectFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to テーマ.
         /// </summary>
         internal static string Theme {

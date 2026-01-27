@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:App.ViewModels"
              xmlns:views="clr-namespace:App.Views"
+             xmlns:culture="clr-namespace:App.Assets.Culture"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="App.Views.CaptureForm"
              x:DataType="vm:CaptureFormViewModel">
@@ -14,7 +15,7 @@
       <views:TextInputField DataContext="{Binding IntervalField}" />
       <Grid ColumnDefinitions="*, 20, Auto" RowDefinitions="Auto">
         <views:TextInputField DataContext="{Binding OutputFolderField}" Grid.Column="0" />
-        <Button Content="Browse" Grid.Column="2" Classes="FormButton" Height="{StaticResource InputFieldHeight}"
+        <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Column="2" Classes="FormButton" Height="{StaticResource InputFieldHeight}"
                 Command="{Binding SelectFolderCommand}" />
       </Grid>
       <Button Content="Submit" IsEnabled="{Binding !CaptureCommand.IsRunning}" Command="{Binding CaptureCommand}" Classes="FormButton" />
