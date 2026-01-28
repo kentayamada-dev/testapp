@@ -139,6 +139,21 @@ jobs:
       - name: Publish
         run: dotnet publish ${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj --configuration Release --runtime ${{ matrix.rid }} --output ${{ env.PUBLISH_DIR }}
 
+      - name: Download ffmpeg binary
+        shell: pwsh
+        run: |
+          if ("${{ matrix.os }}" -like "macos*") {
+            $zipUrl = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v6.1/ffmpeg-6.1-macos-64.zip"
+          } else {
+            $zipUrl = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v6.1/ffmpeg-6.1-win-64.zip"
+          }
+
+          $zipPath = "$env:RUNNER_TEMP/ffmpeg.zip"
+          $extractPath = "${{ env.PUBLISH_DIR }}/bin"
+
+          Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
+          Expand-Archive -Path $zipPath -DestinationPath $extractPath
+
       - name: Build macOS package
         if: startsWith(matrix.os, 'macos')
         env:

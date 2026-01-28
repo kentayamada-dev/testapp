@@ -24,7 +24,7 @@ public static class CaptureService
       .OutputToFile(outputPath, false, options => options
         .WithFrameOutputCount(1)
         .Seek(TimeSpan.FromSeconds(2)))
-      .ProcessAsynchronously();
+      .ProcessAsynchronously(true, new FFOptions { BinaryFolder = "./bin" });
 
     await LoggerService.Log($"Frame captured: {outputPath}");
   }
