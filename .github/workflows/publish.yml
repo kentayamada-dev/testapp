@@ -121,9 +121,9 @@ jobs:
           - os: windows-2025
             rid: win-x64
             platform: windows-x64
-          - os: windows-11-arm
-            rid: win-arm64
-            platform: windows-arm64
+          # - os: windows-11-arm
+          #   rid: win-arm64
+          #   platform: windows-arm64
 
     runs-on: ${{ matrix.os }}
 
@@ -147,7 +147,12 @@ jobs:
           $ffmpegPath = node -e "console.log(require('ffmpeg-static'))"
           $outputPath = "${{ env.PUBLISH_DIR }}/bin"
 
-          Copy-Item $ffmpegPath "$outputPath"
+          if ("${{ matrix.os }}" -like "macos*") {
+            Copy-Item $ffmpegPath "$outputPath/ffmpeg"
+            chmod +x "$outputPath/ffmpeg"
+          } else {
+            Copy-Item $ffmpegPath "$outputPath/ffmpeg.exe"
+          }
 
       - name: Build macOS package
         if: startsWith(matrix.os, 'macos')
