@@ -17,6 +17,10 @@ public static class ConfigurationService
 
   private static readonly Lazy<string> CachedAppBinFolder = new(GetAppBinFolder);
 
+  private static readonly Lazy<string> CachedAppLogFolder = new(GetAppLogFolder);
+
+  public static string AppLogFolder => CachedAppLogFolder.Value;
+
   public static string AppDataFolder => CachedAppDataFolder.Value;
 
   public static string AppBinFolder => CachedAppBinFolder.Value;
@@ -78,6 +82,20 @@ public static class ConfigurationService
         Environment.SpecialFolder.ApplicationData),
       AppMetadata.CompanyName,
       AppMetadata.AppName);
+
+    Directory.CreateDirectory(folderPath);
+
+    return folderPath;
+  }
+
+  private static string GetAppLogFolder()
+  {
+    var folderPath = Path.Combine(
+      Environment.GetFolderPath(
+        Environment.SpecialFolder.ApplicationData),
+      AppMetadata.CompanyName,
+      AppMetadata.AppName,
+      AppSettings.LogFolder);
 
     Directory.CreateDirectory(folderPath);
 

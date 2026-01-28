@@ -7,11 +7,6 @@ namespace App.Services.Logger;
 
 public static class LoggerService
 {
-  private static readonly string FolderPath = Path.Combine(
-    ConfigurationService.AppDataFolder,
-    ConfigurationService.AppSettings.LogFolder
-  );
-
   public static async Task Log(string message)
   {
     await WriteLogAsync(message);
@@ -25,7 +20,7 @@ public static class LoggerService
   private static async Task WriteLogAsync(string message)
   {
     var logFilePath = Path.Combine(
-      FolderPath,
+      ConfigurationService.AppLogFolder,
       $"{DateTime.Now:yyyy-MM-dd}.txt"
     );
     var logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}";
