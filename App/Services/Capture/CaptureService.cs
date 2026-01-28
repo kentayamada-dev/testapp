@@ -21,7 +21,8 @@ public static class CaptureService
     var outputPath = Path.Combine(fullPath, fileName);
 
     await FFMpegArguments
-      .FromUrlInput(new System.Uri(url))
+      .FromUrlInput(new System.Uri(url), options => options
+        .WithCustomArgument("-rtsp_transport tcp"))
       .OutputToFile(outputPath, false, options => options
         .WithFrameOutputCount(1)
         .Seek(TimeSpan.FromSeconds(2)))
