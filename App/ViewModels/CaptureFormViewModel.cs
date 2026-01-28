@@ -32,9 +32,6 @@ public partial class CaptureFormViewModel : ViewModelBase
     ErrorMessage = Resources.IntervalError
   };
 
-  [NotifyPropertyChangedFor(nameof(CapturePathData))] [ObservableProperty]
-  private bool _isCapturing;
-
   [ObservableProperty] private TextInputFieldViewModel _outputFolderField = new()
   {
     Label = Resources.OutputFolder,
@@ -46,6 +43,9 @@ public partial class CaptureFormViewModel : ViewModelBase
     Label = "URL",
     ErrorMessage = Resources.UrlError
   };
+
+  [NotifyPropertyChangedFor(nameof(CapturePathData))] [ObservableProperty]
+  private bool _isCapturing;
 
   public CaptureFormViewModel()
   {

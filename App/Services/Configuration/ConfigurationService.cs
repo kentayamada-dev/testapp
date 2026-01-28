@@ -9,20 +9,23 @@ namespace App.Services.Configuration;
 
 public static class ConfigurationService
 {
-  private static readonly Lazy<AppSettings> CachedAppSettings = new(GetAppSettingsInternal);
+  private static readonly Lazy<AppSettings> CachedAppSettings = new(GetAppSettings);
 
-  private static readonly Lazy<AppMetadata> CachedMetadata = new(GetMetadataInternal);
+  private static readonly Lazy<AppMetadata> CachedMetadata = new(GetMetadata);
 
-  private static readonly Lazy<string> CachedAppDataFolder =
-    new(GetAppDataFolderInternal);
+  private static readonly Lazy<string> CachedAppDataFolder = new(GetAppDataFolder);
+
+  private static readonly Lazy<string> CachedAppBinFolder = new(GetAppBinFolder);
 
   public static string AppDataFolder => CachedAppDataFolder.Value;
+
+  public static string AppBinFolder => CachedAppBinFolder.Value;
 
   public static AppSettings AppSettings => CachedAppSettings.Value;
 
   public static AppMetadata AppMetadata => CachedMetadata.Value;
 
-  private static AppSettings GetAppSettingsInternal()
+  private static AppSettings GetAppSettings()
   {
     using var stream = AssetLoader.Open(new System.Uri("avares://App/Assets/Config/appsettings.json"));
     var configuration = new ConfigurationBuilder().AddJsonStream(stream).Build();
@@ -32,7 +35,7 @@ public static class ConfigurationService
     return settings;
   }
 
-  private static AppMetadata GetMetadataInternal()
+  private static AppMetadata GetMetadata()
   {
     var assembly = Assembly.GetExecutingAssembly();
 
@@ -42,6 +45,11 @@ public static class ConfigurationService
       AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(assembly, attribute => attribute.InformationalVersion),
       CompanyName = GetAttribute<AssemblyCompanyAttribute>(assembly, attribute => attribute.Company)
     };
+  }
+
+  private static string GetAppBinFolder()
+  {
+    return Path.Combine(AppContext.BaseDirectory, "bin");
   }
 
   private static string GetAttribute<T>(Assembly assembly, Func<T, string?> selector) where T : Attribute
@@ -63,7 +71,7 @@ public static class ConfigurationService
     if (invalid.Count > 0) throw new InvalidOperationException($"Invalid settings: {string.Join(", ", invalid)}");
   }
 
-  private static string GetAppDataFolderInternal()
+  private static string GetAppDataFolder()
   {
     var folderPath = Path.Combine(
       Environment.GetFolderPath(

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using App.Services.Configuration;
 using App.Services.Logger;
 using FFMpegCore;
 
@@ -24,7 +25,7 @@ public static class CaptureService
       .OutputToFile(outputPath, false, options => options
         .WithFrameOutputCount(1)
         .Seek(TimeSpan.FromSeconds(2)))
-      .ProcessAsynchronously(true, new FFOptions { BinaryFolder = "./bin" });
+      .ProcessAsynchronously(true, new FFOptions { BinaryFolder = ConfigurationService.AppBinFolder });
 
     await LoggerService.Log($"Frame captured: {outputPath}");
   }
