@@ -142,12 +142,12 @@ jobs:
       - name: Download ffmpeg binary
         shell: pwsh
         run: |
-          npm install -g ffmpeg-static
+          npm install ffmpeg-static
 
           $ffmpegPath = node -e "console.log(require('ffmpeg-static'))"
           $outputPath = "${{ env.PUBLISH_DIR }}/bin"
 
-          Copy-Item Copy-Item $ffmpegPath "$outputPath"
+          Copy-Item $ffmpegPath "$outputPath"
 
       - name: Build macOS package
         if: startsWith(matrix.os, 'macos')
