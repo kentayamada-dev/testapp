@@ -18,7 +18,14 @@
         <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Column="2" Classes="FormButton" Height="{StaticResource InputFieldHeight}"
                 Command="{Binding SelectFolderCommand}" />
       </Grid>
-      <Button Content="Submit" IsEnabled="{Binding !CaptureCommand.IsRunning}" Command="{Binding CaptureCommand}" Classes="FormButton" />
+      <Button Command="{Binding CaptureCommand}" Classes="FormButton">
+        <Path VerticalAlignment="Center" Data="{Binding CapturePathData}" Stroke="{DynamicResource ThemeForegroundBrush}" StrokeThickness="1.5" />
+        <Button.Styles>
+          <Style Selector="Button.FormButton /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{Binding FormButtonBackGroudColor}" />
+          </Style>
+        </Button.Styles>
+      </Button>
     </StackPanel>
   </StackPanel>
 </UserControl>

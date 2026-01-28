@@ -6,9 +6,14 @@
       <Button Content="Open Menu" Classes="MenuButton" Height="30" Width="100">
         <Button.Flyout>
           <MenuFlyout Placement="BottomEdgeAlignedLeft">
-            <MenuItem Header="Menu 1" />
-            <MenuItem Header="Menu 2" />
-            <MenuItem Header="Menu 3" />
+            <MenuItem Header="Item 1">
+              <MenuItem Header="Subitem 1" />
+              <MenuItem Header="Subitem 2" />
+              <MenuItem Header="Subitem 3" />
+            </MenuItem>
+            <MenuItem Header="Item 2"
+                      InputGesture="Ctrl+A" />
+            <MenuItem Header="Item 3" />
           </MenuFlyout>
         </Button.Flyout>
       </Button>
@@ -18,14 +23,41 @@
   <Style Selector="MenuItem">
     <Setter Property="Template">
       <ControlTemplate>
-        <Border Name="root" Background="{TemplateBinding Background}">
-          <ContentPresenter Padding="30,10" FontSize="13" Content="{TemplateBinding Header}" />
-        </Border>
+        <Grid>
+          <Border Name="root" Background="{TemplateBinding Background}">
+            <Grid ColumnDefinitions="*,Auto">
+              <ContentPresenter Grid.Column="0"
+                                Padding="15,7" FontSize="13"
+                                Content="{TemplateBinding Header}" />
+              <Path Name="rightArrow"
+                    Grid.Column="1"
+                    Margin="10,0,10,0"
+                    VerticalAlignment="Center"
+                    Data="M0,0 L5,5 L0,10"
+                    Stroke="{DynamicResource ThemeForegroundBrush}"
+                    StrokeThickness="1.5" />
+            </Grid>
+          </Border>
+          <Popup Name="PART_Popup"
+                 IsOpen="{TemplateBinding IsSubMenuOpen, Mode=TwoWay}"
+                 Placement="RightEdgeAlignedTop"
+                 IsLightDismissEnabled="False">
+            <Border Background="{DynamicResource SecondaryColor}"
+                    BorderBrush="{DynamicResource BorderColor}"
+                    BorderThickness="1">
+              <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+            </Border>
+          </Popup>
+        </Grid>
       </ControlTemplate>
     </Setter>
   </Style>
 
   <Style Selector="MenuItem:pointerover /template/ Border#root">
+    <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+  </Style>
+
+  <Style Selector="MenuItem:selected /template/ Border#root">
     <Setter Property="Background" Value="{DynamicResource HoverColor}" />
   </Style>
 

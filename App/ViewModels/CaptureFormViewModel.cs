@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using App.Assets.Culture;
+using App.Services.Capture;
 using App.Services.Data;
+using App.Services.Logger;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,11 +14,26 @@ namespace App.ViewModels;
 
 public partial class CaptureFormViewModel : ViewModelBase
 {
+  private const string StopIconPath = "M0,0 L14,0 L14,14 L0,14 z";
+  private const string PlayIconPath = "M0,0L8,7 0,14z";
+  private const string StopButtonColor = "#f85149";
+  private const string PlayButtonColor = "#1a7f37";
+
+  private Window? _mainWindow;
+  private CancellationTokenSource? _captureCancellationTokenSource;
+
+  [ObservableProperty] private string _capturePathData = PlayIconPath;
+
+  [ObservableProperty] private string _formButtonBackGroudColor = PlayButtonColor;
+
   [ObservableProperty] private TextInputFieldViewModel _intervalField = new()
   {
     Label = Resources.Interval,
     ErrorMessage = Resources.IntervalError
   };
+
+  [NotifyPropertyChangedFor(nameof(CapturePathData))] [ObservableProperty]
+  private bool _isCapturing;
 
   [ObservableProperty] private TextInputFieldViewModel _outputFolderField = new()
   {
@@ -27,8 +46,6 @@ public partial class CaptureFormViewModel : ViewModelBase
     Label = "URL",
     ErrorMessage = Resources.UrlError
   };
-
-  private Window? _mainWindow;
 
   public CaptureFormViewModel()
   {
@@ -43,6 +60,12 @@ public partial class CaptureFormViewModel : ViewModelBase
     _mainWindow = mainWindow;
   }
 
+  partial void OnIsCapturingChanged(bool value)
+  {
+    CapturePathData = value ? StopIconPath : PlayIconPath;
+    FormButtonBackGroudColor = value ? StopButtonColor : PlayButtonColor;
+  }
+
   [RelayCommand]
   private async Task SelectFolder()
   {
@@ -54,9 +77,16 @@ public partial class CaptureFormViewModel : ViewModelBase
     if (folders.Count > 0) OutputFolderField.Value = folders[0].Path.LocalPath;
   }
 
-  [RelayCommand]
+  [RelayCommand(AllowConcurrentExecutions = true)]
   private async Task Capture()
   {
+    if (IsCapturing)
+    {
+      await _captureCancellationTokenSource!.CancelAsync();
+      IsCapturing = false;
+      return;
+    }
+
     if (await IsInValid()) return;
 
     await DataPersistService.Update(data =>
@@ -65,6 +95,30 @@ public partial class CaptureFormViewModel : ViewModelBase
       data.CaptureForm.Interval = IntervalField.Value;
       data.CaptureForm.OutputFolder = OutputFolderField.Value;
     });
+
+    using (_captureCancellationTokenSource = new CancellationTokenSource())
+    {
+      IsCapturing = true;
+      var interval = Convert.ToDouble(IntervalField.Value);
+
+      try
+      {
+        while (!_captureCancellationTokenSource.Token.IsCancellationRequested)
+        {
+          await Task.Delay(
+            TimeSpan.FromSeconds(interval),
+            _captureCancellationTokenSource.Token);
+
+          await CaptureService.Capture(
+            UrlField.Value,
+            OutputFolderField.Value);
+        }
+      }
+      catch (Exception ex)
+      {
+        await LoggerService.Log(ex);
+      }
+    }
   }
 
   private async Task<bool> IsInValid()

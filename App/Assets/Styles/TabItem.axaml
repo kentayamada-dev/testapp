@@ -15,7 +15,7 @@
   </Design.PreviewWith>
 
   <Style Selector="TabItem.CustomTabItem /template/ ContentPresenter#PART_ContentPresenter">
-    <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+    <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
     <Setter Property="Padding" Value="20,5" />
   </Style>
 

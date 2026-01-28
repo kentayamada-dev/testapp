@@ -10,7 +10,7 @@
   <Style Selector="TextBox.CustomTextBox">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="SelectionBrush" Value="{DynamicResource SelectionBackgroundColor}" />
-    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource TextColor}" />
+    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ThemeForegroundBrush}" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="FontSize" Value="15" />
     <Setter Property="Height" Value="30" />

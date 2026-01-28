@@ -9,7 +9,7 @@ public static class LoggerService
 {
   private static readonly string FolderPath = Path.Combine(
     ConfigurationService.AppDataFolder,
-    ConfigurationService.AppSettings.SettingsFile
+    ConfigurationService.AppSettings.LogFolder
   );
 
   public static async Task Log(string message)
@@ -19,8 +19,7 @@ public static class LoggerService
 
   public static async Task Log(Exception ex)
   {
-    var fullMessage = $"{ex.Message}{Environment.NewLine}{ex}";
-    await WriteLogAsync(fullMessage);
+    await WriteLogAsync(ex.ToString());
   }
 
   private static async Task WriteLogAsync(string message)
