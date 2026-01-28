@@ -147,9 +147,10 @@ jobs:
           $ffmpegPath = node -e "console.log(require('ffmpeg-static'))"
           $outputPath = "${{ env.PUBLISH_DIR }}/bin"
 
+          New-Item -ItemType Directory -Path $outputPath -Force | Out-Null
+
           if ("${{ matrix.os }}" -like "macos*") {
             Copy-Item $ffmpegPath "$outputPath/ffmpeg"
-            chmod +x "$outputPath/ffmpeg"
           } else {
             Copy-Item $ffmpegPath "$outputPath/ffmpeg.exe"
           }
