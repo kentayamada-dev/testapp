@@ -143,16 +143,22 @@ jobs:
         shell: pwsh
         run: |
           if ("${{ matrix.os }}" -like "macos*") {
-            $zipUrl = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v6.1/ffmpeg-6.1-macos-64.zip"
+            $fileUrl = "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.1.1/ffmpeg-darwin-arm64"
           } else {
-            $zipUrl = "https://github.com/ffbinaries/ffbinaries-prebuilt/releases/download/v6.1/ffmpeg-6.1-win-64.zip"
+            $fileUrl = "https://github.com/eugeneware/ffmpeg-static/releases/download/b6.1.1/ffmpeg-win32-x64.gz"
           }
 
-          $zipPath = "$env:RUNNER_TEMP/ffmpeg.zip"
-          $extractPath = "${{ env.PUBLISH_DIR }}/bin"
+          $outputPath = "${{ env.PUBLISH_DIR }}/bin"
 
-          Invoke-WebRequest -Uri $zipUrl -OutFile $zipPath
-          Expand-Archive -Path $zipPath -DestinationPath $extractPath
+          if ("${{ matrix.os }}" -like "macos*") {
+            $filePath = "$outputPath/ffmpeg"
+            Invoke-WebRequest -Uri $fileUrl -OutFile $filePath
+            chmod +x $filePath
+          } else {
+            $gzPath = "$env:RUNNER_TEMP/ffmpeg.gz"
+            Invoke-WebRequest -Uri $fileUrl -OutFile $gzPath
+            tar -xzf $gzPath -C $outputPath
+          }
 
       - name: Build macOS package
         if: startsWith(matrix.os, 'macos')
