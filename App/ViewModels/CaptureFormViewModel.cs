@@ -14,18 +14,14 @@ namespace App.ViewModels;
 
 public partial class CaptureFormViewModel : ViewModelBase
 {
-  private const string StopIconPath = "M0,0 L14,0 L14,14 L0,14 z";
-  private const string PlayIconPath = "M0,0L8,7 0,14z";
-  private const string StopButtonColor = "#f85149";
-  private const string PlayButtonColor = "#1a7f37";
+  private const string StopIconPath = "M0,0 L56,0 L56,56 L0,56 z";
+  private const string PlayIconPath = "M0,0 L56,28 L0,56 z";
 
   private Window? _mainWindow;
 
   [ObservableProperty] private CancellationTokenSource? _captureCancellationTokenSource;
 
   [ObservableProperty] private string _capturePathData = PlayIconPath;
-
-  [ObservableProperty] private string _formButtonBackGroudColor = PlayButtonColor;
 
   [ObservableProperty] private TextInputFieldViewModel _intervalField = new()
   {
@@ -63,7 +59,6 @@ public partial class CaptureFormViewModel : ViewModelBase
   partial void OnCaptureCancellationTokenSourceChanged(CancellationTokenSource? value)
   {
     CapturePathData = value == null ? PlayIconPath : StopIconPath;
-    FormButtonBackGroudColor = value == null ? PlayButtonColor : StopButtonColor;
   }
 
   [RelayCommand]

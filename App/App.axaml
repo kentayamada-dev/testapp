@@ -33,7 +33,6 @@
     <StyleInclude Source="/Assets/Styles/DialogButton.axaml" />
     <StyleInclude Source="/Assets/Styles/WindowChromeButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuButton.axaml" />
-    <StyleInclude Source="/Assets/Styles/FormButton.axaml" />
     <StyleInclude Source="/Assets/Styles/MenuItem.axaml" />
     <StyleInclude Source="/Assets/Styles/TabItem.axaml" />
     <StyleInclude Source="/Assets/Styles/TabControl.axaml" />

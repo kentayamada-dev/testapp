@@ -10,22 +10,18 @@
              x:DataType="vm:CaptureFormViewModel">
 
   <StackPanel Background="{DynamicResource WindowBackground}">
-    <StackPanel Margin="30" Spacing="15">
-      <views:TextInputField DataContext="{Binding UrlField}" />
-      <views:TextInputField DataContext="{Binding IntervalField}" />
-      <Grid ColumnDefinitions="*, 20, Auto" RowDefinitions="Auto">
-        <views:TextInputField DataContext="{Binding OutputFolderField}" Grid.Column="0" />
-        <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Column="2" Classes="FormButton" Height="{StaticResource InputFieldHeight}"
-                Command="{Binding SelectFolderCommand}" />
-      </Grid>
-      <Button Command="{Binding CaptureCommand}" Classes="FormButton">
-        <Path VerticalAlignment="Center" Data="{Binding CapturePathData}" Stroke="{DynamicResource ThemeForegroundBrush}" StrokeThickness="1.5" />
-        <Button.Styles>
-          <Style Selector="Button.FormButton /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{Binding FormButtonBackGroudColor}" />
-          </Style>
-        </Button.Styles>
-      </Button>
-    </StackPanel>
+    <Grid ColumnDefinitions="*,130,200" RowDefinitions="*,*,*" ColumnSpacing="20" Margin="20">
+      <views:TextInputField DataContext="{Binding UrlField}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+      <views:TextInputField DataContext="{Binding IntervalField}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+      <views:TextInputField DataContext="{Binding OutputFolderField}" Grid.Row="2" Grid.Column="0" />
+      <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Row="2" Grid.Column="1" Classes="DialogButton"
+              Height="{StaticResource InputFieldHeight}"
+              Command="{Binding SelectFolderCommand}" />
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+        <Button Command="{Binding CaptureCommand}" Classes="DialogButton" Width="130" Height="130">
+          <Path VerticalAlignment="Center" Data="{Binding CapturePathData}" Stroke="{DynamicResource PrimaryColor}" StrokeThickness="5" />
+        </Button>
+      </StackPanel>
+    </Grid>
   </StackPanel>
 </UserControl>
