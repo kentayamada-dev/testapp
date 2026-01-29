@@ -15,6 +15,8 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App;
@@ -53,14 +55,46 @@ public sealed class App : Application
     var mainViewModel = serviceProvider.GetRequiredService<MainViewModel>();
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
     {
-      _mainWindow = new MainWindow { DataContext = mainViewModel };
+      var shutdownMode = OperatingSystem.IsMacOS()
+        ? ShutdownMode.OnExplicitShutdown
+        : ShutdownMode.OnLastWindowClose;
 
+      _mainWindow = new MainWindow { DataContext = mainViewModel };
       mainViewModel.SetMainWindow(_mainWindow);
 
+      desktop.ShutdownMode = shutdownMode;
       desktop.MainWindow = _mainWindow;
     }
 
+    if (OperatingSystem.IsWindows()) SetTrayIcon();
+
     base.OnFrameworkInitializationCompleted();
+  }
+
+  private void SetTrayIcon()
+  {
+    var quitMenuItem = new NativeMenuItem(
+      Assets.Culture.Resources.QuitApp
+    );
+    quitMenuItem.Click += QuitApp_Click;
+
+    var trayIcon = new TrayIcon
+    {
+      Icon = new WindowIcon(
+        new Bitmap(
+          AssetLoader.Open(
+            new Uri("avares://App/Assets/Logo/logo.ico")
+          )
+        )
+      ),
+      ToolTipText = AppName,
+      Menu = [quitMenuItem]
+    };
+
+    trayIcon.Clicked += TrayIcon_Click;
+
+    var icons = new TrayIcons { trayIcon };
+    TrayIcon.SetIcons(Current ?? throw new InvalidOperationException("Application context unavailable."), icons);
   }
 
   private async void CheckUpdate_Click(object? sender, EventArgs e)
@@ -105,7 +139,7 @@ public sealed class App : Application
     }
   }
 
-  private void QuitApp_Click(object? sender, EventArgs e)
+  private static void QuitApp_Click(object? sender, EventArgs e)
   {
     ApplicationService.CloseApplication();
   }
