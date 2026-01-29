@@ -177,6 +177,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quit App.
+        /// </summary>
+        public static string QuitApp {
+            get {
+                return ResourceManager.GetString("QuitApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restart the app for changes to take effect?.
         /// </summary>
         public static string RestartApp {

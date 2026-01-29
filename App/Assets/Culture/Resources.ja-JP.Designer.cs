@@ -177,6 +177,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to アプリを終了.
+        /// </summary>
+        internal static string QuitApp {
+            get {
+                return ResourceManager.GetString("QuitApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 変更を有効にするためにアプリを再起動しますか？.
         /// </summary>
         internal static string RestartApp {

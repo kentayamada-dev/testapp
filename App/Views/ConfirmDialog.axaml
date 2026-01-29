@@ -5,6 +5,7 @@
         xmlns:culture="clr-namespace:App.Assets.Culture"
         x:Class="App.Views.ConfirmDialog"
         SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
         ShowInTaskbar="False">
 
   <StackPanel>

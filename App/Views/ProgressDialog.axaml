@@ -4,6 +4,7 @@
         xmlns:views="clr-namespace:App.Views"
         x:Class="App.Views.ProgressDialog"
         SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
         ShowInTaskbar="False">
 
   <StackPanel Width="{StaticResource DialogWidth}">

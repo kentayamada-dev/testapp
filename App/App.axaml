@@ -17,6 +17,18 @@
     </NativeMenu>
   </NativeMenu.Menu>
 
+  <TrayIcon.Icons>
+    <TrayIcons>
+      <TrayIcon Icon="/Assets/Logo/logo.ico" ToolTipText="{x:Static local:App.AppName}" Clicked="TrayIcon_Click">
+        <TrayIcon.Menu>
+          <NativeMenu>
+            <NativeMenuItem Header="{x:Static culture:Resources.QuitApp}" Click="QuitApp_Click" />
+          </NativeMenu>
+        </TrayIcon.Menu>
+      </TrayIcon>
+    </TrayIcons>
+  </TrayIcon.Icons>
+
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>

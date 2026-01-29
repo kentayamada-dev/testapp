@@ -99,4 +99,7 @@
   <data name="SelectFolder" xml:space="preserve">
     <value>フォルダを選択</value>
   </data>
+  <data name="QuitApp" xml:space="preserve">
+    <value>アプリを終了</value>
+  </data>
 </root>

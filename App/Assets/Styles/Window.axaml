@@ -13,7 +13,6 @@
   <Style Selector="Window">
     <Setter Property="FontFamily" Value="fonts:MyFonts#Noto Sans JP" />
     <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
-    <Setter Property="WindowStartupLocation" Value="CenterScreen" />
     <Setter Property="Title" Value="{x:Static local:App.AppName}" />
     <Setter Property="CanResize" Value="False" />
   </Style>

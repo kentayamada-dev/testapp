@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using App.Services;
+using App.Services.Application;
 using App.Services.Configuration;
 using App.Services.Culture;
 using App.Services.Data;
@@ -102,5 +103,16 @@ public sealed class App : Application
     {
       await LoggerService.Log(ex);
     }
+  }
+
+  private void QuitApp_Click(object? sender, EventArgs e)
+  {
+    ApplicationService.CloseApplication();
+  }
+
+  private void TrayIcon_Click(object? sender, EventArgs e)
+  {
+    _mainWindow?.Show();
+    _mainWindow?.Activate();
   }
 }

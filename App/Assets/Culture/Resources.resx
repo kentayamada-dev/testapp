@@ -99,4 +99,7 @@
   <data name="SelectFolder" xml:space="preserve">
     <value>Select Folder</value>
   </data>
+  <data name="QuitApp" xml:space="preserve">
+    <value>Quit App</value>
+  </data>
 </root>
