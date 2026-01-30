@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>My Best App</AssemblyTitle>
     <Company>Kenta Yamada</Company>
-    <Version>1.30.0</Version>
+    <Version>1.31.0</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -12,6 +12,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <ApplicationIcon>Assets\Logo\logo.ico</ApplicationIcon>
+    <PackageIcon>logo.png</PackageIcon>
     <Description>My best app is cool</Description>
     <Product>MyBestApp</Product>
     <Copyright>2025 Kenta Yamada</Copyright>
@@ -39,6 +41,14 @@
     <AvaloniaResource Include="Assets\Icons\*"/>
     <AvaloniaResource Include="Assets\Logo\*"/>
     <AvaloniaResource Include="Assets\Config\*"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Logo\logo.ico"/>
+    <None Update="Assets\Logo\logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -72,10 +82,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.3.11"/>
     <PackageReference Include="Avalonia.Desktop" Version="11.3.11"/>
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.11">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Avalonia.Themes.Simple" Version="11.3.11"/>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
     <PackageReference Include="FFMpegCore" Version="5.4.0"/>
