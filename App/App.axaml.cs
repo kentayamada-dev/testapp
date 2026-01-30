@@ -77,6 +77,20 @@ public sealed class App : Application
       desktop.ShutdownMode = shutdownMode;
       desktop.MainWindow = _mainWindow;
 
+      if (OperatingSystem.IsMacOS())
+      {
+        _mainWindow.Closing += (_, e) =>
+        {
+          if (e.CloseReason is WindowCloseReason.ApplicationShutdown or WindowCloseReason.OSShutdown) return;
+
+          e.Cancel = true;
+          _mainWindow.Hide();
+        };
+
+        if (Current?.TryGetFeature<IActivatableLifetime>(out var activatable) == true)
+          activatable.Activated += (_, _) => { _mainWindow.Show(); };
+      }
+
       if (OperatingSystem.IsWindows())
       {
         _singleInstanceService.StartActivateListener(_mainWindow);
