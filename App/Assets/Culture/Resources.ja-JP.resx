@@ -99,7 +99,4 @@
   <data name="QuitApp" xml:space="preserve">
     <value>アプリを終了</value>
   </data>
-  <data name="Appearance" xml:space="preserve">
-    <value>外観</value>
-  </data>
 </root>
