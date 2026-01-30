@@ -2,10 +2,11 @@
   <PropertyGroup>
     <AssemblyTitle>My Best App</AssemblyTitle>
     <Company>Kenta Yamada</Company>
-    <Version>1.31.0</Version>
+    <Version>1.32.0</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <InvariantGlobalization>false</InvariantGlobalization>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
@@ -13,7 +14,6 @@
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <ApplicationIcon>Assets\Logo\logo.ico</ApplicationIcon>
-    <PackageIcon>logo.png</PackageIcon>
     <Description>My best app is cool</Description>
     <Product>MyBestApp</Product>
     <Copyright>2025 Kenta Yamada</Copyright>
@@ -24,6 +24,7 @@
     <TrimMode>full</TrimMode>
     <SuppressTrimAnalysisWarnings>false</SuppressTrimAnalysisWarnings>
     <StripSymbols>true</StripSymbols>
+    <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
     <OptimizationPreference>Speed</OptimizationPreference>
     <SelfContained>true</SelfContained>
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
@@ -45,10 +46,6 @@
 
   <ItemGroup>
     <Content Include="Assets\Logo\logo.ico"/>
-    <None Update="Assets\Logo\logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
