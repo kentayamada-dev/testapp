@@ -77,6 +77,17 @@ public sealed class App : Application
       desktop.ShutdownMode = shutdownMode;
       desktop.MainWindow = _mainWindow;
 
+      if (OperatingSystem.IsMacOS())
+      {
+        desktop.Startup += (_, _) =>
+        {
+          if (_mainWindow.IsVisible) return;
+
+          _mainWindow.Show();
+          _mainWindow.Activate();
+        };
+      }
+
       if (OperatingSystem.IsWindows())
       {
         _singleInstanceService.StartActivateListener(_mainWindow);
