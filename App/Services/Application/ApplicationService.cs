@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.IO;
 using Avalonia.Controls.ApplicationLifetimes;
 
 namespace App.Services.Application;
@@ -13,7 +14,17 @@ public static class ApplicationService
 
     if (exePath == null) return;
 
-    Process.Start(exePath);
+    Program.SingleInstanceService?.Dispose();
+
+    var startInfo = new ProcessStartInfo
+    {
+      FileName = exePath,
+      UseShellExecute = true,
+      WorkingDirectory = Path.GetDirectoryName(exePath)
+    };
+
+    Process.Start(startInfo);
+
     desktop.Shutdown();
   }
 
