@@ -1,11 +1,11 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using App.Services;
 using App.Services.Application;
 using App.Services.Configuration;
 using App.Services.Culture;
 using App.Services.Data;
-using App.Services.Logger;
 using App.Services.Theme;
 using App.Services.Updater;
 using App.Services.Uri;
@@ -24,7 +24,9 @@ namespace App;
 public sealed class App : Application
 {
   private Window? _mainWindow;
+  private SingleInstanceService? _singleInstanceService;
   private UpdaterService? _updaterService;
+
   public static string? AppName { get; private set; }
 
   public override void Initialize()
@@ -42,10 +44,21 @@ public sealed class App : Application
 
   public override void OnFrameworkInitializationCompleted()
   {
+    _singleInstanceService = new SingleInstanceService();
+
+    if (OperatingSystem.IsWindows())
+    {
+      _singleInstanceService.CheckSingleInstance();
+
+      if (!_singleInstanceService.IsNewInstance)
+      {
+        ApplicationService.CloseApplication();
+        return;
+      }
+    }
+
     var services = new ServiceCollection();
-
     services.AddAppServices();
-
     var serviceProvider = services.BuildServiceProvider();
 
     _updaterService = serviceProvider.GetRequiredService<UpdaterService>();
@@ -53,17 +66,22 @@ public sealed class App : Application
     ThemeService.ApplyTheme(ThemeService.GetTheme(DataPersistService.Get().Theme));
 
     var mainViewModel = serviceProvider.GetRequiredService<MainViewModel>();
+
     if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
     {
-      var shutdownMode = OperatingSystem.IsMacOS()
-        ? ShutdownMode.OnExplicitShutdown
-        : ShutdownMode.OnLastWindowClose;
+      var shutdownMode = OperatingSystem.IsMacOS() ? ShutdownMode.OnExplicitShutdown : ShutdownMode.OnLastWindowClose;
 
       _mainWindow = new MainWindow { DataContext = mainViewModel };
       mainViewModel.SetMainWindow(_mainWindow);
 
       desktop.ShutdownMode = shutdownMode;
       desktop.MainWindow = _mainWindow;
+
+      if (OperatingSystem.IsWindows())
+      {
+        _singleInstanceService.StartActivateListener(_mainWindow);
+        desktop.Exit += (_, _) => _singleInstanceService.Dispose();
+      }
     }
 
     if (OperatingSystem.IsWindows()) SetTrayIcon();
@@ -73,20 +91,13 @@ public sealed class App : Application
 
   private void SetTrayIcon()
   {
-    var quitMenuItem = new NativeMenuItem(
-      Assets.Culture.Resources.QuitApp
-    );
+    var quitMenuItem = new NativeMenuItem(Assets.Culture.Resources.QuitApp);
+
     quitMenuItem.Click += QuitApp_Click;
 
     var trayIcon = new TrayIcon
     {
-      Icon = new WindowIcon(
-        new Bitmap(
-          AssetLoader.Open(
-            new Uri("avares://App/Assets/Logo/logo.ico")
-          )
-        )
-      ),
+      Icon = new WindowIcon(new Bitmap(AssetLoader.Open(new Uri("avares://App/Assets/Logo/logo.ico")))),
       ToolTipText = AppName,
       Menu = [quitMenuItem]
     };
@@ -97,46 +108,28 @@ public sealed class App : Application
     TrayIcon.SetIcons(Current ?? throw new InvalidOperationException("Application context unavailable."), icons);
   }
 
+  [SuppressMessage("ReSharper", "AsyncVoidEventHandlerMethod")]
   private async void CheckUpdate_Click(object? sender, EventArgs e)
   {
-    try
-    {
-      if (_mainWindow == null || _updaterService == null) return;
+    if (_mainWindow == null || _updaterService == null) return;
 
-      await _updaterService.CheckForUpdate(_mainWindow);
-    }
-    catch (Exception ex)
-    {
-      await LoggerService.Log(ex);
-    }
+    await _updaterService.CheckForUpdate(_mainWindow);
   }
 
+  [SuppressMessage("ReSharper", "AsyncVoidEventHandlerMethod")]
   private async void AboutDeveloper_Click(object? sender, EventArgs e)
   {
-    try
-    {
-      if (_mainWindow == null) return;
+    if (_mainWindow == null) return;
 
-      await UriService.OpenUri(ConfigurationService.AppSettings.HomepageUrl, _mainWindow);
-    }
-    catch (Exception ex)
-    {
-      await LoggerService.Log(ex);
-    }
+    await UriService.OpenUri(ConfigurationService.AppSettings.HomepageUrl, _mainWindow);
   }
 
+  [SuppressMessage("ReSharper", "AsyncVoidEventHandlerMethod")]
   private async void AboutApp_Click(object? sender, EventArgs e)
   {
-    try
-    {
-      if (_mainWindow == null) return;
+    if (_mainWindow == null) return;
 
-      await UriService.OpenUri(ConfigurationService.AppSettings.AppRepoUrl, _mainWindow);
-    }
-    catch (Exception ex)
-    {
-      await LoggerService.Log(ex);
-    }
+    await UriService.OpenUri(ConfigurationService.AppSettings.AppRepoUrl, _mainWindow);
   }
 
   private static void QuitApp_Click(object? sender, EventArgs e)
@@ -146,7 +139,6 @@ public sealed class App : Application
 
   private void TrayIcon_Click(object? sender, EventArgs e)
   {
-    _mainWindow?.Show();
-    _mainWindow?.Activate();
+    _singleInstanceService?.BringWindowToFront();
   }
 }
