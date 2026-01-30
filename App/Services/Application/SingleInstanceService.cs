@@ -25,8 +25,14 @@ public class SingleInstanceService : IDisposable
     _activateListenerCts?.Cancel();
     _activateListenerCts?.Dispose();
     _activateEvent?.Dispose();
-    _instanceMutex?.ReleaseMutex();
-    _instanceMutex?.Dispose();
+
+    if (_instanceMutex != null)
+    {
+      if (IsNewInstance) _instanceMutex.ReleaseMutex();
+
+      _instanceMutex.Dispose();
+    }
+
     GC.SuppressFinalize(this);
   }
 
@@ -34,7 +40,6 @@ public class SingleInstanceService : IDisposable
   public void CheckSingleInstance()
   {
     _instanceMutex = new Mutex(true, _instanceMutexName, out var isNewInstance);
-
     IsNewInstance = isNewInstance;
 
     if (!isNewInstance)
@@ -49,21 +54,25 @@ public class SingleInstanceService : IDisposable
 
   public void StartActivateListener(Window mainWindow)
   {
+    if (!IsNewInstance) return;
+
+    if (_activateEvent == null)
+      throw new InvalidOperationException(
+        "Activate event is not initialized. Call CheckSingleInstance() first."
+      );
+
     _mainWindow = mainWindow;
     _activateListenerCts = new CancellationTokenSource();
 
     var token = _activateListenerCts.Token;
+    var handles = new[] { _activateEvent, token.WaitHandle };
 
-    Task.Run(() =>
-    {
-      while (!token.IsCancellationRequested)
+    Task.Run(
+      () =>
       {
-        _activateEvent?.WaitOne();
-        Dispatcher.UIThread.Post(BringWindowToFront);
-      }
-    }, token);
+        while (WaitHandle.WaitAny(handles) == 0) Dispatcher.UIThread.Post(BringWindowToFront);
+      }, token);
   }
-
 
   public void BringWindowToFront()
   {

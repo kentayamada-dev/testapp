@@ -1,4 +1,5 @@
 ﻿using System;
+using App.Services.Application;
 using Avalonia;
 using Avalonia.Media.Fonts;
 
@@ -9,9 +10,25 @@ public sealed class MyFontCollection() : EmbeddedFontCollection(new Uri("fonts:M
 
 public static class Program
 {
+  public static SingleInstanceService? SingleInstanceService { get; private set; }
+
   [STAThread]
   public static void Main(string[] args)
   {
+    if (OperatingSystem.IsWindows())
+    {
+      var single = new SingleInstanceService();
+      single.CheckSingleInstance();
+
+      if (!single.IsNewInstance)
+      {
+        single.Dispose();
+        return;
+      }
+
+      SingleInstanceService = single;
+    }
+
     BuildAvaloniaApp()
       .StartWithClassicDesktopLifetime(args);
   }

@@ -44,18 +44,7 @@ public sealed class App : Application
 
   public override void OnFrameworkInitializationCompleted()
   {
-    _singleInstanceService = new SingleInstanceService();
-
-    if (OperatingSystem.IsWindows())
-    {
-      _singleInstanceService.CheckSingleInstance();
-
-      if (!_singleInstanceService.IsNewInstance)
-      {
-        ApplicationService.CloseApplication();
-        return;
-      }
-    }
+    _singleInstanceService = Program.SingleInstanceService;
 
     var services = new ServiceCollection();
     services.AddAppServices();
@@ -88,13 +77,14 @@ public sealed class App : Application
         };
 
         if (Current?.TryGetFeature<IActivatableLifetime>(out var activatable) == true)
+        {
           activatable.Activated += (_, _) => { _mainWindow.Show(); };
+        }
       }
 
       if (OperatingSystem.IsWindows())
       {
-        _singleInstanceService.StartActivateListener(_mainWindow);
-        desktop.Exit += (_, _) => _singleInstanceService.Dispose();
+        _singleInstanceService?.StartActivateListener(_mainWindow);
       }
     }
 
