@@ -60,9 +60,6 @@
   <data name="updateUnable" xml:space="preserve">
     <value>更新情報の取得に失敗しました。しばらく後にお試しください。</value>
   </data>
-  <data name="View" xml:space="preserve">
-    <value>表示</value>
-  </data>
   <data name="About" xml:space="preserve">
     <value>情報</value>
   </data>
@@ -101,5 +98,8 @@
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>アプリを終了</value>
+  </data>
+  <data name="Appearance" xml:space="preserve">
+    <value>外観</value>
   </data>
 </root>

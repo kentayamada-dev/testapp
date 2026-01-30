@@ -9,8 +9,8 @@
 
 namespace App.Assets.Culture {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,15 +22,15 @@ namespace App.Assets.Culture {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources_ja_JP {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources_ja_JP() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +44,7 @@ namespace App.Assets.Culture {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace App.Assets.Culture {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 情報.
         /// </summary>
@@ -67,7 +67,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("About", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to アプリについて.
         /// </summary>
@@ -76,7 +76,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("AboutApp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 開発者について.
         /// </summary>
@@ -85,7 +85,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("AboutDeveloper", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to キャンセル.
         /// </summary>
@@ -94,7 +94,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to キャプチャ.
         /// </summary>
@@ -103,7 +103,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Capture", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 更新をチェック.
         /// </summary>
@@ -112,7 +112,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("CheckUpdate", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 情報.
         /// </summary>
@@ -121,7 +121,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Info", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 間隔（秒）.
         /// </summary>
@@ -130,7 +130,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Interval", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 10進数である必要があります.
         /// </summary>
@@ -139,7 +139,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("IntervalError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 言語.
         /// </summary>
@@ -148,7 +148,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to いいえ.
         /// </summary>
@@ -157,7 +157,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("No", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 出力フォルダ.
         /// </summary>
@@ -166,7 +166,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("OutputFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 無効なパス.
         /// </summary>
@@ -175,7 +175,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("OutputFolderError", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to アプリを終了.
         /// </summary>
@@ -184,7 +184,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("QuitApp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 変更を有効にするためにアプリを再起動しますか？.
         /// </summary>
@@ -193,7 +193,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("RestartApp", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to フォルダを選択.
         /// </summary>
@@ -202,7 +202,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("SelectFolder", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to テーマ.
         /// </summary>
@@ -211,7 +211,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to ダーク.
         /// </summary>
@@ -220,7 +220,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("ThemeDark", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to ライト.
         /// </summary>
@@ -229,7 +229,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("ThemeLight", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to システム.
         /// </summary>
@@ -238,7 +238,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("ThemeSystem", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 新しいバージョンが利用可能です。今すぐインストールしますか？.
         /// </summary>
@@ -247,7 +247,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("UpdateAvailable", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 現在、利用可能な更新はありません。.
         /// </summary>
@@ -256,7 +256,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("UpdateNotAvailable", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to 更新情報の取得に失敗しました。しばらく後にお試しください。.
         /// </summary>
@@ -265,7 +265,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("updateUnable", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to URLは必須です.
         /// </summary>
@@ -274,16 +274,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("UrlError", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 表示.
-        /// </summary>
-        internal static string View {
-            get {
-                return ResourceManager.GetString("View", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to はい.
         /// </summary>

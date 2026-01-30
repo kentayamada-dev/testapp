@@ -76,16 +76,10 @@ public sealed class App : Application
           _mainWindow.Hide();
         };
 
-        if (Current?.TryGetFeature<IActivatableLifetime>(out var activatable) == true)
-        {
-          activatable.Activated += (_, _) => { _mainWindow.Show(); };
-        }
+        if (Current?.TryGetFeature<IActivatableLifetime>(out var activatable) == true) activatable.Activated += (_, _) => { _mainWindow.Show(); };
       }
 
-      if (OperatingSystem.IsWindows())
-      {
-        _singleInstanceService?.StartActivateListener(_mainWindow);
-      }
+      if (OperatingSystem.IsWindows()) _singleInstanceService?.StartActivateListener(_mainWindow);
     }
 
     if (OperatingSystem.IsWindows()) SetTrayIcon();

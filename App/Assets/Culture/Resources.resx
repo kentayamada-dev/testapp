@@ -60,9 +60,6 @@
   <data name="updateUnable" xml:space="preserve">
     <value>Unable to determine update status.</value>
   </data>
-  <data name="View" xml:space="preserve">
-    <value>View</value>
-  </data>
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
