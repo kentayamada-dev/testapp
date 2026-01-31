@@ -57,7 +57,7 @@
   <data name="UpdateNotAvailable" xml:space="preserve">
     <value>現在、利用可能な更新はありません。</value>
   </data>
-  <data name="updateUnable" xml:space="preserve">
+  <data name="UpdateUnable" xml:space="preserve">
     <value>更新情報の取得に失敗しました。しばらく後にお試しください。</value>
   </data>
   <data name="About" xml:space="preserve">
@@ -75,19 +75,13 @@
   <data name="Capture" xml:space="preserve">
     <value>キャプチャ</value>
   </data>
-  <data name="Interval" xml:space="preserve">
-    <value>間隔（秒）</value>
-  </data>
   <data name="OutputFolder" xml:space="preserve">
     <value>出力フォルダ</value>
   </data>
   <data name="RestartApp" xml:space="preserve">
     <value>変更を有効にするためにアプリを再起動しますか？</value>
   </data>
-  <data name="IntervalError" xml:space="preserve">
-    <value>10進数である必要があります</value>
-  </data>
-  <data name="OutputFolderError" xml:space="preserve">
+  <data name="FolderError" xml:space="preserve">
     <value>無効なパス</value>
   </data>
   <data name="UrlError" xml:space="preserve">
@@ -98,5 +92,41 @@
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>アプリを終了</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>アップロード</value>
+  </data>
+  <data name="CaptureInterval" xml:space="preserve">
+    <value>間隔（秒）</value>
+  </data>
+  <data name="UploadInterval" xml:space="preserve">
+    <value>間隔</value>
+  </data>
+  <data name="CaptureIntervalError" xml:space="preserve">
+    <value>10進数である必要があります</value>
+  </data>
+  <data name="FpsError" xml:space="preserve">
+    <value>FPSは必須です</value>
+  </data>
+  <data name="UploadIntervalError" xml:space="preserve">
+    <value>アップロード間隔を選択してください</value>
+  </data>
+  <data name="InputFolder" xml:space="preserve">
+    <value>入力フォルダ</value>
+  </data>
+  <data name="UploadInterval_1" xml:space="preserve">
+    <value>毎日深夜（午前0時）</value>
+  </data>
+  <data name="UploadInterval_2" xml:space="preserve">
+    <value>1日2回（深夜、正午）</value>
+  </data>
+  <data name="UploadInterval_3" xml:space="preserve">
+    <value>8時間ごと</value>
+  </data>
+  <data name="UploadInterval_4" xml:space="preserve">
+    <value>6時間ごと</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>バージョン</value>
   </data>
 </root>

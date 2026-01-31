@@ -3,16 +3,29 @@
 
   <Design.PreviewWith>
     <Border Padding="20" Width="300" Height="100">
-      <TextBox Classes="CustomTextBox" />
+      <TextBox Classes="CustomTextBox" Text="Sample Text" />
     </Border>
   </Design.PreviewWith>
 
   <Style Selector="TextBox.CustomTextBox">
     <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
     <Setter Property="SelectionBrush" Value="{DynamicResource SelectionBackgroundColor}" />
     <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ThemeForegroundBrush}" />
-    <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="FontSize" Value="15" />
-    <Setter Property="Height" Value="30" />
+    <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Height" Value="{StaticResource InputBoxHeight}" />
+  </Style>
+
+  <Style Selector="TextBox.CustomTextBox:pointerover /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
+  </Style>
+
+  <Style Selector="TextBox.CustomTextBox:focus /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
+  </Style>
+
+  <Style Selector="TextBox.CustomTextBox.error /template/ Border#border">
+    <Setter Property="BorderBrush" Value="{DynamicResource ErrorBrush}" />
   </Style>
 </Styles>

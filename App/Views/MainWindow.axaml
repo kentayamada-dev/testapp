@@ -85,10 +85,8 @@
           <TabItem Header="{x:Static culture:Resources.Capture}" Classes="CustomTabItem">
             <views:CaptureForm DataContext="{Binding CaptureFormViewModel}" />
           </TabItem>
-          <TabItem Header="Tab 2" Classes="CustomTabItem">
-            <StackPanel Background="{DynamicResource WindowBackground}">
-              <TextBlock Text="{x:Static culture:Resources.Theme}" FontSize="70" />
-            </StackPanel>
+          <TabItem Header="{x:Static culture:Resources.Upload}" Classes="CustomTabItem">
+            <views:UploadForm DataContext="{Binding UploadFormViewModel}" />
           </TabItem>
         </TabControl>
       </Border>

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using App.Assets.Culture;
+using App.Models;
 using App.Services.Capture;
 using App.Services.Data;
 using App.Services.Logger;
@@ -19,36 +21,25 @@ public partial class CaptureFormViewModel : ViewModelBase
 
   private Window? _mainWindow;
 
-  [ObservableProperty] private CancellationTokenSource? _captureCancellationTokenSource;
+  [ObservableProperty] private string _buttonIconData = PlayIconPath;
 
-  [ObservableProperty] private string _capturePathData = PlayIconPath;
+  [ObservableProperty] private CancellationTokenSource? _cancellationTokenSource;
 
-  [ObservableProperty] private TextInputFieldViewModel _intervalField = new()
-  {
-    Label = Resources.Interval,
-    ErrorMessage = Resources.IntervalError
-  };
+  [ObservableProperty] private TextInputFieldViewModel _intervalField = new(Resources.CaptureInterval, Resources.CaptureIntervalError);
 
-  [ObservableProperty] private bool _isCapturing;
+  [ObservableProperty] private TextInputFieldViewModel _outputFolderField = new(Resources.OutputFolder, Resources.FolderError);
 
-  [ObservableProperty] private TextInputFieldViewModel _outputFolderField = new()
-  {
-    Label = Resources.OutputFolder,
-    ErrorMessage = Resources.OutputFolderError
-  };
-
-  [ObservableProperty] private TextInputFieldViewModel _urlField = new()
-  {
-    Label = "URL",
-    ErrorMessage = Resources.UrlError
-  };
+  [ObservableProperty] private TextInputFieldViewModel _urlField = new("URL", Resources.UrlError);
 
   public CaptureFormViewModel()
   {
     var form = DataPersistService.Get().CaptureForm;
-    UrlField.Value = form.Url ?? "";
-    IntervalField.Value = form.Interval ?? "";
-    OutputFolderField.Value = form.OutputFolder ?? "";
+
+    if (form == null) return;
+
+    UrlField.Value = form.Url ?? UrlField.Value;
+    IntervalField.Value = form.Interval ?? IntervalField.Value;
+    OutputFolderField.Value = form.OutputFolder ?? OutputFolderField.Value;
   }
 
   public void SetMainWindow(Window mainWindow)
@@ -56,9 +47,9 @@ public partial class CaptureFormViewModel : ViewModelBase
     _mainWindow = mainWindow;
   }
 
-  partial void OnCaptureCancellationTokenSourceChanged(CancellationTokenSource? value)
+  partial void OnCancellationTokenSourceChanged(CancellationTokenSource? value)
   {
-    CapturePathData = value == null ? PlayIconPath : StopIconPath;
+    ButtonIconData = value == null ? PlayIconPath : StopIconPath;
   }
 
   [RelayCommand]
@@ -66,8 +57,7 @@ public partial class CaptureFormViewModel : ViewModelBase
   {
     if (_mainWindow == null) return;
 
-    var folders = await _mainWindow.StorageProvider.OpenFolderPickerAsync(
-      new FolderPickerOpenOptions());
+    var folders = await _mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions());
 
     if (folders.Count > 0) OutputFolderField.Value = folders[0].Path.LocalPath;
   }
@@ -75,10 +65,10 @@ public partial class CaptureFormViewModel : ViewModelBase
   [RelayCommand]
   private async Task Capture()
   {
-    if (CaptureCancellationTokenSource != null)
+    if (CancellationTokenSource != null)
     {
-      await CaptureCancellationTokenSource.CancelAsync();
-      CaptureCancellationTokenSource = null;
+      await CancellationTokenSource.CancelAsync();
+      CancellationTokenSource = null;
       return;
     }
 
@@ -86,13 +76,14 @@ public partial class CaptureFormViewModel : ViewModelBase
 
     await DataPersistService.Update(data =>
     {
+      data.CaptureForm ??= new CaptureFormModel();
       data.CaptureForm.Url = UrlField.Value;
       data.CaptureForm.Interval = IntervalField.Value;
       data.CaptureForm.OutputFolder = OutputFolderField.Value;
     });
 
-    CaptureCancellationTokenSource = new CancellationTokenSource();
-    _ = CaptureAsync(int.Parse(IntervalField.Value), CaptureCancellationTokenSource.Token);
+    CancellationTokenSource = new CancellationTokenSource();
+    _ = CaptureAsync(byte.Parse(IntervalField.Value), CancellationTokenSource.Token);
   }
 
   private async Task CaptureAsync(int interval, CancellationToken cancellationToken)
@@ -126,7 +117,7 @@ public partial class CaptureFormViewModel : ViewModelBase
     else
       OutputFolderField.IsInvalid = false;
 
-    if (string.IsNullOrWhiteSpace(IntervalField.Value) || !decimal.TryParse(IntervalField.Value, out _))
+    if (string.IsNullOrWhiteSpace(IntervalField.Value) || !byte.TryParse(IntervalField.Value, NumberStyles.None, null, out var result) || result < 1)
       IntervalField.IsInvalid = true;
     else
       IntervalField.IsInvalid = false;
@@ -134,8 +125,7 @@ public partial class CaptureFormViewModel : ViewModelBase
     return IntervalField.IsInvalid || OutputFolderField.IsInvalid || UrlField.IsInvalid;
   }
 
-  private async Task<bool> IsValidFolderPath(
-    string? folderPath)
+  private async Task<bool> IsValidFolderPath(string? folderPath)
   {
     if (_mainWindow == null || folderPath == null) return false;
 

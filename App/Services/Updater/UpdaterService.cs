@@ -51,7 +51,7 @@ public class UpdaterService(
       case UpdateStatus.UserSkipped:
       case UpdateStatus.CouldNotDetermine:
       default:
-        await ShowMessageDialog(owner, Resources.updateUnable);
+        await ShowMessageDialog(owner, Resources.UpdateUnable);
         break;
     }
   }

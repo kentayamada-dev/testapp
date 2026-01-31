@@ -105,11 +105,47 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interval (sec).
+        /// </summary>
+        public static string CaptureInterval {
+            get {
+                return ResourceManager.GetString("CaptureInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must be a decimal number.
+        /// </summary>
+        public static string CaptureIntervalError {
+            get {
+                return ResourceManager.GetString("CaptureIntervalError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check Update.
         /// </summary>
         public static string CheckUpdate {
             get {
                 return ResourceManager.GetString("CheckUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid path.
+        /// </summary>
+        public static string FolderError {
+            get {
+                return ResourceManager.GetString("FolderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPS is required.
+        /// </summary>
+        public static string FpsError {
+            get {
+                return ResourceManager.GetString("FpsError", resourceCulture);
             }
         }
         
@@ -123,20 +159,11 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Interval (sec).
+        ///   Looks up a localized string similar to Input Folder.
         /// </summary>
-        public static string Interval {
+        public static string InputFolder {
             get {
-                return ResourceManager.GetString("Interval", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Must be a decimal number.
-        /// </summary>
-        public static string IntervalError {
-            get {
-                return ResourceManager.GetString("IntervalError", resourceCulture);
+                return ResourceManager.GetString("InputFolder", resourceCulture);
             }
         }
         
@@ -164,15 +191,6 @@ namespace App.Assets.Culture {
         public static string OutputFolder {
             get {
                 return ResourceManager.GetString("OutputFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid path.
-        /// </summary>
-        public static string OutputFolderError {
-            get {
-                return ResourceManager.GetString("OutputFolderError", resourceCulture);
             }
         }
         
@@ -260,9 +278,72 @@ namespace App.Assets.Culture {
         /// <summary>
         ///   Looks up a localized string similar to Unable to determine update status..
         /// </summary>
-        public static string updateUnable {
+        public static string UpdateUnable {
             get {
-                return ResourceManager.GetString("updateUnable", resourceCulture);
+                return ResourceManager.GetString("UpdateUnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interval.
+        /// </summary>
+        public static string UploadInterval {
+            get {
+                return ResourceManager.GetString("UploadInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Daily at midnight (12:00 AM).
+        /// </summary>
+        public static string UploadInterval_1 {
+            get {
+                return ResourceManager.GetString("UploadInterval_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twice a day (midnight, noon).
+        /// </summary>
+        public static string UploadInterval_2 {
+            get {
+                return ResourceManager.GetString("UploadInterval_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every 8 hours.
+        /// </summary>
+        public static string UploadInterval_3 {
+            get {
+                return ResourceManager.GetString("UploadInterval_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Every 6 hours.
+        /// </summary>
+        public static string UploadInterval_4 {
+            get {
+                return ResourceManager.GetString("UploadInterval_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select upload interval.
+        /// </summary>
+        public static string UploadIntervalError {
+            get {
+                return ResourceManager.GetString("UploadIntervalError", resourceCulture);
             }
         }
         
@@ -272,6 +353,15 @@ namespace App.Assets.Culture {
         public static string UrlError {
             get {
                 return ResourceManager.GetString("UrlError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         

@@ -20,7 +20,8 @@ namespace App.ViewModels;
 public partial class MainViewModel(
   IServiceProvider serviceProvider,
   UpdaterService updaterService,
-  CaptureFormViewModel captureFormViewModel) : ViewModelBase
+  CaptureFormViewModel captureFormViewModel,
+  UploadFormViewModel uploadFormViewModel) : ViewModelBase
 {
   [ObservableProperty] private string _appRepoUrl = ConfigurationService.AppSettings.AppRepoUrl;
   [ObservableProperty] private CaptureFormViewModel _captureFormViewModel = captureFormViewModel;
@@ -30,6 +31,7 @@ public partial class MainViewModel(
   [ObservableProperty] private string _jaCode = Culture.Ja.Code;
   [ObservableProperty] private string _lightTheme = Theme.Light.Value;
   [ObservableProperty] private string _systemTheme = Theme.System.Value;
+  [ObservableProperty] private UploadFormViewModel _uploadFormViewModel = uploadFormViewModel;
 
   private Window? _mainWindow;
 
@@ -37,6 +39,7 @@ public partial class MainViewModel(
   {
     _mainWindow = mainWindow;
     CaptureFormViewModel.SetMainWindow(mainWindow);
+    UploadFormViewModel.SetMainWindow(mainWindow);
   }
 
   [RelayCommand]

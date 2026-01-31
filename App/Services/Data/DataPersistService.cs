@@ -14,7 +14,9 @@ public class UserPreferencesModel
 
   public string? Culture { get; set; }
 
-  public CaptureFormModel CaptureForm { get; init; } = new();
+  public CaptureFormModel? CaptureForm { get; set; }
+
+  public UploadFormModel? UploadForm { get; set; }
 }
 
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,

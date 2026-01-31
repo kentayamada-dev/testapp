@@ -9,8 +9,8 @@
 
 namespace App.Assets.Culture {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,15 +22,15 @@ namespace App.Assets.Culture {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources_ja_JP {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources_ja_JP() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -44,7 +44,7 @@ namespace App.Assets.Culture {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -58,7 +58,7 @@ namespace App.Assets.Culture {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 情報.
         /// </summary>
@@ -67,7 +67,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("About", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to アプリについて.
         /// </summary>
@@ -76,7 +76,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("AboutApp", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 開発者について.
         /// </summary>
@@ -85,7 +85,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("AboutDeveloper", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to キャンセル.
         /// </summary>
@@ -94,7 +94,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to キャプチャ.
         /// </summary>
@@ -103,7 +103,25 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Capture", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 間隔（秒）.
+        /// </summary>
+        internal static string CaptureInterval {
+            get {
+                return ResourceManager.GetString("CaptureInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10進数である必要があります.
+        /// </summary>
+        internal static string CaptureIntervalError {
+            get {
+                return ResourceManager.GetString("CaptureIntervalError", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to 更新をチェック.
         /// </summary>
@@ -112,7 +130,25 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("CheckUpdate", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 無効なパス.
+        /// </summary>
+        internal static string FolderError {
+            get {
+                return ResourceManager.GetString("FolderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPSは必須です.
+        /// </summary>
+        internal static string FpsError {
+            get {
+                return ResourceManager.GetString("FpsError", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to 情報.
         /// </summary>
@@ -121,25 +157,16 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Info", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to 間隔（秒）.
+        ///   Looks up a localized string similar to 入力フォルダ.
         /// </summary>
-        internal static string Interval {
+        internal static string InputFolder {
             get {
-                return ResourceManager.GetString("Interval", resourceCulture);
+                return ResourceManager.GetString("InputFolder", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to 10進数である必要があります.
-        /// </summary>
-        internal static string IntervalError {
-            get {
-                return ResourceManager.GetString("IntervalError", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 言語.
         /// </summary>
@@ -148,7 +175,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to いいえ.
         /// </summary>
@@ -157,7 +184,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("No", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 出力フォルダ.
         /// </summary>
@@ -166,16 +193,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("OutputFolder", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to 無効なパス.
-        /// </summary>
-        internal static string OutputFolderError {
-            get {
-                return ResourceManager.GetString("OutputFolderError", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to アプリを終了.
         /// </summary>
@@ -184,7 +202,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("QuitApp", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 変更を有効にするためにアプリを再起動しますか？.
         /// </summary>
@@ -193,7 +211,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("RestartApp", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to フォルダを選択.
         /// </summary>
@@ -202,7 +220,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("SelectFolder", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to テーマ.
         /// </summary>
@@ -211,7 +229,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ダーク.
         /// </summary>
@@ -220,7 +238,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("ThemeDark", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to ライト.
         /// </summary>
@@ -229,7 +247,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("ThemeLight", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to システム.
         /// </summary>
@@ -238,7 +256,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("ThemeSystem", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 新しいバージョンが利用可能です。今すぐインストールしますか？.
         /// </summary>
@@ -247,7 +265,7 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("UpdateAvailable", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 現在、利用可能な更新はありません。.
         /// </summary>
@@ -256,16 +274,79 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("UpdateNotAvailable", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to 更新情報の取得に失敗しました。しばらく後にお試しください。.
         /// </summary>
-        internal static string updateUnable {
+        internal static string UpdateUnable {
             get {
-                return ResourceManager.GetString("updateUnable", resourceCulture);
+                return ResourceManager.GetString("UpdateUnable", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to アップロード.
+        /// </summary>
+        internal static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 間隔.
+        /// </summary>
+        internal static string UploadInterval {
+            get {
+                return ResourceManager.GetString("UploadInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 毎日深夜（午前0時）.
+        /// </summary>
+        internal static string UploadInterval_1 {
+            get {
+                return ResourceManager.GetString("UploadInterval_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1日2回（深夜、正午）.
+        /// </summary>
+        internal static string UploadInterval_2 {
+            get {
+                return ResourceManager.GetString("UploadInterval_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8時間ごと.
+        /// </summary>
+        internal static string UploadInterval_3 {
+            get {
+                return ResourceManager.GetString("UploadInterval_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6時間ごと.
+        /// </summary>
+        internal static string UploadInterval_4 {
+            get {
+                return ResourceManager.GetString("UploadInterval_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to アップロード間隔を選択してください.
+        /// </summary>
+        internal static string UploadIntervalError {
+            get {
+                return ResourceManager.GetString("UploadIntervalError", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to URLは必須です.
         /// </summary>
@@ -274,7 +355,16 @@ namespace App.Assets.Culture {
                 return ResourceManager.GetString("UrlError", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to バージョン.
+        /// </summary>
+        internal static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to はい.
         /// </summary>

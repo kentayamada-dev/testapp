@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
   {
     services.AddSingleton<MainViewModel>();
     services.AddSingleton<CaptureFormViewModel>();
+    services.AddSingleton<UploadFormViewModel>();
     services.AddTransient<MessageDialog>();
     services.AddTransient<ConfirmDialog>();
     services.AddTransient<ProgressDialog>();

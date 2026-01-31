@@ -90,20 +90,31 @@ public sealed class App : Application
   private void SetTrayIcon()
   {
     var quitMenuItem = new NativeMenuItem(Assets.Culture.Resources.QuitApp);
-
     quitMenuItem.Click += QuitApp_Click;
+
+    var settingsMenuItem = new NativeMenuItem($"{Assets.Culture.Resources.Version}: {ConfigurationService.AppMetadata.AppVersion}");
 
     var trayIcon = new TrayIcon
     {
-      Icon = new WindowIcon(new Bitmap(AssetLoader.Open(new Uri("avares://App/Assets/Logo/logo.ico")))),
+      Icon = new WindowIcon(
+        new Bitmap(
+          AssetLoader.Open(
+            new Uri("avares://App/Assets/Logo/logo.ico")
+          )
+        )
+      ),
       ToolTipText = AppName,
-      Menu = [quitMenuItem]
+      Menu = [settingsMenuItem, quitMenuItem]
     };
 
     trayIcon.Clicked += TrayIcon_Click;
-
     var icons = new TrayIcons { trayIcon };
-    TrayIcon.SetIcons(Current ?? throw new InvalidOperationException("Application context unavailable."), icons);
+    TrayIcon.SetIcons(
+      Current ?? throw new InvalidOperationException(
+        "Application context unavailable."
+      ),
+      icons
+    );
   }
 
   [SuppressMessage("ReSharper", "AsyncVoidEventHandlerMethod")]

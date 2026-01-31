@@ -2,12 +2,10 @@
 
 namespace App.ViewModels;
 
-public partial class TextInputFieldViewModel : ViewModelBase
+public partial class TextInputFieldViewModel(string label, string errorMessage, bool isInvalid = false, string value = "") : ViewModelBase
 {
-  [ObservableProperty] private string _errorMessage = "";
-
-  [ObservableProperty] private bool _isInvalid;
-  [ObservableProperty] private string _label = "";
-
-  [ObservableProperty] private string _value = "";
+  [ObservableProperty] private string _errorMessage = errorMessage;
+  [ObservableProperty] private bool _isInvalid = isInvalid;
+  [ObservableProperty] private string _label = label;
+  [ObservableProperty] private string _value = value;
 }
