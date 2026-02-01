@@ -4,7 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="200"
              x:Class="App.Views.ChromeCloseButton">
-  <Button Click="Close_Click" Classes="WindowChromeButton WindowChromeCloseButton">
-    <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg ChromeButtonCloseSvg" />
+  <Button Click="Close_Click" Classes="ChromeButton">
+    <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg" />
+    <Button.Styles>
+      <Style Selector="Button.ChromeButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="Red" />
+      </Style>
+      <Style Selector="Button.ChromeButton:pointerover Svg.ChromeButtonSvg">
+        <Setter Property="Css" Value="* { fill: #ffffff; }" />
+      </Style>
+    </Button.Styles>
   </Button>
 </UserControl>

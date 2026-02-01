@@ -104,7 +104,7 @@ public sealed class App : Application
         )
       ),
       ToolTipText = AppName,
-      Menu = [settingsMenuItem, quitMenuItem]
+      Menu = [settingsMenuItem, new NativeMenuItemSeparator(), quitMenuItem]
     };
 
     trayIcon.Clicked += TrayIcon_Click;

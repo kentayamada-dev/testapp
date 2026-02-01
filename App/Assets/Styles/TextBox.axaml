@@ -8,24 +8,19 @@
   </Design.PreviewWith>
 
   <Style Selector="TextBox.CustomTextBox">
+    <Setter Property="Padding" Value="{StaticResource FormInputPadding}" />
+    <Setter Property="Height" Value="{StaticResource FormInputHeight}" />
+    <Setter Property="FontSize" Value="{StaticResource FormInputSize}" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource PrimaryColor}" />
+    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ThemeForegroundBrush}" />
+  </Style>
+  <Style Selector="TextBox.CustomTextBox /template/ Border#PART_BorderElement">
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
-    <Setter Property="SelectionBrush" Value="{DynamicResource SelectionBackgroundColor}" />
-    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource ThemeForegroundBrush}" />
-    <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}" />
-    <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Height" Value="{StaticResource InputBoxHeight}" />
   </Style>
 
-  <Style Selector="TextBox.CustomTextBox:pointerover /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
-  </Style>
-
-  <Style Selector="TextBox.CustomTextBox:focus /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
-  </Style>
-
-  <Style Selector="TextBox.CustomTextBox.error /template/ Border#border">
-    <Setter Property="BorderBrush" Value="{DynamicResource ErrorBrush}" />
+  <Style Selector="TextBox.CustomTextBox:focus /template/ Border#PART_BorderElement">
+    <Setter Property="BorderThickness" Value="{TemplateBinding BorderThickness}" />
   </Style>
 </Styles>

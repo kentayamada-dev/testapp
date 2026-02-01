@@ -9,7 +9,22 @@
 
   <StackPanel>
     <TextBlock Text="{Binding Label}" FontWeight="Bold" Margin="0,0,0,5" />
-    <TextBox Text="{Binding Value, UpdateSourceTrigger=LostFocus}" Classes="CustomTextBox" Classes.error="{Binding IsInvalid}" />
-    <TextBlock Text="{Binding ErrorMessage}" Margin="0,5,0,0" Classes="ErrorTextBlock" Classes.error="{Binding IsInvalid}" />
+    <TextBox Text="{Binding Value, UpdateSourceTrigger=LostFocus}" Classes.error="{Binding IsInvalid}" Classes="CustomTextBox">
+      <TextBox.Styles>
+        <Style Selector="TextBox.CustomTextBox.error /template/ Border#PART_BorderElement">
+          <Setter Property="BorderBrush" Value="Red" />
+        </Style>
+      </TextBox.Styles>
+    </TextBox>
+    <TextBlock Text="{Binding ErrorMessage}" Margin="0,5,0,0" Classes.error="{Binding IsInvalid}">
+      <TextBlock.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="Foreground" Value="Transparent" />
+        </Style>
+        <Style Selector="TextBlock.error">
+          <Setter Property="Foreground" Value="Red" />
+        </Style>
+      </TextBlock.Styles>
+    </TextBlock>
   </StackPanel>
 </UserControl>

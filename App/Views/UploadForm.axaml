@@ -14,11 +14,12 @@
       <views:ComboBoxField DataContext="{Binding IntervalField}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
       <views:TextInputField DataContext="{Binding FpsField}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
       <views:TextInputField DataContext="{Binding InputFolderField}" Grid.Row="2" Grid.Column="0" />
-      <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Row="2" Grid.Column="1" Classes="DialogButton"
-              Height="{StaticResource InputBoxHeight}" Command="{Binding SelectFolderCommand}" />
+      <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Row="2" Grid.Column="1" Command="{Binding SelectFolderCommand}"
+              Classes="DefaultButton" />
       <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
-        <Button Command="{Binding UploadCommand}" Classes="DialogButton" Width="130" Height="130">
-          <Path VerticalAlignment="Center" Data="{Binding ButtonIconData}" Stroke="{DynamicResource PrimaryColor}" StrokeThickness="5" />
+        <Button Command="{Binding UploadCommand}" Width="130" Height="130" Classes="DefaultButton">
+          <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{Binding ButtonIconData}" Stroke="{DynamicResource PrimaryColor}"
+                StrokeThickness="5" />
         </Button>
       </StackPanel>
     </Grid>

@@ -78,9 +78,7 @@
       </Border>
     </Grid>
     <StackPanel Name="MainContent" Margin="20">
-      <Border
-        BorderBrush="{DynamicResource BorderColor}"
-        BorderThickness="1">
+      <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1">
         <TabControl Classes="CustomTabControl">
           <TabItem Header="{x:Static culture:Resources.Capture}" Classes="CustomTabItem">
             <views:CaptureForm DataContext="{Binding CaptureFormViewModel}" />

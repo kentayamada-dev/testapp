@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="200"
              x:Class="App.Views.ChromeMinimizeButton">
-  <Button Click="Minimize_Click" Classes="WindowChromeButton">
+  <Button Click="Minimize_Click" Classes="ChromeButton">
     <Svg Path="/Assets/Icons/minimize.svg" Classes="ChromeButtonSvg" />
   </Button>
 </UserControl>

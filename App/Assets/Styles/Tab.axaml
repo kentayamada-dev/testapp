@@ -1,0 +1,46 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Design.PreviewWith>
+    <Border Width="300">
+      <TabControl Classes="CustomTabControl">
+        <TabItem Header="Tab 1" Classes="CustomTabItem">
+          <TextBlock Text="Hello" FontSize="70" />
+        </TabItem>
+        <TabItem Header="Tab 2" Classes="CustomTabItem">
+          <TextBlock Text=" World" FontSize="70" />
+        </TabItem>
+      </TabControl>
+    </Border>
+  </Design.PreviewWith>
+
+  <Style Selector="TabControl.CustomTabControl">
+    <Setter Property="Padding" Value="0" />
+  </Style>
+
+  <Style Selector="TabItem.CustomTabItem">
+    <Setter Property="Padding" Value="0" />
+  </Style>
+
+  <Style Selector="TabItem.CustomTabItem /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Padding" Value="20,0" />
+  </Style>
+
+  <Style Selector="TabItem.CustomTabItem:selected /template/ Border#PART_SelectedPipe">
+    <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+  </Style>
+
+  <Style Selector="TabItem.CustomTabItem:pointerover /template/ Border#PART_LayoutRoot">
+    <Setter Property="TextElement.Background" Value="{DynamicResource HoverColor}" />
+  </Style>
+
+  <Style Selector="TabItem.CustomTabItem:selected:pointerover /template/ Border#PART_LayoutRoot">
+    <Setter Property="TextElement.Background" Value="Transparent" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource TabItemHeaderForegroundSelected}" />
+  </Style>
+
+  <Style Selector="TabItem.CustomTabItem:selected:pressed /template/ Border#PART_LayoutRoot">
+    <Setter Property="TextElement.Background" Value="Transparent" />
+    <Setter Property="TextElement.Foreground" Value="{DynamicResource TabItemHeaderForegroundSelected}" />
+  </Style>
+</Styles>

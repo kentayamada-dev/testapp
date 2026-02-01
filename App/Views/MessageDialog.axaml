@@ -25,8 +25,8 @@
                Margin="20" TextWrapping="Wrap" Width="{StaticResource DialogWidth}" />
     <StackPanel Spacing="10">
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Spacing="10">
-        <Button Name="OkButton" Classes="DialogButton" Content="OK" Click="OkButton_Click" Width="80" />
-        <Button Name="CancelButton" Classes="DialogButton" Content="{x:Static culture:Resources.Cancel}" Click="CancelButton_Click" Width="80" />
+        <Button Name="OkButton" Content="OK" Click="OkButton_Click" Width="80" Classes="DefaultButton" />
+        <Button Name="CancelButton" Content="{x:Static culture:Resources.Cancel}" Click="CancelButton_Click" Width="80" Classes="DefaultButton" />
       </StackPanel>
     </StackPanel>
   </StackPanel>

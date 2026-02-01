@@ -7,8 +7,6 @@
       <Color x:Key="WindowBackground">#ffffff</Color>
       <Color x:Key="HoverColor">#eaebed</Color>
       <Color x:Key="PrimaryColor">#61afef</Color>
-      <Color x:Key="PrimaryHoverColor">#579dd7</Color>
-      <Color x:Key="SelectionBackgroundColor">#d1d9e0</Color>
       <Color x:Key="SecondaryColor">#f6f8fa</Color>
       <Color x:Key="BorderColor">#d1d9e0</Color>
       <system:String x:Key="SvgCss">* { fill: #000000 }</system:String>
@@ -17,8 +15,6 @@
       <Color x:Key="WindowBackground">#23272e</Color>
       <Color x:Key="HoverColor">#383C42</Color>
       <Color x:Key="PrimaryColor">#4d78cc</Color>
-      <Color x:Key="PrimaryHoverColor">#456cb7</Color>
-      <Color x:Key="SelectionBackgroundColor">#50565e</Color>
       <Color x:Key="SecondaryColor">#1e2227</Color>
       <Color x:Key="BorderColor">#3d444d</Color>
       <system:String x:Key="SvgCss">* { fill: #ffffff }</system:String>
