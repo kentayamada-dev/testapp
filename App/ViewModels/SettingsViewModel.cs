@@ -55,7 +55,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     var files = await _mainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
     {
-      FileTypeFilter = [new FilePickerFileType(null) { Patterns = ["*.json"] }]
+      FileTypeFilter = [FilePickerFileTypes.Json]
     });
 
     if (files.Count > 0) FilePathField.Value = files[0].Path.LocalPath;
