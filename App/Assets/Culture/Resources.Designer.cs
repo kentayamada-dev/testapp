@@ -87,6 +87,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -132,20 +141,29 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid path.
+        ///   Looks up a localized string similar to Enter the path to client_secrets.json.
         /// </summary>
-        public static string FolderError {
+        public static string EnterGoogleSecretFilePath {
             get {
-                return ResourceManager.GetString("FolderError", resourceCulture);
+                return ResourceManager.GetString("EnterGoogleSecretFilePath", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FPS is required.
+        ///   Looks up a localized string similar to Google Sheet ID.
         /// </summary>
-        public static string FpsError {
+        public static string GoogleSheetId {
             get {
-                return ResourceManager.GetString("FpsError", resourceCulture);
+                return ResourceManager.GetString("GoogleSheetId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google Sheet Name.
+        /// </summary>
+        public static string GoogleSheetName {
+            get {
+                return ResourceManager.GetString("GoogleSheetName", resourceCulture);
             }
         }
         
@@ -195,11 +213,65 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid path.
+        /// </summary>
+        public static string PathError {
+            get {
+                return ResourceManager.GetString("PathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit App.
         /// </summary>
         public static string QuitApp {
             get {
                 return ResourceManager.GetString("QuitApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register Google Authentication File.
+        /// </summary>
+        public static string RegisterGoogleAuthFile {
+            get {
+                return ResourceManager.GetString("RegisterGoogleAuthFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register your Google data in the settings.
+        /// </summary>
+        public static string RegisterGoogleDataWarning {
+            get {
+                return ResourceManager.GetString("RegisterGoogleDataWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register Google Sheet Data.
+        /// </summary>
+        public static string RegisterGoogleSheetData {
+            get {
+                return ResourceManager.GetString("RegisterGoogleSheetData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is required.
+        /// </summary>
+        public static string RequiredError {
+            get {
+                return ResourceManager.GetString("RequiredError", resourceCulture);
             }
         }
         
@@ -213,11 +285,11 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Folder.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
-        public static string SelectFolder {
+        public static string Settings {
             get {
-                return ResourceManager.GetString("SelectFolder", resourceCulture);
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -335,24 +407,6 @@ namespace App.Assets.Culture {
         public static string UploadInterval_4 {
             get {
                 return ResourceManager.GetString("UploadInterval_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select upload interval.
-        /// </summary>
-        public static string UploadIntervalError {
-            get {
-                return ResourceManager.GetString("UploadIntervalError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URL is required.
-        /// </summary>
-        public static string UrlError {
-            get {
-                return ResourceManager.GetString("UrlError", resourceCulture);
             }
         }
         

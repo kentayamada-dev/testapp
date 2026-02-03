@@ -18,21 +18,25 @@ public partial class CaptureFormViewModel : ViewModelBase
 {
   private const string StopIconPath = "M0,0 L56,0 L56,56 L0,56 z";
   private const string PlayIconPath = "M0,0 L56,28 L0,56 z";
-
   private Window? _mainWindow;
+  private readonly SemaphoreSlim _captureSemaphore = new(1, 1);
 
   [ObservableProperty] private string _buttonIconData = PlayIconPath;
-
   [ObservableProperty] private CancellationTokenSource? _cancellationTokenSource;
-
-  [ObservableProperty] private TextInputFieldViewModel _intervalField = new(Resources.CaptureInterval, Resources.CaptureIntervalError);
-
-  [ObservableProperty] private TextInputFieldViewModel _outputFolderField = new(Resources.OutputFolder, Resources.FolderError);
-
-  [ObservableProperty] private TextInputFieldViewModel _urlField = new("URL", Resources.UrlError);
+  [ObservableProperty] private TextInputFieldViewModel _intervalField = new(Resources.CaptureIntervalError, Resources.CaptureInterval);
+  [ObservableProperty] private TextInputWithButtonViewModel _outputFolderField;
+  [ObservableProperty] private TextInputFieldViewModel _urlField = new(Resources.RequiredError, "URL");
 
   public CaptureFormViewModel()
   {
+    _outputFolderField = new TextInputWithButtonViewModel(
+      buttonCommand: SelectFolderCommand,
+      fieldLabel: Resources.OutputFolder,
+      buttonLabel: Resources.Browse,
+      errorMessage: Resources.PathError,
+      watermark: Resources.EnterGoogleSecretFilePath
+    );
+
     var form = DataPersistService.Get().CaptureForm;
 
     if (form == null) return;
@@ -50,6 +54,9 @@ public partial class CaptureFormViewModel : ViewModelBase
   partial void OnCancellationTokenSourceChanged(CancellationTokenSource? value)
   {
     ButtonIconData = value == null ? PlayIconPath : StopIconPath;
+    IntervalField.IsDisabled = value != null;
+    UrlField.IsDisabled = value != null;
+    OutputFolderField.IsDisabled = value != null;
   }
 
   [RelayCommand]
@@ -94,9 +101,17 @@ public partial class CaptureFormViewModel : ViewModelBase
       {
         await Task.Delay(TimeSpan.FromSeconds(interval), cancellationToken);
 
-        await CaptureService.Capture(
-          UrlField.Value,
-          OutputFolderField.Value);
+        await _captureSemaphore.WaitAsync(cancellationToken);
+        try
+        {
+          await CaptureService.Capture(
+            UrlField.Value,
+            OutputFolderField.Value);
+        }
+        finally
+        {
+          _captureSemaphore.Release();
+        }
       }
     }
     catch (Exception ex)
@@ -107,10 +122,7 @@ public partial class CaptureFormViewModel : ViewModelBase
 
   private async Task<bool> IsInValid()
   {
-    if (string.IsNullOrWhiteSpace(UrlField.Value))
-      UrlField.IsInvalid = true;
-    else
-      UrlField.IsInvalid = false;
+    UrlField.IsInvalid = string.IsNullOrWhiteSpace(UrlField.Value);
 
     if (string.IsNullOrWhiteSpace(OutputFolderField.Value) || !await IsValidFolderPath(OutputFolderField.Value))
       OutputFolderField.IsInvalid = true;

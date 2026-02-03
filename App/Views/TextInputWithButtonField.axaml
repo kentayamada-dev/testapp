@@ -1,0 +1,35 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:App.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Views.TextInputWithButtonField"
+             x:DataType="vm:TextInputWithButtonViewModel">
+
+  <StackPanel>
+    <TextBlock Text="{Binding FieldLabel}" IsVisible="{Binding IsLabelVisible}" FontWeight="SemiBold" Margin="0,0,0,5" />
+    <Grid ColumnDefinitions="*,100" ColumnSpacing="20">
+      <TextBox Grid.Column="0" Watermark="{Binding Watermark}" Focusable="{Binding !IsDisabled}"
+               Text="{Binding Value, UpdateSourceTrigger=LostFocus}" Classes.error="{Binding IsInvalid}" Classes="CustomTextBox">
+        <TextBox.Styles>
+          <Style Selector="TextBox.CustomTextBox.error /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="Red" />
+          </Style>
+        </TextBox.Styles>
+      </TextBox>
+      <Button IsEnabled="{Binding !IsDisabled}" Content="{Binding ButtonLabel}" Command="{Binding ButtonCommand}" Classes="DefaultButton"
+              HorizontalAlignment="Stretch" Grid.Column="1" Height="{StaticResource FormInputHeight}" />
+    </Grid>
+    <TextBlock Text="{Binding ErrorMessage}" Margin="0,5,0,0" Classes.error="{Binding IsInvalid}">
+      <TextBlock.Styles>
+        <Style Selector="TextBlock">
+          <Setter Property="Foreground" Value="Transparent" />
+        </Style>
+        <Style Selector="TextBlock.error">
+          <Setter Property="Foreground" Value="Red" />
+        </Style>
+      </TextBlock.Styles>
+    </TextBlock>
+  </StackPanel>
+</UserControl>

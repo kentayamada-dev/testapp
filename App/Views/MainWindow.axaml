@@ -6,7 +6,7 @@
         x:Class="App.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         WindowStartupLocation="CenterScreen"
-        Width="900" Height="500">
+        Width="{StaticResource WindowWidth}">
 
   <NativeMenu.Menu>
     <NativeMenu>
@@ -78,16 +78,17 @@
       </Border>
     </Grid>
     <StackPanel Name="MainContent" Margin="20">
-      <Border BorderBrush="{DynamicResource BorderColor}" BorderThickness="1">
-        <TabControl Classes="CustomTabControl">
-          <TabItem Header="{x:Static culture:Resources.Capture}" Classes="CustomTabItem">
-            <views:CaptureForm DataContext="{Binding CaptureFormViewModel}" />
-          </TabItem>
-          <TabItem Header="{x:Static culture:Resources.Upload}" Classes="CustomTabItem">
-            <views:UploadForm DataContext="{Binding UploadFormViewModel}" />
-          </TabItem>
-        </TabControl>
-      </Border>
+      <TabControl Classes="CustomTabControl" Width="800" Height="400">
+        <TabItem Header="{x:Static culture:Resources.Capture}" Classes="CustomTabItem" FontWeight="SemiBold">
+          <views:CaptureForm DataContext="{Binding CaptureFormViewModel}" Margin="20" />
+        </TabItem>
+        <TabItem Header="{x:Static culture:Resources.Upload}" Classes="CustomTabItem" FontWeight="SemiBold">
+          <views:UploadForm DataContext="{Binding UploadFormViewModel}" Margin="20" />
+        </TabItem>
+        <TabItem Header="{x:Static culture:Resources.Settings}" Classes="CustomTabItem" FontWeight="SemiBold">
+          <views:SettingsView DataContext="{Binding SettingsViewModel}" Margin="20" />
+        </TabItem>
+      </TabControl>
     </StackPanel>
   </Grid>
 </Window>

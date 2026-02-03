@@ -1,24 +1,23 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
   <Design.PreviewWith>
-    <Border Padding="20">
-      <StackPanel Spacing="30" Orientation="Horizontal">
-        <Button Classes="DefaultButton">
-          Default Button
-        </Button>
-        <Button Classes="ChromeButton" Width="100">
-          <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg" />
-        </Button>
-        <Button Classes="MenuButton">
-          Menu Button
-        </Button>
-      </StackPanel>
-    </Border>
+    <StackPanel Margin="30" Spacing="30" Orientation="Horizontal">
+      <Button Classes="DefaultButton" Height="50">
+        Default Button
+      </Button>
+      <Button Classes="ChromeButton" Width="100">
+        <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg" />
+      </Button>
+      <Button Classes="MenuButton">
+        Menu Button
+      </Button>
+    </StackPanel>
   </Design.PreviewWith>
 
   <Style Selector="Button.DefaultButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Background" Value="Transparent" />
+    <Setter Property="CornerRadius" Value="{StaticResource CornerRadius}" />
     <Setter Property="HorizontalContentAlignment" Value="Center" />
     <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
   </Style>
@@ -47,6 +46,7 @@
 
   <Style Selector="Button.MenuButton /template/ ContentPresenter#PART_ContentPresenter">
     <Setter Property="Background" Value="Transparent" />
+    <Setter Property="CornerRadius" Value="{StaticResource CornerRadius}" />
     <Setter Property="Padding" Value="10,2" />
     <Setter Property="FontSize" Value="13" />
   </Style>

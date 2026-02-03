@@ -81,14 +81,11 @@
   <data name="RestartApp" xml:space="preserve">
     <value>Restart the app for changes to take effect?</value>
   </data>
-  <data name="FolderError" xml:space="preserve">
+  <data name="PathError" xml:space="preserve">
     <value>Invalid path</value>
   </data>
-  <data name="UrlError" xml:space="preserve">
-    <value>URL is required</value>
-  </data>
-  <data name="SelectFolder" xml:space="preserve">
-    <value>Select Folder</value>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>Quit App</value>
@@ -105,11 +102,8 @@
   <data name="CaptureIntervalError" xml:space="preserve">
     <value>Must be a decimal number</value>
   </data>
-  <data name="FpsError" xml:space="preserve">
-    <value>FPS is required</value>
-  </data>
-  <data name="UploadIntervalError" xml:space="preserve">
-    <value>Select upload interval</value>
+  <data name="RequiredError" xml:space="preserve">
+    <value>This is required</value>
   </data>
   <data name="InputFolder" xml:space="preserve">
     <value>Input Folder</value>
@@ -128,5 +122,29 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="RegisterGoogleAuthFile" xml:space="preserve">
+    <value>Register Google Authentication File</value>
+  </data>
+  <data name="EnterGoogleSecretFilePath" xml:space="preserve">
+    <value>Enter the path to client_secrets.json</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterGoogleDataWarning" xml:space="preserve">
+    <value>Register your Google data in the settings</value>
+  </data>
+  <data name="GoogleSheetId" xml:space="preserve">
+    <value>Google Sheet ID</value>
+  </data>
+  <data name="GoogleSheetName" xml:space="preserve">
+    <value>Google Sheet Name</value>
+  </data>
+  <data name="RegisterGoogleSheetData" xml:space="preserve">
+    <value>Register Google Sheet Data</value>
   </data>
 </root>

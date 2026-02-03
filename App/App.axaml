@@ -26,12 +26,14 @@
       <x:Double x:Key="FormInputSize">15</x:Double>
       <x:Double x:Key="FormInputHeight">40</x:Double>
       <Thickness x:Key="FormInputPadding">10,0</Thickness>
-      <x:Double x:Key="DialogWidth">350</x:Double>
+      <x:Double x:Key="DialogWidth">400</x:Double>
+      <x:Double x:Key="WindowWidth">900</x:Double>
+      <CornerRadius x:Key="CornerRadius">3</CornerRadius>
     </ResourceDictionary>
   </Application.Resources>
 
   <Application.Styles>
-    <StyleInclude Source="/Assets/Styles/Button.axaml" />
+    <StyleInclude Source="/Assets/Styles/Buttons.axaml" />
     <StyleInclude Source="/Assets/Styles/ComboBox.axaml" />
     <StyleInclude Source="/Assets/Styles/Menu.axaml" />
     <StyleInclude Source="/Assets/Styles/Tab.axaml" />
@@ -47,6 +49,5 @@
     </Style>
 
     <FluentTheme />
-
   </Application.Styles>
 </Application>

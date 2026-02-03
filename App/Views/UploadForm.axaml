@@ -4,24 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:App.ViewModels"
              xmlns:views="clr-namespace:App.Views"
-             xmlns:culture="clr-namespace:App.Assets.Culture"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="App.Views.UploadForm"
              x:DataType="vm:UploadFormViewModel">
 
-  <StackPanel Background="{DynamicResource WindowBackground}">
-    <Grid ColumnDefinitions="*,130,200" RowDefinitions="*,*,*" ColumnSpacing="20" Margin="20" RowSpacing="10">
-      <views:ComboBoxField DataContext="{Binding IntervalField}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
-      <views:TextInputField DataContext="{Binding FpsField}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-      <views:TextInputField DataContext="{Binding InputFolderField}" Grid.Row="2" Grid.Column="0" />
-      <Button Content="{x:Static culture:Resources.SelectFolder}" Grid.Row="2" Grid.Column="1" Command="{Binding SelectFolderCommand}"
-              Classes="DefaultButton" />
-      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
-        <Button Command="{Binding UploadCommand}" Width="130" Height="130" Classes="DefaultButton">
-          <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{Binding ButtonIconData}" Stroke="{DynamicResource PrimaryColor}"
-                StrokeThickness="5" />
-        </Button>
-      </StackPanel>
-    </Grid>
-  </StackPanel>
+  <Grid ColumnDefinitions="*,130,200" RowDefinitions="*,*,*" ColumnSpacing="20" RowSpacing="10">
+    <views:ComboBoxField DataContext="{Binding IntervalField}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+    <views:TextInputField DataContext="{Binding FpsField}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
+    <views:TextInputWithButtonField DataContext="{Binding InputFolderField}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+      <Button Command="{Binding UploadCommand}" Width="130" Height="130" Classes="DefaultButton">
+        <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{Binding ButtonIconData}"
+              Stroke="{DynamicResource TextControlForeground}"
+              StrokeThickness="3" />
+      </Button>
+    </StackPanel>
+  </Grid>
 </UserControl>

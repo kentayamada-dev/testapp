@@ -2,5 +2,5 @@
 
 namespace App.ViewModels;
 
-public class ComboBoxFieldUploadIntervalViewModel(ScheduleOption selectedOption, string label, ObservableCollection<ScheduleOption> options)
-  : ComboBoxFieldViewModel<ScheduleOption>(selectedOption, label, options);
+public class ComboBoxFieldUploadIntervalViewModel(ScheduleOption selectedOption, ObservableCollection<ScheduleOption> options, string label = "")
+  : ComboBoxFieldViewModel<ScheduleOption>(selectedOption, options, label);

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="200"
              x:Class="App.Views.ChromeCloseButton">
+
   <Button Click="Close_Click" Classes="ChromeButton">
     <Svg Path="/Assets/Icons/cross.svg" Classes="ChromeButtonSvg" />
     <Button.Styles>

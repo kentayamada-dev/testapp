@@ -17,6 +17,8 @@ public class UserPreferencesModel
   public CaptureFormModel? CaptureForm { get; set; }
 
   public UploadFormModel? UploadForm { get; set; }
+
+  public GoogleFormModel? GoogleForm { get; set; }
 }
 
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,

@@ -8,8 +8,9 @@
              x:DataType="vm:TextInputFieldViewModel">
 
   <StackPanel>
-    <TextBlock Text="{Binding Label}" FontWeight="Bold" Margin="0,0,0,5" />
-    <TextBox Text="{Binding Value, UpdateSourceTrigger=LostFocus}" Classes.error="{Binding IsInvalid}" Classes="CustomTextBox">
+    <TextBlock Text="{Binding Label}" IsVisible="{Binding IsLabelVisible}" FontWeight="SemiBold" Margin="0,0,0,5" />
+    <TextBox Watermark="{Binding Watermark}" Focusable="{Binding !IsDisabled}" Text="{Binding Value, UpdateSourceTrigger=LostFocus}"
+             Classes.error="{Binding IsInvalid}" Classes="CustomTextBox">
       <TextBox.Styles>
         <Style Selector="TextBox.CustomTextBox.error /template/ Border#PART_BorderElement">
           <Setter Property="BorderBrush" Value="Red" />

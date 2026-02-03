@@ -1,6 +1,4 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:App">
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:App">
   <Design.PreviewWith>
     <Window Width="420" Height="130">
       <StackPanel Margin="20" Spacing="10">
@@ -15,5 +13,6 @@
     <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
     <Setter Property="Title" Value="{x:Static local:App.AppName}" />
     <Setter Property="CanResize" Value="False" />
+    <Setter Property="SizeToContent" Value="Height" />
   </Style>
 </Styles>

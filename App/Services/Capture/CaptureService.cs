@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using App.Services.Configuration;
 using App.Services.Logger;
@@ -29,5 +31,19 @@ public static class CaptureService
       .ProcessAsynchronously(true, new FFOptions { BinaryFolder = ConfigurationService.AppBinFolder });
 
     await LoggerService.Log($"Frame captured: {outputPath}");
+  }
+
+  public static async Task CreateVideo(List<string> imageFiles, string videoFilePath, byte fps)
+  {
+    var tempListFile = Path.Combine(Path.GetTempPath(), "images_list.txt");
+    var lines = imageFiles.Select(file => $"file '{Path.GetFullPath(file)}'\nduration {1 / fps}");
+
+    await File.WriteAllTextAsync(tempListFile, string.Join("\n", lines));
+
+    await FFMpegArguments.FromFileInput(new FileInfo(tempListFile), options => options.WithCustomArgument("-f concat").WithCustomArgument("-safe 0"))
+      .OutputToFile(videoFilePath, true, options => options.WithFramerate(fps).ForcePixelFormat("yuv420p"))
+      .ProcessAsynchronously(true, new FFOptions { BinaryFolder = ConfigurationService.AppBinFolder });
+
+    await LoggerService.Log($"Video created: {videoFilePath}");
   }
 }

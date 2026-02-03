@@ -81,14 +81,11 @@
   <data name="RestartApp" xml:space="preserve">
     <value>変更を有効にするためにアプリを再起動しますか？</value>
   </data>
-  <data name="FolderError" xml:space="preserve">
+  <data name="PathError" xml:space="preserve">
     <value>無効なパス</value>
   </data>
-  <data name="UrlError" xml:space="preserve">
-    <value>URLは必須です</value>
-  </data>
-  <data name="SelectFolder" xml:space="preserve">
-    <value>フォルダを選択</value>
+  <data name="Browse" xml:space="preserve">
+    <value>参照</value>
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>アプリを終了</value>
@@ -105,11 +102,8 @@
   <data name="CaptureIntervalError" xml:space="preserve">
     <value>10進数である必要があります</value>
   </data>
-  <data name="FpsError" xml:space="preserve">
-    <value>FPSは必須です</value>
-  </data>
-  <data name="UploadIntervalError" xml:space="preserve">
-    <value>アップロード間隔を選択してください</value>
+  <data name="RequiredError" xml:space="preserve">
+    <value>必須です</value>
   </data>
   <data name="InputFolder" xml:space="preserve">
     <value>入力フォルダ</value>
@@ -128,5 +122,29 @@
   </data>
   <data name="Version" xml:space="preserve">
     <value>バージョン</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="RegisterGoogleAuthFile" xml:space="preserve">
+    <value>Google認証ファイルの登録</value>
+  </data>
+  <data name="EnterGoogleSecretFilePath" xml:space="preserve">
+    <value>client_secrets.json のパスを入力してください</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>登録</value>
+  </data>
+  <data name="RegisterGoogleDataWarning" xml:space="preserve">
+    <value>設定画面からGoogleデータの登録をしてください</value>
+  </data>
+  <data name="GoogleSheetId" xml:space="preserve">
+    <value>GoogleシートID</value>
+  </data>
+  <data name="GoogleSheetName" xml:space="preserve">
+    <value>Googleシート名</value>
+  </data>
+  <data name="RegisterGoogleSheetData" xml:space="preserve">
+    <value>Googleシートデータの登録</value>
   </data>
 </root>

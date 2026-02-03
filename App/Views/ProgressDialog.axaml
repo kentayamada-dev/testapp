@@ -3,11 +3,11 @@
         xmlns:local="clr-namespace:App"
         xmlns:views="clr-namespace:App.Views"
         x:Class="App.Views.ProgressDialog"
-        SizeToContent="WidthAndHeight"
+        ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
-        ShowInTaskbar="False">
+        Width="{StaticResource DialogWidth}">
 
-  <StackPanel Width="{StaticResource DialogWidth}">
+  <StackPanel>
     <Grid Name="WindowsMenu">
       <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderColor}">
         <Grid ColumnDefinitions="Auto,*,Auto" Height="{StaticResource ChromeHeight}" Background="{DynamicResource SecondaryColor}">

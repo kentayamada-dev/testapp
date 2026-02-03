@@ -1,0 +1,33 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:App.ViewModels"
+             xmlns:culture="clr-namespace:App.Assets.Culture"
+             xmlns:views="clr-namespace:App.Views"
+             mc:Ignorable="d" d:DesignWidth="800"
+             x:Class="App.Views.SettingsView"
+             x:DataType="vm:SettingsViewModel">
+
+  <Grid ColumnDefinitions="*,*" ColumnSpacing="30">
+    <Border Grid.Column="0" Padding="10" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" CornerRadius="{StaticResource CornerRadius}">
+      <StackPanel>
+        <TextBlock Text="{x:Static culture:Resources.RegisterGoogleAuthFile}" FontWeight="SemiBold" Margin="0,0,0,10" FontSize="18" />
+        <Grid ColumnDefinitions="*,130" RowDefinitions="Auto,Auto" ColumnSpacing="20" RowSpacing="10">
+          <views:TextInputWithButtonField DataContext="{Binding FilePathField}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+          <Button Content="{x:Static culture:Resources.Register}" IsEnabled="{Binding !IsUploading}" Classes="DefaultButton"
+                  Command="{Binding RegisterGoogleSecretFileCommand}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" />
+        </Grid>
+      </StackPanel>
+    </Border>
+    <Border Grid.Column="1" Padding="10" BorderBrush="{DynamicResource BorderColor}" BorderThickness="1" CornerRadius="{StaticResource CornerRadius}">
+      <StackPanel Spacing="15">
+        <TextBlock Text="{x:Static culture:Resources.RegisterGoogleSheetData}" FontWeight="SemiBold" Margin="0,0,0,10" FontSize="18" />
+        <views:TextInputField DataContext="{Binding GoogleSheetId}" />
+        <views:TextInputField DataContext="{Binding GoogleSheetName}" />
+        <Button Content="{x:Static culture:Resources.Register}" IsEnabled="{Binding !IsUploading}" Classes="DefaultButton"
+                Command="{Binding RegisterGoogleSheetDataCommand}" HorizontalAlignment="Stretch" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>

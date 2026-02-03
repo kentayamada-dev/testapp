@@ -1,13 +1,17 @@
-﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
-    <Border Padding="20" Height="200" Width="500">
+    <StackPanel Margin="20" Spacing="10" Height="500" Width="500">
+      <ComboBox SelectedIndex="0" IsEnabled="False">
+        <ComboBoxItem>Text Item 1</ComboBoxItem>
+        <ComboBoxItem>Text Item 2</ComboBoxItem>
+        <ComboBoxItem>Text Item 3</ComboBoxItem>
+      </ComboBox>
       <ComboBox SelectedIndex="0">
         <ComboBoxItem>Text Item 1</ComboBoxItem>
         <ComboBoxItem>Text Item 2</ComboBoxItem>
         <ComboBoxItem>Text Item 3</ComboBoxItem>
       </ComboBox>
-    </Border>
+    </StackPanel>
   </Design.PreviewWith>
 
   <Style Selector="ComboBox">
@@ -21,7 +25,7 @@
                     Background="Transparent"
                     BorderBrush="{DynamicResource BorderColor}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="{TemplateBinding CornerRadius}"
+                    CornerRadius="{StaticResource CornerRadius}"
                     MinWidth="{DynamicResource ComboBoxThemeMinWidth}" />
             <Border x:Name="HighlightBackground"
                     Grid.Column="0"
@@ -138,6 +142,9 @@
     <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}" />
   </Style>
 
+  <Style Selector="ComboBox:disabled /template/ Border#Background">
+    <Setter Property="Background" Value="{DynamicResource HoverColor}" />
+  </Style>
 
   <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
     <Setter Property="Background" Value="{DynamicResource HoverColor}" />

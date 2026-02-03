@@ -4,9 +4,9 @@
         xmlns:views="clr-namespace:App.Views"
         xmlns:culture="clr-namespace:App.Assets.Culture"
         x:Class="App.Views.MessageDialog"
-        SizeToContent="WidthAndHeight"
+        ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"
-        ShowInTaskbar="False">
+        Width="{StaticResource DialogWidth}">
 
   <StackPanel>
     <Grid Name="WindowsMenu">
@@ -22,7 +22,7 @@
       </Border>
     </Grid>
     <TextBlock Name="MessageText" Text="Test Message Test Message Test Message Test Message Test Message Test Message" FontSize="15" Height="100"
-               Margin="20" TextWrapping="Wrap" Width="{StaticResource DialogWidth}" />
+               Margin="20" TextWrapping="Wrap" />
     <StackPanel Spacing="10">
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Spacing="10">
         <Button Name="OkButton" Content="OK" Click="OkButton_Click" Width="80" Classes="DefaultButton" />

@@ -87,6 +87,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 参照.
+        /// </summary>
+        internal static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to キャンセル.
         /// </summary>
         internal static string Cancel {
@@ -132,20 +141,29 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 無効なパス.
+        ///   Looks up a localized string similar to client_secrets.json のパスを入力してください.
         /// </summary>
-        internal static string FolderError {
+        internal static string EnterGoogleSecretFilePath {
             get {
-                return ResourceManager.GetString("FolderError", resourceCulture);
+                return ResourceManager.GetString("EnterGoogleSecretFilePath", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FPSは必須です.
+        ///   Looks up a localized string similar to GoogleシートID.
         /// </summary>
-        internal static string FpsError {
+        internal static string GoogleSheetId {
             get {
-                return ResourceManager.GetString("FpsError", resourceCulture);
+                return ResourceManager.GetString("GoogleSheetId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Googleシート名.
+        /// </summary>
+        internal static string GoogleSheetName {
+            get {
+                return ResourceManager.GetString("GoogleSheetName", resourceCulture);
             }
         }
         
@@ -195,11 +213,65 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 無効なパス.
+        /// </summary>
+        internal static string PathError {
+            get {
+                return ResourceManager.GetString("PathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to アプリを終了.
         /// </summary>
         internal static string QuitApp {
             get {
                 return ResourceManager.GetString("QuitApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 登録.
+        /// </summary>
+        internal static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google認証ファイルの登録.
+        /// </summary>
+        internal static string RegisterGoogleAuthFile {
+            get {
+                return ResourceManager.GetString("RegisterGoogleAuthFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 設定画面からGoogleデータの登録をしてください.
+        /// </summary>
+        internal static string RegisterGoogleDataWarning {
+            get {
+                return ResourceManager.GetString("RegisterGoogleDataWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Googleシートデータの登録.
+        /// </summary>
+        internal static string RegisterGoogleSheetData {
+            get {
+                return ResourceManager.GetString("RegisterGoogleSheetData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 必須です.
+        /// </summary>
+        internal static string RequiredError {
+            get {
+                return ResourceManager.GetString("RequiredError", resourceCulture);
             }
         }
         
@@ -213,11 +285,11 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to フォルダを選択.
+        ///   Looks up a localized string similar to 設定.
         /// </summary>
-        internal static string SelectFolder {
+        internal static string Settings {
             get {
-                return ResourceManager.GetString("SelectFolder", resourceCulture);
+                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
@@ -335,24 +407,6 @@ namespace App.Assets.Culture {
         internal static string UploadInterval_4 {
             get {
                 return ResourceManager.GetString("UploadInterval_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to アップロード間隔を選択してください.
-        /// </summary>
-        internal static string UploadIntervalError {
-            get {
-                return ResourceManager.GetString("UploadIntervalError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to URLは必須です.
-        /// </summary>
-        internal static string UrlError {
-            get {
-                return ResourceManager.GetString("UrlError", resourceCulture);
             }
         }
         

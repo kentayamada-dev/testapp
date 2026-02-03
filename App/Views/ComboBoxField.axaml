@@ -8,8 +8,9 @@
              x:DataType="vm:ComboBoxFieldUploadIntervalViewModel">
 
   <StackPanel>
-    <TextBlock Text="{Binding Label}" FontWeight="Bold" Margin="0,0,0,5" />
-    <ComboBox ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedOption, UpdateSourceTrigger=LostFocus}" />
+    <TextBlock Text="{Binding Label}" IsVisible="{Binding IsLabelVisible}" FontWeight="SemiBold" Margin="0,0,0,5" />
+    <ComboBox ItemsSource="{Binding Options}" IsEnabled="{Binding !IsDisabled}"
+              SelectedItem="{Binding SelectedOption, UpdateSourceTrigger=LostFocus}" />
     <TextBlock Text="" Margin="0,5,0,0" />
   </StackPanel>
 </UserControl>
