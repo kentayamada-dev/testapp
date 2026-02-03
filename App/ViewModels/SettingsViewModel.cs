@@ -51,11 +51,9 @@ public partial class SettingsViewModel : ViewModelBase
   [RelayCommand]
   private async Task SelectFile()
   {
-    var topLevel = TopLevel.GetTopLevel(_mainWindow);
+    if (_mainWindow == null) return;
 
-    if (topLevel == null) return;
-
-    var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+    var files = await _mainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
     {
       FileTypeFilter = [new FilePickerFileType(null) { Patterns = ["*.json"] }]
     });
