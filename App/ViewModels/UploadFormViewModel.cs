@@ -47,7 +47,6 @@ public partial class UploadFormViewModel : ViewModelBase
   private const string StopIconPath = "M0,0 L56,0 L56,56 L0,56 z";
   private const string PlayIconPath = "M0,0 L56,28 L0,56 z";
   private Window? _mainWindow;
-  private readonly SemaphoreSlim _captureSemaphore = new(1, 1);
   private readonly IServiceProvider _serviceProvider;
 
   [ObservableProperty] private string _buttonIconData = PlayIconPath;
@@ -161,40 +160,32 @@ public partial class UploadFormViewModel : ViewModelBase
 
         await Task.Delay(delayUntilNext, cancellationToken);
 
-        await _captureSemaphore.WaitAsync(cancellationToken);
-        try
-        {
-          var imageFiles = Directory.GetFiles(inputFolder, "*.png", SearchOption.AllDirectories).OrderBy(file => file).ToList();
-          var firstCreatedTime = new FileInfo(imageFiles.First()).CreationTime.ToString("yyyy/MM/dd HH:mm:ss");
-          var lastCreatedTime = new FileInfo(imageFiles.Last()).CreationTime.ToString("yyyy/MM/dd HH:mm:ss");
+        var imageFiles = Directory.GetFiles(inputFolder, "*.png", SearchOption.AllDirectories).OrderBy(file => file).ToList();
+        var firstCreatedTime = new FileInfo(imageFiles.First()).CreationTime.ToString("yyyy/MM/dd HH:mm:ss");
+        var lastCreatedTime = new FileInfo(imageFiles.Last()).CreationTime.ToString("yyyy/MM/dd HH:mm:ss");
 
-          await CaptureService.CreateVideo(imageFiles, videoFilePath, fps);
+        await CaptureService.CreateVideo(imageFiles, videoFilePath, fps);
 
-          foreach (var file in imageFiles) File.Delete(file);
-          var allDirs = Directory.GetDirectories(inputFolder, "*", SearchOption.AllDirectories).OrderByDescending(d => d.Length).ToList();
-          foreach (var dir in allDirs.Where(dir => Directory.GetFileSystemEntries(dir).Length == 0)) Directory.Delete(dir);
+        foreach (var file in imageFiles) File.Delete(file);
+        var allDirs = Directory.GetDirectories(inputFolder, "*", SearchOption.AllDirectories).OrderByDescending(d => d.Length).ToList();
+        foreach (var dir in allDirs.Where(dir => Directory.GetFileSystemEntries(dir).Length == 0)) Directory.Delete(dir);
 
-          var videoId = await GoogleService.UploadVideo(
-            videoFilePath,
-            $"{firstCreatedTime} ~ {lastCreatedTime}",
-            progress => { _ = LoggerService.Log($@"Uploaded: {progress}%"); }
-          );
+        var videoId = await GoogleService.UploadVideo(
+          videoFilePath,
+          $"{firstCreatedTime} ~ {lastCreatedTime}",
+          progress => { _ = LoggerService.Log($@"Uploaded: {progress}%"); }
+        );
 
-          await LoggerService.Log($"Video ID: {videoId}");
+        await LoggerService.Log($"Video ID: {videoId}");
 
-          await GoogleService.AppendDataToSheet(
-            form.GoogleSheetId,
-            form.GoogleSheetName,
-            new List<IList<object>>
-            {
-              new List<object> { now, $"https://youtu.be/{videoId}" }
-            }
-          );
-        }
-        finally
-        {
-          _captureSemaphore.Release();
-        }
+        await GoogleService.AppendDataToSheet(
+          form.GoogleSheetId,
+          form.GoogleSheetName,
+          new List<IList<object>>
+          {
+            new List<object> { now, $"https://youtu.be/{videoId}" }
+          }
+        );
       }
     }
     catch (Exception ex)

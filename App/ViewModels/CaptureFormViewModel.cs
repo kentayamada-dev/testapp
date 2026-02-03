@@ -19,7 +19,6 @@ public partial class CaptureFormViewModel : ViewModelBase
   private const string StopIconPath = "M0,0 L56,0 L56,56 L0,56 z";
   private const string PlayIconPath = "M0,0 L56,28 L0,56 z";
   private Window? _mainWindow;
-  private readonly SemaphoreSlim _captureSemaphore = new(1, 1);
 
   [ObservableProperty] private string _buttonIconData = PlayIconPath;
   [ObservableProperty] private CancellationTokenSource? _cancellationTokenSource;
@@ -101,17 +100,9 @@ public partial class CaptureFormViewModel : ViewModelBase
       {
         await Task.Delay(TimeSpan.FromSeconds(interval), cancellationToken);
 
-        await _captureSemaphore.WaitAsync(cancellationToken);
-        try
-        {
-          await CaptureService.Capture(
-            UrlField.Value,
-            OutputFolderField.Value);
-        }
-        finally
-        {
-          _captureSemaphore.Release();
-        }
+        await CaptureService.Capture(
+          UrlField.Value,
+          OutputFolderField.Value);
       }
     }
     catch (Exception ex)
