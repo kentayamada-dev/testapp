@@ -14,13 +14,13 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace App.Services.Google;
 
-public static class GoogleService
+public sealed class GoogleService
 {
-  private static UserCredential? _credential;
-  private static YouTubeService? _youtubeService;
-  private static SheetsService? _sheetsService;
+  private UserCredential? _credential;
+  private SheetsService? _sheetsService;
+  private YouTubeService? _youtubeService;
 
-  public static async Task Initialize(string credentialsPath)
+  public async Task Initialize(string credentialsPath)
   {
     await using (var stream = new FileStream(credentialsPath, FileMode.Open, FileAccess.Read))
     {
@@ -32,7 +32,7 @@ public static class GoogleService
         ],
         "user",
         CancellationToken.None,
-        new FileDataStore(ConfigurationService.AppDataFolder)
+        new FileDataStore(ConfigurationService.AppFolders.DataFolder)
       );
     }
 
@@ -46,9 +46,9 @@ public static class GoogleService
     _sheetsService = new SheetsService(initializer);
   }
 
-  public static async Task<string> UploadVideo(string filePath, string title, Action<int>? onProgress)
+  public async Task<string> UploadVideo(string filePath, string title, Action<int>? onProgress)
   {
-    if (_youtubeService == null) throw new InvalidOperationException("YouTube Service is not initialized");
+    if (_youtubeService == null) throw new InvalidOperationException("YouTube Service is not initialized.");
 
     var videoId = "";
 
@@ -82,9 +82,9 @@ public static class GoogleService
     return videoId;
   }
 
-  public static async Task AppendDataToSheet(string spreadsheetId, string sheetName, IList<IList<object>> values)
+  public async Task AppendDataToSheet(string spreadsheetId, string sheetName, IList<IList<object>> values)
   {
-    if (_sheetsService == null) throw new InvalidOperationException("Sheets Service is not initialized");
+    if (_sheetsService == null) throw new InvalidOperationException("Sheets Service is not initialized.");
 
     var request = _sheetsService.Spreadsheets.Values.Append(new ValueRange { Values = values }, spreadsheetId, $"{sheetName}!A1");
 

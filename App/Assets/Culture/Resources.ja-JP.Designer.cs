@@ -114,7 +114,7 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 間隔（秒）.
+        ///   Looks up a localized string similar to 間隔（分）.
         /// </summary>
         internal static string CaptureInterval {
             get {
@@ -263,6 +263,15 @@ namespace App.Assets.Culture {
         internal static string RegisterGoogleSheetData {
             get {
                 return ResourceManager.GetString("RegisterGoogleSheetData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 登録が完了しました。.
+        /// </summary>
+        internal static string RegistrationComplete {
+            get {
+                return ResourceManager.GetString("RegistrationComplete", resourceCulture);
             }
         }
         

@@ -94,7 +94,7 @@
     <value>アップロード</value>
   </data>
   <data name="CaptureInterval" xml:space="preserve">
-    <value>間隔（秒）</value>
+    <value>間隔（分）</value>
   </data>
   <data name="UploadInterval" xml:space="preserve">
     <value>間隔</value>
@@ -146,5 +146,8 @@
   </data>
   <data name="RegisterGoogleSheetData" xml:space="preserve">
     <value>Googleシートデータの登録</value>
+  </data>
+  <data name="RegistrationComplete" xml:space="preserve">
+    <value>登録が完了しました。</value>
   </data>
 </root>

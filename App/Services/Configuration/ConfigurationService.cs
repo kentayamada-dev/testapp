@@ -13,17 +13,9 @@ public static class ConfigurationService
 
   private static readonly Lazy<AppMetadata> CachedMetadata = new(GetMetadata);
 
-  private static readonly Lazy<string> CachedAppDataFolder = new(GetAppDataFolder);
+  private static readonly Lazy<AppFolders> CachedFolders = new(GetAppFolders);
 
-  private static readonly Lazy<string> CachedAppBinFolder = new(GetAppBinFolder);
-
-  private static readonly Lazy<string> CachedAppLogFolder = new(GetAppLogFolder);
-
-  public static string AppLogFolder => CachedAppLogFolder.Value;
-
-  public static string AppDataFolder => CachedAppDataFolder.Value;
-
-  public static string AppBinFolder => CachedAppBinFolder.Value;
+  public static AppFolders AppFolders => CachedFolders.Value;
 
   public static AppSettings AppSettings => CachedAppSettings.Value;
 
@@ -48,6 +40,16 @@ public static class ConfigurationService
       AppName = GetAttribute<AssemblyTitleAttribute>(assembly, attribute => attribute.Title),
       AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(assembly, attribute => attribute.InformationalVersion),
       CompanyName = GetAttribute<AssemblyCompanyAttribute>(assembly, attribute => attribute.Company)
+    };
+  }
+
+  private static AppFolders GetAppFolders()
+  {
+    return new AppFolders
+    {
+      BinFolder = GetAppBinFolder(),
+      DataFolder = GetAppDataFolder(),
+      LogFolder = GetAppLogFolder()
     };
   }
 
@@ -77,11 +79,7 @@ public static class ConfigurationService
 
   private static string GetAppDataFolder()
   {
-    var folderPath = Path.Combine(
-      Environment.GetFolderPath(
-        Environment.SpecialFolder.ApplicationData),
-      AppMetadata.CompanyName,
-      AppMetadata.AppName);
+    var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppMetadata.CompanyName, AppMetadata.AppName);
 
     Directory.CreateDirectory(folderPath);
 
@@ -90,11 +88,7 @@ public static class ConfigurationService
 
   private static string GetAppLogFolder()
   {
-    var folderPath = Path.Combine(
-      Environment.GetFolderPath(
-        Environment.SpecialFolder.ApplicationData),
-      AppMetadata.CompanyName,
-      AppMetadata.AppName,
+    var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppMetadata.CompanyName, AppMetadata.AppName,
       AppSettings.LogFolder);
 
     Directory.CreateDirectory(folderPath);

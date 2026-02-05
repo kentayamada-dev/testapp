@@ -114,7 +114,7 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Interval (sec).
+        ///   Looks up a localized string similar to Interval (min).
         /// </summary>
         public static string CaptureInterval {
             get {
@@ -263,6 +263,15 @@ namespace App.Assets.Culture {
         public static string RegisterGoogleSheetData {
             get {
                 return ResourceManager.GetString("RegisterGoogleSheetData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration has been completed..
+        /// </summary>
+        public static string RegistrationComplete {
+            get {
+                return ResourceManager.GetString("RegistrationComplete", resourceCulture);
             }
         }
         

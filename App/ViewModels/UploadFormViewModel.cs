@@ -10,11 +10,11 @@ using App.Assets.Culture;
 using App.Models;
 using App.Services.Capture;
 using App.Services.Data;
+using App.Services.FileStorage;
 using App.Services.Google;
 using App.Services.Logger;
 using App.Views;
 using Avalonia.Controls;
-using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,18 +46,27 @@ public partial class UploadFormViewModel : ViewModelBase
 {
   private const string StopIconPath = "M0,0 L56,0 L56,56 L0,56 z";
   private const string PlayIconPath = "M0,0 L56,28 L0,56 z";
-  private Window? _mainWindow;
+
+  private readonly CaptureService _captureService;
+  private readonly GoogleService _googleService;
+  private readonly LoggerService _loggerService;
   private readonly IServiceProvider _serviceProvider;
+  private Window? _mainWindow;
 
   [ObservableProperty] private string _buttonIconData = PlayIconPath;
   [ObservableProperty] private CancellationTokenSource? _cancellationTokenSource;
   [ObservableProperty] private TextInputFieldViewModel _fpsField = new(Resources.RequiredError, "FPS");
   [ObservableProperty] private TextInputWithButtonViewModel _inputFolderField;
-  [ObservableProperty] private ComboBoxFieldUploadIntervalViewModel _intervalField = new(ScheduleOptions.Options[0], new ObservableCollection<ScheduleOption>(ScheduleOptions.Options), Resources.UploadInterval);
+  [ObservableProperty] private ComboBoxFieldUploadIntervalViewModel _intervalField = new(ScheduleOptions.Options[0],
+    new ObservableCollection<ScheduleOption>(ScheduleOptions.Options), Resources.UploadInterval);
   [ObservableProperty] private SettingsViewModel _settingsViewModel;
 
-  public UploadFormViewModel(IServiceProvider serviceProvider, SettingsViewModel settingsViewModel)
+  public UploadFormViewModel(IServiceProvider serviceProvider, SettingsViewModel settingsViewModel, CaptureService captureService,
+    LoggerService loggerService, GoogleService googleService)
   {
+    _googleService = googleService;
+    _loggerService = loggerService;
+    _captureService = captureService;
     _settingsViewModel = settingsViewModel;
     _serviceProvider = serviceProvider;
     _inputFolderField = new TextInputWithButtonViewModel(
@@ -97,11 +106,9 @@ public partial class UploadFormViewModel : ViewModelBase
   [RelayCommand]
   private async Task SelectFolder()
   {
-    if (_mainWindow == null) return;
+    var selectedFolderPath = await FileStorageService.GetSelectedFolderPath(_mainWindow);
 
-    var folders = await _mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions());
-
-    if (folders.Count > 0) InputFolderField.Value = folders[0].Path.LocalPath;
+    if (selectedFolderPath != null) InputFolderField.Value = selectedFolderPath;
   }
 
   [RelayCommand]
@@ -110,6 +117,7 @@ public partial class UploadFormViewModel : ViewModelBase
     if (CancellationTokenSource != null)
     {
       await CancellationTokenSource.CancelAsync();
+      CancellationTokenSource.Dispose();
       CancellationTokenSource = null;
       return;
     }
@@ -132,7 +140,7 @@ public partial class UploadFormViewModel : ViewModelBase
   {
     var form = DataPersistService.Get().GoogleForm;
 
-    if (form?.ClientSecretFile == null || form?.GoogleSheetId == null || form?.GoogleSheetName == null)
+    if (form?.ClientSecretFile == null || form.GoogleSheetId == null || form.GoogleSheetName == null)
     {
       if (_mainWindow == null || CancellationTokenSource == null) return;
 
@@ -146,11 +154,10 @@ public partial class UploadFormViewModel : ViewModelBase
     }
 
     var scheduleHours = GetScheduleHours(scheduleOptionId);
-    var videoFilePath = Path.Join(inputFolder, "output.mp4");
 
     try
     {
-      await GoogleService.Initialize(form.ClientSecretFile);
+      await _googleService.Initialize(form.ClientSecretFile);
 
       while (!cancellationToken.IsCancellationRequested)
       {
@@ -160,55 +167,45 @@ public partial class UploadFormViewModel : ViewModelBase
 
         await Task.Delay(delayUntilNext, cancellationToken);
 
-        var imageFiles = Directory.GetFiles(inputFolder, "*.png", SearchOption.AllDirectories).OrderBy(file => file).ToList();
+        var imageFiles = Directory.GetFiles(inputFolder, $"*{CaptureService.ImageExtension}", SearchOption.AllDirectories).OrderBy(file => file)
+          .ToList();
         var firstCreatedTime = new FileInfo(imageFiles.First()).CreationTime.ToString("yyyy/MM/dd HH:mm:ss");
         var lastCreatedTime = new FileInfo(imageFiles.Last()).CreationTime.ToString("yyyy/MM/dd HH:mm:ss");
 
-        await CaptureService.CreateVideo(imageFiles, videoFilePath, fps);
+        var videoFilePath = await _captureService.CreateVideo(TimeSpan.FromHours(1), imageFiles, inputFolder, fps);
 
-        foreach (var file in imageFiles) File.Delete(file);
-        var allDirs = Directory.GetDirectories(inputFolder, "*", SearchOption.AllDirectories).OrderByDescending(d => d.Length).ToList();
-        foreach (var dir in allDirs.Where(dir => Directory.GetFileSystemEntries(dir).Length == 0)) Directory.Delete(dir);
+        CleanupImageFilesAndDirectories(inputFolder, imageFiles);
 
-        var videoId = await GoogleService.UploadVideo(
-          videoFilePath,
-          $"{firstCreatedTime} ~ {lastCreatedTime}",
-          progress => { _ = LoggerService.Log($@"Uploaded: {progress}%"); }
-        );
+        var videoId = await _googleService.UploadVideo(videoFilePath, $"{firstCreatedTime} ~ {lastCreatedTime}",
+          progress => { _ = _loggerService.Log($@"Uploaded: {progress}%"); });
 
-        await LoggerService.Log($"Video ID: {videoId}");
+        await _loggerService.Log($"Video ID: {videoId}");
 
-        await GoogleService.AppendDataToSheet(
-          form.GoogleSheetId,
-          form.GoogleSheetName,
-          new List<IList<object>>
-          {
-            new List<object> { now, $"https://youtu.be/{videoId}" }
-          }
-        );
+        await _googleService.AppendDataToSheet(form.GoogleSheetId, form.GoogleSheetName,
+          new List<IList<object>> { new List<object> { now, $"https://youtu.be/{videoId}" } });
       }
     }
     catch (Exception ex)
     {
-      await LoggerService.Log(ex);
+      await _loggerService.Log(ex);
     }
+  }
+
+  private static void CleanupImageFilesAndDirectories(string inputFolder, List<string> imageFiles)
+  {
+    foreach (var file in imageFiles) File.Delete(file);
+
+    var allDirs = Directory.GetDirectories(inputFolder, "*", SearchOption.AllDirectories).OrderByDescending(d => d.Length).ToList();
+
+    foreach (var dir in allDirs.Where(dir => Directory.GetFileSystemEntries(dir).Length == 0)) Directory.Delete(dir);
   }
 
   private static int[] GetScheduleHours(int scheduleOptionId)
   {
-    return scheduleOptionId switch
-    {
-      1 => [0],
-      2 => [0, 12],
-      3 => [0, 8, 16],
-      4 => [0, 6, 12, 18],
-      _ => [0]
-    };
+    return scheduleOptionId switch { 1 => [0], 2 => [0, 12], 3 => [0, 8, 16], 4 => [0, 6, 12, 18], _ => [0] };
   }
 
-  private static DateTime GetNextScheduledTime(
-    DateTime now,
-    int[] scheduleHours)
+  private static DateTime GetNextScheduledTime(DateTime now, int[] scheduleHours)
   {
     var today = now.Date;
 
@@ -223,7 +220,7 @@ public partial class UploadFormViewModel : ViewModelBase
 
   private async Task<bool> IsInValid()
   {
-    if (string.IsNullOrWhiteSpace(InputFolderField.Value) || !await IsValidFolderPath(InputFolderField.Value))
+    if (string.IsNullOrWhiteSpace(InputFolderField.Value) || !await FileStorageService.IsValidFolderPath(_mainWindow, InputFolderField.Value))
       InputFolderField.IsInvalid = true;
     else
       InputFolderField.IsInvalid = false;
@@ -234,14 +231,5 @@ public partial class UploadFormViewModel : ViewModelBase
       FpsField.IsInvalid = false;
 
     return FpsField.IsInvalid || InputFolderField.IsInvalid;
-  }
-
-  private async Task<bool> IsValidFolderPath(string? folderPath)
-  {
-    if (_mainWindow == null || folderPath == null) return false;
-
-    var folder = await _mainWindow.StorageProvider.TryGetFolderFromPathAsync(folderPath);
-
-    return folder != null;
   }
 }

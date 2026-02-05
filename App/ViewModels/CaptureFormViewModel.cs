@@ -6,9 +6,9 @@ using App.Assets.Culture;
 using App.Models;
 using App.Services.Capture;
 using App.Services.Data;
+using App.Services.FileStorage;
 using App.Services.Logger;
 using Avalonia.Controls;
-using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -18,6 +18,8 @@ public partial class CaptureFormViewModel : ViewModelBase
 {
   private const string StopIconPath = "M0,0 L56,0 L56,56 L0,56 z";
   private const string PlayIconPath = "M0,0 L56,28 L0,56 z";
+  private readonly CaptureService _captureService;
+  private readonly LoggerService _loggerService;
   private Window? _mainWindow;
 
   [ObservableProperty] private string _buttonIconData = PlayIconPath;
@@ -26,8 +28,10 @@ public partial class CaptureFormViewModel : ViewModelBase
   [ObservableProperty] private TextInputWithButtonViewModel _outputFolderField;
   [ObservableProperty] private TextInputFieldViewModel _urlField = new(Resources.RequiredError, "URL");
 
-  public CaptureFormViewModel()
+  public CaptureFormViewModel(LoggerService loggerService, CaptureService captureService)
   {
+    _captureService = captureService;
+    _loggerService = loggerService;
     _outputFolderField = new TextInputWithButtonViewModel(
       buttonCommand: SelectFolderCommand,
       fieldLabel: Resources.OutputFolder,
@@ -61,11 +65,9 @@ public partial class CaptureFormViewModel : ViewModelBase
   [RelayCommand]
   private async Task SelectFolder()
   {
-    if (_mainWindow == null) return;
+    var selectedFolder = await FileStorageService.GetSelectedFolderPath(_mainWindow);
 
-    var folders = await _mainWindow.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions());
-
-    if (folders.Count > 0) OutputFolderField.Value = folders[0].Path.LocalPath;
+    if (selectedFolder != null) OutputFolderField.Value = selectedFolder;
   }
 
   [RelayCommand]
@@ -74,6 +76,7 @@ public partial class CaptureFormViewModel : ViewModelBase
     if (CancellationTokenSource != null)
     {
       await CancellationTokenSource.CancelAsync();
+      CancellationTokenSource.Dispose();
       CancellationTokenSource = null;
       return;
     }
@@ -98,16 +101,14 @@ public partial class CaptureFormViewModel : ViewModelBase
     {
       while (!cancellationToken.IsCancellationRequested)
       {
-        await Task.Delay(TimeSpan.FromSeconds(interval), cancellationToken);
+        await Task.Delay(TimeSpan.FromMinutes(interval), cancellationToken);
 
-        await CaptureService.Capture(
-          UrlField.Value,
-          OutputFolderField.Value);
+        await _captureService.Capture(TimeSpan.FromSeconds(5), UrlField.Value, OutputFolderField.Value, DateTime.Now);
       }
     }
     catch (Exception ex)
     {
-      await LoggerService.Log(ex);
+      await _loggerService.Log(ex);
     }
   }
 
@@ -115,7 +116,7 @@ public partial class CaptureFormViewModel : ViewModelBase
   {
     UrlField.IsInvalid = string.IsNullOrWhiteSpace(UrlField.Value);
 
-    if (string.IsNullOrWhiteSpace(OutputFolderField.Value) || !await IsValidFolderPath(OutputFolderField.Value))
+    if (string.IsNullOrWhiteSpace(OutputFolderField.Value) || !await FileStorageService.IsValidFolderPath(_mainWindow, OutputFolderField.Value))
       OutputFolderField.IsInvalid = true;
     else
       OutputFolderField.IsInvalid = false;
@@ -126,14 +127,5 @@ public partial class CaptureFormViewModel : ViewModelBase
       IntervalField.IsInvalid = false;
 
     return IntervalField.IsInvalid || OutputFolderField.IsInvalid || UrlField.IsInvalid;
-  }
-
-  private async Task<bool> IsValidFolderPath(string? folderPath)
-  {
-    if (_mainWindow == null || folderPath == null) return false;
-
-    var folder = await _mainWindow.StorageProvider.TryGetFolderFromPathAsync(folderPath);
-
-    return folder != null;
   }
 }

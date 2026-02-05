@@ -13,11 +13,6 @@ public sealed class Theme(string value)
 
   public string Value { get; } = value;
 
-  public static IReadOnlyList<Theme> GetAll()
-  {
-    return AllThemes;
-  }
-
   public static Theme? FromValue(string? value)
   {
     return AllThemes.FirstOrDefault(t => t.Value == value);

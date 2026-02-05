@@ -8,7 +8,7 @@ using App.Services.Configuration;
 
 namespace App.Services.Data;
 
-public class UserPreferencesModel
+public sealed class UserPreferencesModel
 {
   public string? Theme { get; set; }
 
@@ -29,7 +29,7 @@ public partial class DataPersistJsonContext : JsonSerializerContext;
 public static class DataPersistService
 {
   private static readonly string FilePath = Path.Combine(
-    ConfigurationService.AppDataFolder,
+    ConfigurationService.AppFolders.DataFolder,
     ConfigurationService.AppSettings.SettingsFile
   );
 
@@ -40,30 +40,29 @@ public static class DataPersistService
     if (!File.Exists(FilePath))
     {
       _cache = new UserPreferencesModel();
-      var json = JsonSerializer.Serialize(
-        _cache,
-        DataPersistJsonContext.Default.UserPreferencesModel
-      );
+      var json = JsonSerializer.Serialize(_cache, DataPersistJsonContext.Default.UserPreferencesModel);
       File.WriteAllText(FilePath, json);
     }
     else
     {
       var json = File.ReadAllText(FilePath);
-      _cache = JsonSerializer.Deserialize(
-        json,
-        DataPersistJsonContext.Default.UserPreferencesModel
-      ) ?? new UserPreferencesModel();
+      _cache = JsonSerializer.Deserialize(json, DataPersistJsonContext.Default.UserPreferencesModel) ?? new UserPreferencesModel();
     }
   }
 
   public static UserPreferencesModel Get()
   {
-    return _cache ?? throw new InvalidOperationException(
-      "Service not initialized. Call Initialize() first"
-    );
+    return _cache ?? throw new InvalidOperationException("Service not initialized.");
   }
 
-  public static async Task Save(UserPreferencesModel settings)
+  public static async Task Update(Action<UserPreferencesModel> updateAction)
+  {
+    var cache = _cache ?? throw new InvalidOperationException("Service not initialized.");
+    updateAction(cache);
+    await Save(cache);
+  }
+
+  private static async Task Save(UserPreferencesModel settings)
   {
     var json = JsonSerializer.Serialize(
       settings,
@@ -71,16 +70,5 @@ public static class DataPersistService
     );
     await File.WriteAllTextAsync(FilePath, json);
     _cache = settings;
-  }
-
-  public static async Task Update(
-    Action<UserPreferencesModel> updateAction
-  )
-  {
-    var cache = _cache ?? throw new InvalidOperationException(
-      "Service not initialized. Call Initialize() first"
-    );
-    updateAction(cache);
-    await Save(cache);
   }
 }

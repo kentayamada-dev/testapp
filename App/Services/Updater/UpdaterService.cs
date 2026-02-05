@@ -14,8 +14,7 @@ using NetSparkleUpdater.SignatureVerifiers;
 
 namespace App.Services.Updater;
 
-public class UpdaterService(
-  IServiceProvider serviceProvider)
+public sealed class UpdaterService(IServiceProvider serviceProvider)
 {
   private readonly SparkleUpdater _sparkleUpdater = new CustomSparkleUpdater(
     ConfigurationService.AppSettings.AppcastUrl,

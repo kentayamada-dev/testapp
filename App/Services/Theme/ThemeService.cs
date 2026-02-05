@@ -13,15 +13,9 @@ public static class ThemeService
 
   public static void ApplyTheme(Theme theme)
   {
-    var themeVariant = theme.Value switch
-    {
-      "Dark" => ThemeVariant.Dark,
-      "Light" => ThemeVariant.Light,
-      _ => ThemeVariant.Default
-    };
+    var themeVariant = theme.Value switch { "Dark" => ThemeVariant.Dark, "Light" => ThemeVariant.Light, _ => ThemeVariant.Default };
 
-    Avalonia.Application.Current?.RequestedThemeVariant =
-      themeVariant;
+    Avalonia.Application.Current?.RequestedThemeVariant = themeVariant;
   }
 
   public static async Task ApplyAndSaveTheme(Theme theme)

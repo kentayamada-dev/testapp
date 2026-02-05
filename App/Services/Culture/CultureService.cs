@@ -8,8 +8,8 @@ public static class CultureService
 {
   public static Culture GetCulture(string? culture)
   {
-    return Culture.GetAll().FirstOrDefault(availableCulture => availableCulture.Code == culture) ??
-           Culture.En;
+    return Culture.GetAll()
+      .FirstOrDefault(availableCulture => availableCulture.Code == culture) ?? Culture.En;
   }
 
   public static void ApplyCulture(Culture culture)

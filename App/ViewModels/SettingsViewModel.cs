@@ -1,11 +1,15 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using App.Assets.Culture;
 using App.Models;
 using App.Services.Data;
+using App.Services.FileStorage;
+using App.Views;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace App.ViewModels;
 
@@ -17,9 +21,11 @@ public partial class SettingsViewModel : ViewModelBase
   [ObservableProperty] private bool _isUploading;
 
   private Window? _mainWindow;
+  private readonly IServiceProvider _serviceProvider;
 
-  public SettingsViewModel()
+  public SettingsViewModel(IServiceProvider serviceProvider)
   {
+    _serviceProvider = serviceProvider;
     _filePathField = new TextInputWithButtonViewModel(
       buttonCommand: SelectFileCommand,
       buttonLabel: Resources.Browse,
@@ -51,19 +57,16 @@ public partial class SettingsViewModel : ViewModelBase
   [RelayCommand]
   private async Task SelectFile()
   {
-    if (_mainWindow == null) return;
+    var selectedFilePath = await FileStorageService.GetSelectedFilePath(_mainWindow, [FilePickerFileTypes.Json]);
 
-    var files = await _mainWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
-    {
-      FileTypeFilter = [FilePickerFileTypes.Json]
-    });
-
-    if (files.Count > 0) FilePathField.Value = files[0].Path.LocalPath;
+    if (selectedFilePath != null) FilePathField.Value = selectedFilePath;
   }
 
   [RelayCommand]
   private async Task RegisterGoogleSheetData()
   {
+    if (_mainWindow == null) return;
+
     GoogleSheetId.IsInvalid = string.IsNullOrWhiteSpace(GoogleSheetId.Value);
 
     GoogleSheetName.IsInvalid = string.IsNullOrWhiteSpace(GoogleSheetName.Value);
@@ -76,12 +79,16 @@ public partial class SettingsViewModel : ViewModelBase
       data.GoogleForm.GoogleSheetName = GoogleSheetName.Value;
       data.GoogleForm.GoogleSheetId = GoogleSheetId.Value;
     });
+
+    await ShowMessageDialog(_mainWindow, Resources.RegistrationComplete);
   }
 
   [RelayCommand]
   private async Task RegisterGoogleSecretFile()
   {
-    if (string.IsNullOrWhiteSpace(FilePathField.Value) || !await IsValidFilePath(FilePathField.Value))
+    if (_mainWindow == null) return;
+
+    if (string.IsNullOrWhiteSpace(FilePathField.Value) || !await FileStorageService.IsValidFilePath(_mainWindow, FilePathField.Value))
     {
       FilePathField.IsInvalid = true;
       return;
@@ -94,14 +101,15 @@ public partial class SettingsViewModel : ViewModelBase
       data.GoogleForm ??= new GoogleFormModel();
       data.GoogleForm.ClientSecretFile = FilePathField.Value;
     });
+
+    await ShowMessageDialog(_mainWindow, Resources.RegistrationComplete);
   }
 
-  private async Task<bool> IsValidFilePath(string? filePath)
+  private async Task ShowMessageDialog(Window owner, string message)
   {
-    if (_mainWindow == null || filePath == null) return false;
-
-    var file = await _mainWindow.StorageProvider.TryGetFileFromPathAsync(filePath);
-
-    return file != null;
+    var dialog = _serviceProvider.GetRequiredService<MessageDialog>();
+    dialog.SetMessage(message);
+    dialog.SetShowCancelButton(false);
+    await dialog.ShowDialog<MessageDialogResult>(owner);
   }
 }

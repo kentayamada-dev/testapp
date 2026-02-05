@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>My Best App</AssemblyTitle>
     <Company>Kenta Yamada</Company>
-    <Version>1.46.0</Version>
+    <Version>1.47.0</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -77,9 +77,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TrimmerRootAssembly Include="Google.Apis.Auth" />
-    <TrimmerRootAssembly Include="Google.Apis.Sheets.v4" />
-    <TrimmerRootAssembly Include="Google.Apis.YouTube.v3" />
+    <TrimmerRootAssembly Include="Google.Apis.Auth"/>
+    <TrimmerRootAssembly Include="Google.Apis.Sheets.v4"/>
+    <TrimmerRootAssembly Include="Google.Apis.YouTube.v3"/>
   </ItemGroup>
 
   <ItemGroup>

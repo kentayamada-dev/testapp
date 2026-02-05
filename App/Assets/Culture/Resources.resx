@@ -94,7 +94,7 @@
     <value>Upload</value>
   </data>
   <data name="CaptureInterval" xml:space="preserve">
-    <value>Interval (sec)</value>
+    <value>Interval (min)</value>
   </data>
   <data name="UploadInterval" xml:space="preserve">
     <value>Interval</value>
@@ -146,5 +146,8 @@
   </data>
   <data name="RegisterGoogleSheetData" xml:space="preserve">
     <value>Register Google Sheet Data</value>
+  </data>
+  <data name="RegistrationComplete" xml:space="preserve">
+    <value>Registration has been completed.</value>
   </data>
 </root>
