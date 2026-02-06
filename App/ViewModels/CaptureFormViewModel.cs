@@ -97,19 +97,17 @@ public partial class CaptureFormViewModel : ViewModelBase
 
   private async Task CaptureAsync(int interval, CancellationToken cancellationToken)
   {
-    try
-    {
-      while (!cancellationToken.IsCancellationRequested)
+    while (!cancellationToken.IsCancellationRequested)
+      try
       {
         await Task.Delay(TimeSpan.FromMinutes(interval), cancellationToken);
 
         await _captureService.Capture(TimeSpan.FromSeconds(5), UrlField.Value, OutputFolderField.Value, DateTime.Now);
       }
-    }
-    catch (Exception ex)
-    {
-      await _loggerService.Log(ex);
-    }
+      catch (Exception ex)
+      {
+        await _loggerService.Log(ex);
+      }
   }
 
   private async Task<bool> IsInValid()

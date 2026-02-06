@@ -1,0 +1,28 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:LibVLCSharp.Avalonia;assembly=LibVLCSharp.Avalonia"
+             xmlns:vm="clr-namespace:App.ViewModels"
+             xmlns:views="clr-namespace:App.Views"
+             xmlns:culture="clr-namespace:App.Assets.Culture"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="App.Views.StreamView"
+             x:DataType="vm:StreamViewModel">
+
+  <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+    <avalonia:VideoView Grid.Column="0" Name="Video" MediaPlayer="{Binding MediaPlayer}" Width="544" Height="306">
+      <Panel IsVisible="{Binding IsPointerOver, ElementName=Video}">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+          <Button Click="ToggleButton" Margin="10" CornerRadius="50" Height="50" Width="50">
+            <PathIcon Height="20" Width="20" Foreground="White" Name="SoundIcon" />
+          </Button>
+        </StackPanel>
+      </Panel>
+    </avalonia:VideoView>
+    <StackPanel Grid.Column="1">
+      <views:TextInputField DataContext="{Binding UrlField}" HorizontalAlignment="Stretch" />
+      <Button Classes="DefaultButton" Content="{x:Static culture:Resources.Update}" HorizontalAlignment="Right" Command="{Binding UrlUpdateCommand}" />
+    </StackPanel>
+  </Grid>
+</UserControl>

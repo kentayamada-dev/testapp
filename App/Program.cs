@@ -1,12 +1,10 @@
 ﻿using System;
 using App.Services.Application;
+using App.Services.Configuration;
 using Avalonia;
 using Avalonia.Media.Fonts;
 
 namespace App;
-
-public sealed class MyFontCollection() : EmbeddedFontCollection(new Uri("fonts:MyFonts", UriKind.Absolute),
-  new Uri("avares://App/Assets/Fonts", UriKind.Absolute));
 
 public static class Program
 {
@@ -41,7 +39,15 @@ public static class Program
       {
         DisableDefaultApplicationMenuItems = true
       })
-      .ConfigureFonts(fontManager => { fontManager.AddFontCollection(new MyFontCollection()); })
+      .ConfigureFonts(fontManager =>
+      {
+        fontManager.AddFontCollection(
+          new EmbeddedFontCollection(
+            new Uri("fonts:MyFonts", UriKind.Absolute),
+            new Uri($"avares://{ConfigurationService.AppMetadata.AssemblyName}/Assets/Fonts", UriKind.Absolute)
+          )
+        );
+      })
       .LogToTrace();
   }
 }

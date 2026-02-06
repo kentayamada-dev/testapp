@@ -222,6 +222,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to プレビュー.
+        /// </summary>
+        internal static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to アプリを終了.
         /// </summary>
         internal static string QuitApp {
@@ -339,11 +348,29 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 更新.
+        /// </summary>
+        internal static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 新しいバージョンが利用可能です。今すぐインストールしますか？.
         /// </summary>
         internal static string UpdateAvailable {
             get {
                 return ResourceManager.GetString("UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 更新が完了しました。.
+        /// </summary>
+        internal static string UpdateComplete {
+            get {
+                return ResourceManager.GetString("UpdateComplete", resourceCulture);
             }
         }
         

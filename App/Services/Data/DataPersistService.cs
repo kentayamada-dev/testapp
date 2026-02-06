@@ -19,6 +19,8 @@ public sealed class UserPreferencesModel
   public UploadFormModel? UploadForm { get; set; }
 
   public GoogleFormModel? GoogleForm { get; set; }
+
+  public PreviewFormModel? PreviewForm { get; set; }
 }
 
 [JsonSourceGenerationOptions(WriteIndented = true, PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,

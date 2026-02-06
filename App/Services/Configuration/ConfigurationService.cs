@@ -23,7 +23,7 @@ public static class ConfigurationService
 
   private static AppSettings GetAppSettings()
   {
-    using var stream = AssetLoader.Open(new System.Uri("avares://App/Assets/Config/appsettings.json"));
+    using var stream = AssetLoader.Open(new System.Uri($"avares://{AppMetadata.AssemblyName}/Assets/Config/appsettings.json"));
     var configuration = new ConfigurationBuilder().AddJsonStream(stream).Build();
     var settings = configuration.Get<AppSettings>() ?? throw new InvalidOperationException("Configuration is missing or invalid.");
 
@@ -39,7 +39,8 @@ public static class ConfigurationService
     {
       AppName = GetAttribute<AssemblyTitleAttribute>(assembly, attribute => attribute.Title),
       AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(assembly, attribute => attribute.InformationalVersion),
-      CompanyName = GetAttribute<AssemblyCompanyAttribute>(assembly, attribute => attribute.Company)
+      CompanyName = GetAttribute<AssemblyCompanyAttribute>(assembly, attribute => attribute.Company),
+      AssemblyName = assembly.GetName().Name ?? throw new InvalidOperationException("Assembly name is missing")
     };
   }
 

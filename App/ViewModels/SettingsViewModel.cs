@@ -15,13 +15,13 @@ namespace App.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase
 {
+  private readonly IServiceProvider _serviceProvider;
+  private Window? _mainWindow;
+
   [ObservableProperty] private TextInputWithButtonViewModel _filePathField;
   [ObservableProperty] private TextInputFieldViewModel _googleSheetId = new(Resources.RequiredError, watermark: Resources.GoogleSheetId);
   [ObservableProperty] private TextInputFieldViewModel _googleSheetName = new(Resources.RequiredError, watermark: Resources.GoogleSheetName);
   [ObservableProperty] private bool _isUploading;
-
-  private Window? _mainWindow;
-  private readonly IServiceProvider _serviceProvider;
 
   public SettingsViewModel(IServiceProvider serviceProvider)
   {

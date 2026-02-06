@@ -150,4 +150,13 @@
   <data name="RegistrationComplete" xml:space="preserve">
     <value>登録が完了しました。</value>
   </data>
+  <data name="Preview" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="UpdateComplete" xml:space="preserve">
+    <value>更新が完了しました。</value>
+  </data>
 </root>

@@ -15,8 +15,7 @@
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
       <Button Command="{Binding CaptureCommand}" Width="130" Height="130" Classes="DefaultButton">
         <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{Binding ButtonIconData}"
-              Stroke="{DynamicResource TextControlForeground}"
-              StrokeThickness="3" />
+              Stroke="{DynamicResource TextControlForeground}" StrokeThickness="3" />
       </Button>
     </StackPanel>
   </Grid>

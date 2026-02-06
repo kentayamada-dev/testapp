@@ -222,6 +222,15 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        public static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit App.
         /// </summary>
         public static string QuitApp {
@@ -339,11 +348,29 @@ namespace App.Assets.Culture {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New update available! Update now?.
         /// </summary>
         public static string UpdateAvailable {
             get {
                 return ResourceManager.GetString("UpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update has been completed..
+        /// </summary>
+        public static string UpdateComplete {
+            get {
+                return ResourceManager.GetString("UpdateComplete", resourceCulture);
             }
         }
         

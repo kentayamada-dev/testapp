@@ -99,7 +99,7 @@ public sealed class App : Application
       Icon = new WindowIcon(
         new Bitmap(
           AssetLoader.Open(
-            new Uri("avares://App/Assets/Logo/logo.ico")
+            new Uri($"avares://{ConfigurationService.AppMetadata.AssemblyName}/Assets/Logo/logo.ico")
           )
         )
       ),
