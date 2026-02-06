@@ -201,6 +201,7 @@ jobs:
           $publishDir = "${{ github.workspace }}/${{ env.PUBLISH_DIR }}"
           $projectName = "${{ env.PROJECT_NAME }}"
           $productName = "${{ needs.info-check.outputs.product_name }}"
+          $assemblyName = "${{ needs.info-check.outputs.assembly_name }}"
           $appTitle = "${{ needs.info-check.outputs.app_title }}"
           $appVersion = "${{ needs.info-check.outputs.app_version }}"
           $companyName = "${{ needs.info-check.outputs.company_name }}"
@@ -218,7 +219,7 @@ jobs:
             /DMyAppVersion="$appVersion" `
             /DMyAppPublisher="$companyName" `
             /DMyAppURL="$appUrl" `
-            /DMyAppExeName="$projectName.exe" `
+            /DMyAppExeName="$assemblyName.exe" `
             /O+ `
             /O"$releaseDir" `
             /F"$setupFile" `
