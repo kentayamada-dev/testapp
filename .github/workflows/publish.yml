@@ -175,7 +175,10 @@ jobs:
           app_contents="$app_bundle/Contents"
           publish_dir="${{ env.PUBLISH_DIR }}"
           tmp_info="/tmp/Info.plist"
+          assembly_name=${{ needs.info-check.outputs.assembly_name }}
           app_pkg="${{ env.RELEASE_DIR }}/${{ needs.info-check.outputs.product_name }}-${{ matrix.rid }}.pkg"
+
+          rm -rf "${{ env.PUBLISH_DIR }}/$assembly_name.dSYM"
 
           envsubst < "$info_plist_template" > "$tmp_info"
 
