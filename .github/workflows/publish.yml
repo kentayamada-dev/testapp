@@ -166,7 +166,7 @@ jobs:
         env:
           AppIdentifier: ${{ env.APP_IDENTIFIER }}
           ProductVersion: ${{ needs.info-check.outputs.app_version }}
-          OutputFilename: ${{ env.PROJECT_NAME }}
+          ExecutableName: ${{ needs.info-check.outputs.assembly_name }}
           AppName: ${{ needs.info-check.outputs.app_title }}
         run: |
           info_plist_template="${{ env.GH_WORKFLOWS_ASSETS }}/osx/Info.plist"
@@ -262,7 +262,6 @@ jobs:
           release_dir="${{ env.RELEASE_DIR }}"
           app_title="${{ needs.info-check.outputs.app_title }}"
           base_url="${{ github.server_url }}/${{ github.repository }}/releases/latest/download"
-
 
           find Release -type f \( -name "*.pkg" -o -name "*.exe" \) | while read file; do
             dir_name=$(echo "$file" | cut -d'/' -f2)
