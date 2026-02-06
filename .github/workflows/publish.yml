@@ -24,6 +24,7 @@ jobs:
     timeout-minutes: 5
 
     outputs:
+      assembly_name: ${{ steps.get-info.outputs.assembly_name }}
       product_name: ${{ steps.get-info.outputs.product_name }}
       company_name: ${{ steps.get-info.outputs.company_name }}
       app_title: ${{ steps.get-info.outputs.app_title }}
@@ -55,6 +56,9 @@ jobs:
 
           product_name="$(sed -n 's/.*<Product>\(.*\)<\/Product>.*/\1/p' "$project_file" | head -1)"
           echo "product_name=$product_name" >> "$GITHUB_OUTPUT"
+
+          assembly_name="$(sed -n 's/.*<AssemblyName>\(.*\)<\/AssemblyName>.*/\1/p' "$project_file" | head -1)"
+          echo "assembly_name=$assembly_name" >> "$GITHUB_OUTPUT"
 
           target_framework="$(sed -n 's/.*<TargetFramework>\(.*\)<\/TargetFramework>.*/\1/p' "$project_file" | head -1)"
           dotnet_version="${target_framework#net}.x"
@@ -94,6 +98,7 @@ jobs:
           cat > "$tmp_file" << 'EOF'
           {
             "App Title": "${{ steps.get-info.outputs.app_title }}",
+            "Assembly Name": "${{ steps.get-info.outputs.assembly_name }}",
             "Product Name": "${{ steps.get-info.outputs.product_name }}",
             "Company Name": "${{ steps.get-info.outputs.company_name }}",
             "App Version": "${{ steps.get-info.outputs.app_version }}",
@@ -172,8 +177,6 @@ jobs:
           tmp_info="/tmp/Info.plist"
           app_pkg="${{ env.RELEASE_DIR }}/${{ needs.info-check.outputs.product_name }}-${{ matrix.rid }}.pkg"
 
-          rm -rf "${{ env.PUBLISH_DIR }}/App.dSYM"
-
           envsubst < "$info_plist_template" > "$tmp_info"
 
           mkdir -p "${{ env.RELEASE_DIR }}"
@@ -202,8 +205,6 @@ jobs:
           $appUrl = "${{ github.server_url }}/${{ github.repository }}"
           $releaseDir = "${{ env.RELEASE_DIR }}"
           $setupFile = "$productName-${{ matrix.rid }}-Setup"
-
-          rm "${{ env.PUBLISH_DIR }}/App.pdb" -ErrorAction SilentlyContinue
 
           winget install -e --id JRSoftware.InnoSetup -h
 

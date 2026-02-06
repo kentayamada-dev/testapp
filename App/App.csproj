@@ -3,7 +3,7 @@
     <AssemblyName>MyBestApp</AssemblyName>
     <AssemblyTitle>My Best App</AssemblyTitle>
     <Company>Kenta Yamada</Company>
-    <Version>1.48.0</Version>
+    <Version>1.49.0</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -36,6 +36,7 @@
     <DebugType>None</DebugType>
     <IlcDisableReflection>true</IlcDisableReflection>
     <PublishTrimmed>true</PublishTrimmed>
+    <GenerateDebugInformation>false</GenerateDebugInformation>
     <UseAppHost>true</UseAppHost>
   </PropertyGroup>
 
