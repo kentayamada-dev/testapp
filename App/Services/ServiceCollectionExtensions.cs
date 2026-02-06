@@ -19,7 +19,6 @@ public static class ServiceCollectionExtensions
 
     services.AddSingleton<MainViewModel>();
     services.AddSingleton<CaptureFormViewModel>();
-    services.AddSingleton<StreamViewModel>();
     services.AddSingleton<UploadFormViewModel>();
     services.AddSingleton<TextInputWithButtonViewModel>();
     services.AddSingleton<SettingsViewModel>();

@@ -85,9 +85,6 @@
         <TabItem Header="{x:Static culture:Resources.Upload}" Classes="CustomTabItem" FontWeight="SemiBold">
           <views:UploadForm DataContext="{Binding UploadFormViewModel}" Margin="0,20" />
         </TabItem>
-        <TabItem Header="{x:Static culture:Resources.Preview}" Classes="CustomTabItem" FontWeight="SemiBold">
-          <views:StreamView DataContext="{Binding StreamViewModel}" Margin="0,20" />
-        </TabItem>
         <TabItem Header="{x:Static culture:Resources.Settings}" Classes="CustomTabItem" FontWeight="SemiBold">
           <views:SettingsView DataContext="{Binding SettingsViewModel}" Margin="0,20" />
         </TabItem>

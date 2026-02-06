@@ -3,7 +3,7 @@
     <AssemblyName>MyBestApp</AssemblyName>
     <AssemblyTitle>My Best App</AssemblyTitle>
     <Company>Kenta Yamada</Company>
-    <Version>1.52.0</Version>
+    <Version>1.53.0</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -94,8 +94,6 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.73.0"/>
     <PackageReference Include="Google.Apis.Sheets.v4" Version="1.72.0.3966"/>
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.73.0.4029"/>
-    <PackageReference Include="LibVLCSharp" Version="3.9.5"/>
-    <PackageReference Include="LibVLCSharp.Avalonia" Version="3.9.5"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.2"/>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.2"/>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2"/>
@@ -106,19 +104,4 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-
-  <Choose>
-    <When Condition="$(RuntimeIdentifier) != ''">
-      <ItemGroup>
-        <PackageReference Include="VideoLAN.LibVLC.Mac" Version="3.1.3.1" Condition="$(RuntimeIdentifier.StartsWith('osx'))"/>
-        <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.23" Condition="$(RuntimeIdentifier.StartsWith('win'))"/>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="VideoLAN.LibVLC.Mac" Version="3.1.3.1" Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))"/>
-        <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.23" Condition="$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))"/>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
 </Project>

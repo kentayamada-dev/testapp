@@ -22,8 +22,7 @@ public partial class MainViewModel(
   UpdaterService updaterService,
   CaptureFormViewModel captureFormViewModel,
   UploadFormViewModel uploadFormViewModel,
-  SettingsViewModel settingsViewModel,
-  StreamViewModel streamViewModel) : ViewModelBase
+  SettingsViewModel settingsViewModel) : ViewModelBase
 {
   [ObservableProperty] private string _appRepoUrl = ConfigurationService.AppSettings.AppRepoUrl;
   [ObservableProperty] private string _darkTheme = Theme.Dark.Value;
@@ -34,7 +33,6 @@ public partial class MainViewModel(
   [ObservableProperty] private string _systemTheme = Theme.System.Value;
   [ObservableProperty] private CaptureFormViewModel _captureFormViewModel = captureFormViewModel;
   [ObservableProperty] private SettingsViewModel _settingsViewModel = settingsViewModel;
-  [ObservableProperty] private StreamViewModel _streamViewModel = streamViewModel;
   [ObservableProperty] private UploadFormViewModel _uploadFormViewModel = uploadFormViewModel;
 
   private Window? _mainWindow;
@@ -45,7 +43,6 @@ public partial class MainViewModel(
     CaptureFormViewModel.SetMainWindow(mainWindow);
     UploadFormViewModel.SetMainWindow(mainWindow);
     SettingsViewModel.SetMainWindow(mainWindow);
-    StreamViewModel.SetMainWindow(mainWindow);
   }
 
   [RelayCommand]
