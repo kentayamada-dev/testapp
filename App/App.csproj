@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>MyBestApp</AssemblyName>
-    <AssemblyTitle>My Best App</AssemblyTitle>
+    <AssemblyName>RTSPCapture</AssemblyName>
+    <AssemblyTitle>RTSP Capture</AssemblyTitle>
     <Company>Kenta Yamada</Company>
-    <Version>1.53.0</Version>
+    <Description>RTSP Capture</Description>
+    <Copyright>Copyright © 2026 Kenta Yamada</Copyright>
+    <Version>1.54.0</Version>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -16,9 +18,6 @@
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <ApplicationIcon>Assets\Logo\logo.ico</ApplicationIcon>
-    <Description>My best app is cool</Description>
-    <Product>MyBestApp</Product>
-    <Copyright>2025 Kenta Yamada</Copyright>
     <IsAotCompatible>true</IsAotCompatible>
     <PublishAot>true</PublishAot>
     <BuiltInComInteropSupport>false</BuiltInComInteropSupport>

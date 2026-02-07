@@ -23,6 +23,8 @@ public sealed class CustomSparkleUpdater : SparkleUpdater
     _isWindows = OperatingSystem.IsWindows();
     _isMac = OperatingSystem.IsMacOS();
 
+    Configuration.AssemblyAccessor = new CustomAssemblyAccessor();
+
     AppCastHelper.AppCastFilter = new CustomAppCastFilter
     {
       OperatingSystem = GetCurrentOperatingSystem(),
@@ -30,7 +32,6 @@ public sealed class CustomSparkleUpdater : SparkleUpdater
     };
 
     CheckServerFileName = false;
-
     UserInteractionMode = UserInteractionMode.DownloadAndInstall;
   }
 

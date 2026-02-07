@@ -40,6 +40,8 @@ public static class ConfigurationService
       AppName = GetAttribute<AssemblyTitleAttribute>(assembly, attribute => attribute.Title),
       AppVersion = GetAttribute<AssemblyInformationalVersionAttribute>(assembly, attribute => attribute.InformationalVersion),
       CompanyName = GetAttribute<AssemblyCompanyAttribute>(assembly, attribute => attribute.Company),
+      Description = GetAttribute<AssemblyDescriptionAttribute>(assembly, attribute => attribute.Description),
+      Copyright = GetAttribute<AssemblyCopyrightAttribute>(assembly, attribute => attribute.Copyright),
       AssemblyName = assembly.GetName().Name ?? throw new InvalidOperationException("Assembly name is missing")
     };
   }

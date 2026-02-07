@@ -25,7 +25,6 @@ jobs:
 
     outputs:
       assembly_name: ${{ steps.get-info.outputs.assembly_name }}
-      product_name: ${{ steps.get-info.outputs.product_name }}
       company_name: ${{ steps.get-info.outputs.company_name }}
       app_title: ${{ steps.get-info.outputs.app_title }}
       app_version: ${{ steps.get-info.outputs.app_version }}
@@ -53,9 +52,6 @@ jobs:
 
           company_name="$(sed -n 's/.*<Company>\(.*\)<\/Company>.*/\1/p' "$project_file" | head -1)"
           echo "company_name=$company_name" >> "$GITHUB_OUTPUT"
-
-          product_name="$(sed -n 's/.*<Product>\(.*\)<\/Product>.*/\1/p' "$project_file" | head -1)"
-          echo "product_name=$product_name" >> "$GITHUB_OUTPUT"
 
           assembly_name="$(sed -n 's/.*<AssemblyName>\(.*\)<\/AssemblyName>.*/\1/p' "$project_file" | head -1)"
           echo "assembly_name=$assembly_name" >> "$GITHUB_OUTPUT"
@@ -99,7 +95,6 @@ jobs:
           {
             "App Title": "${{ steps.get-info.outputs.app_title }}",
             "Assembly Name": "${{ steps.get-info.outputs.assembly_name }}",
-            "Product Name": "${{ steps.get-info.outputs.product_name }}",
             "Company Name": "${{ steps.get-info.outputs.company_name }}",
             "App Version": "${{ steps.get-info.outputs.app_version }}",
             ".NET Version": "${{ steps.get-info.outputs.dotnet_version }}",
@@ -176,7 +171,7 @@ jobs:
           publish_dir="${{ env.PUBLISH_DIR }}"
           tmp_info="/tmp/Info.plist"
           assembly_name=${{ needs.info-check.outputs.assembly_name }}
-          app_pkg="${{ env.RELEASE_DIR }}/${{ needs.info-check.outputs.product_name }}-${{ matrix.rid }}.pkg"
+          app_pkg="${{ env.RELEASE_DIR }}/$assembly_name-${{ matrix.rid }}.pkg"
 
           rm -rf "${{ env.PUBLISH_DIR }}/$assembly_name.dSYM"
 
@@ -200,7 +195,6 @@ jobs:
         run: |
           $publishDir = "${{ github.workspace }}/${{ env.PUBLISH_DIR }}"
           $projectName = "${{ env.PROJECT_NAME }}"
-          $productName = "${{ needs.info-check.outputs.product_name }}"
           $assemblyName = "${{ needs.info-check.outputs.assembly_name }}"
           $appTitle = "${{ needs.info-check.outputs.app_title }}"
           $appVersion = "${{ needs.info-check.outputs.app_version }}"
@@ -208,7 +202,7 @@ jobs:
           $logoFile = "${{ github.workspace }}/$projectName/Assets/Logo/logo.ico"
           $appUrl = "${{ github.server_url }}/${{ github.repository }}"
           $releaseDir = "${{ env.RELEASE_DIR }}"
-          $setupFile = "$productName-${{ matrix.rid }}-Setup"
+          $setupFile = "$assemblyName-${{ matrix.rid }}-Setup"
 
           winget install -e --id JRSoftware.InnoSetup -h
 
